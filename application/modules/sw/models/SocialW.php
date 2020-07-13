@@ -431,9 +431,11 @@
         public function js_get_delivery_orderDetailsData($order_no)
         {
 
-            $sql = $this->db->query(" SELECT DISTINCT a.order_no, a.order_dt, a.hsn_no, a.allot_qty, b.item_name FROM td_sw_supply_order a, md_sw_product b
+            $sql = $this->db->query(" SELECT DISTINCT a.order_no, a.order_dt, a.hsn_no, a.allot_qty, b.item_name,a.project_no,c.cdpo FROM td_sw_supply_order a, md_sw_product b, md_sw_project c
                                     WHERE a.hsn_no = b.hsn_no
-                                    AND a.order_no = '$order_no' ");
+                                    AND   a.project_no = c.sl_no
+                                    AND a.order_no = '$order_no' 
+                                    Order by c.cdpo");
                                     
             return $sql->result();
 
@@ -442,14 +444,16 @@
         public function js_get_delivery_previousDeliveryDetailsData($order_no)
         {
 
-            $sql = $this->db->query(" SELECT a.hsn_no, a.allot_qty, b.item_name, SUM(c.del_qty) AS del_qty FROM td_sw_supply_order a, md_sw_product b, td_sw_delivery c
+            $sql = $this->db->query(" SELECT a.hsn_no, a.allot_qty, b.item_name, d.cdpo,SUM(c.del_qty) AS del_qty FROM td_sw_supply_order a, md_sw_product b, td_sw_delivery c, md_sw_project d
                                     WHERE a.hsn_no = b.hsn_no
                                     AND a.hsn_no = c.hsn_no
                                     AND a.order_no = c.order_no
                                     AND a.dist_cd = c.dist_cd
                                     AND a.project_no = c.cdpo_no
+                                    AND a.project_no = d.sl_no
                                     AND a.order_no = '$order_no'
-                                    GROUP BY a.hsn_no, a.dist_cd, a.project_no, a.allot_qty, b.item_name ");
+                                    GROUP BY a.hsn_no, a.dist_cd, a.project_no, a.allot_qty, b.item_name,d.cdpo
+                                    ORDER BY d.cdpo");
 
             return $sql->result();
 

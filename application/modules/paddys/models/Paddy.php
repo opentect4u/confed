@@ -696,7 +696,7 @@ group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name
                 AND `t`.`soc_id` = `m`.`sl_no`
                 AND t.trans_dt 
                 BETWEEN '".$this->input->post('from_date')."' 
-                AND '".$this->input->post('to_date')."' GROUP BY `d`.`district_name`, `m`.`soc_name`) t1,
+                AND '".$this->input->post('to_date')."' GROUP BY `d`.`district_name`, `m`.`soc_name`,`t`.`soc_id`) t1,
                 (SELECT soc_id, SUM(farmer_no) farmer_no FROM
                 td_reg_farmer 
                 WHERE trans_dt 

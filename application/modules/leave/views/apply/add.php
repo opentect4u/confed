@@ -336,14 +336,22 @@
                 const date1     =   new Date(fromDt);
                 const date2     =   new Date(toDt);
                 const diffTime  =   Math.abs(date2.getTime() - date1.getTime());
-                const diffDays  =   Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                const diffDays  =   Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                var leaveType = $('#leave_type').val();
                 
                 var noOfDays = parseFloat(diffDays+1);
+
+                if(leaveType == 'ML'){
+
+                    noOfDays = noOfDays * 2;
+                }else{
+
+                    noOfDays = noOfDays;
+                }
                
                 //console.log(noOfDays);
                 $('#no_of_days').val(noOfDays);
-
-                var leaveType = $('#leave_type').val();
 
                 $.get('<?php echo site_url("leave/js_get_apply_leaveBalance") ?>', {leaveType : leaveType })
                 .done(function(data){

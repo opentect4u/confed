@@ -1071,6 +1071,9 @@
             $this->load->view('post_login/main');
 
             $tableData['data'] = $this->StationaryM->f_get_billCollectionData();
+
+            $tableData['mrno'] = $this->StationaryM->f_get_billCollectionMrno();
+
             $this->load->view('transaction/collection/table', $tableData);
 
             $this->load->view('post_login/footer');
@@ -1167,9 +1170,11 @@
 
             $this->load->view('post_login/main');
 
-            $editData['data']       = $this->StationaryM->f_get_billCollection_editData($lnk_sl_no);  
-             $editData['project']    = $this->StationaryM->f_get_billCollectionEdit_project($lnk_sl_no);  
-             $editData['supplier']    = $this->StationaryM->f_get_billCollectionEdit_supplier($lnk_sl_no);  
+            $editData['data']           = $this->StationaryM->f_get_billCollection_editData($lnk_sl_no);  
+            //$editData['project']        = $this->StationaryM->f_get_billCollectionEdit_project($lnk_sl_no);  
+            //$editData['supplier']       = $this->StationaryM->f_get_billCollectionEdit_supplier($lnk_sl_no);  
+            $editData['supplierAll']    = $this->StationaryM->f_get_supplierData();
+            $editData['projectsAll']    = $this->StationaryM->f_get_projectData();
             // $editData['saleAmount'] = $this->StationaryM->f_get_billCollectionEdit_saleAmount($sl_no);  
 
             $this->load->view('transaction/collection/edit', $editData);
@@ -1179,43 +1184,50 @@
         }
 
 
-        public function updateCollection()
-        {
+        public function updateCollection(){
 
-            if($this->session->userdata('loggedin'))
-            {
-                $modified_by   =  $this->session->userdata('loggedin')->user_name; 
-            }
+            if($_SERVER['REQUEST_METHOD']=="POST"){
 
-            $modified_dt       =     date('y-m-d H:i:s');
-            
-            if($_SERVER['REQUEST_METHOD']=="POST")
-            {
-               
+                for($j=0; $j < count($this->input->post('sl_no')); $j++){
 
-                $sl_no                =       $_POST['sl_no'];
-                $trans_dt             =       $_POST['trans_dt'];
-                // $order_no          =       $_POST['order_no'];
-                // $bill_no           =       $_POST['bill_no'];
-                $supplier             =       $_POST['supplier'];
-                $project              =       $_POST['project'];
-                $mode                 =       $_POST['mode'];
-                $mr_no                =       $_POST['mr_no'];
-                $amount               =       $_POST['amount'];
-                $remarks              =       $_POST['remarks'];
+                    $data_array   =   array(
+                        
+                        "supplier"             =>  $this->input->post('supplier'),
+
+                        "project"              =>  $this->input->post('project')[$j],
+
+                        "mr_no"                =>  $this->input->post('mr_no')[$j],
+
+                        "amount"               =>  $this->input->post('amount')[$j],
+
+                        "remarks"              =>  $this->input->post('remarks')[$j],
+
+                        "modified_by"          =>  $this->session->userdata('loggedin')->user_name,
+
+                        "modified_dt"          =>  date('y-m-d H:i:s')
+                    );
+
+                    $where_array    =   array(
+
+                        "trans_dt"             => $this->input->post('trans_dt'),   
+
+                        "lnk_sl_no"            => $this->input->post('lnk_sl_no'), 
+
+                        "sl_no"                => $this->input->post('sl_no')[$j],
+
+                    );
+
+                    $this->StationaryM->updateCollection($data_array, $where_array);
+                }
                 
-                // print_r($lnk_sl_no );
-                // die();
-                $this->StationaryM->updateCollection( $lnk_sl_no  ,$sl_no, $trans_dt, $supplier, $project, $mode, $mr_no, $amount, $remarks );
-                
-                echo "<script> alert('Successfully Updated');
-                document.location= 'collection' </script>";
+                $this->session->set_flashdata('msg', 'Successfully edited!');
+
+                redirect('stationary/collection');
 
             }
-            else
-            {
-                echo "<script> alert('Sorry! Select Again.');
-                document.location= 'collection' </script>";
+            else{
+                
+                redirect('stationary/collection');
             }
 
         }

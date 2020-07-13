@@ -216,7 +216,7 @@
                     <thead>
                         <caption id= "infoCaption"></caption>
                         <tr>
-
+                            <th>Project</th>
                             <th>Item</th>
                             <th>Alloted Qty (Qnt)</th>
 
@@ -241,10 +241,9 @@
                       <thead>
 
                         <tr>
-
+                            <th>Project</th>    
                             <th>Item</th>
                             <th>Delivered Qty(Qnt)</th>
-
                         </tr>
 
                     </thead>
@@ -357,7 +356,7 @@
                     var caption = 'Order Date: '+orderDt[2]+'-'+orderDt[1]+'-'+orderDt[0];
                     $('#infoCaption').html(caption);
 
-                    var bodyEliment = '<tr> <td>'+value.item_name+'</td> <td>'+value.allot_qty+'</td> </tr>';
+                    var bodyEliment = '<tr> <td>'+value.cdpo+'</td> <td>'+value.item_name+'</td> <td>'+value.allot_qty+'</td> </tr>';
                     $('#info_table').append($(bodyEliment));
 
                 }
@@ -365,6 +364,8 @@
             })
 
         })
+
+//Delivery Details
 
         $('#order_no').on("change", function(){
 
@@ -380,7 +381,7 @@
                 {
 
                     var value2 = tableData2[key2];
-                    var bodyEliment2 = '<tr> <td>'+value2.item_name+'</td> <td>'+value2.del_qty+'</td> </tr>';
+                    var bodyEliment2 = '<tr> <td>'+value2.cdpo+'</td> <td>'+value2.item_name+'</td> <td>'+value2.del_qty+'</td> </tr>';
                     $('#info_table2').append($(bodyEliment2));
 
                 }
@@ -498,11 +499,19 @@
         $('#del_qty').on("change", function(){
 
             var del_qty = $(this).val();
-            var tot_del_qty = $('#delivered').val();
-            var allot_qty = $('#allot_qty').val();
-            var max_delQTY = parseFloat(allot_qty) - parseFloat(tot_del_qty);
 
-            if(parseFloat(del_qty) > parseFloat(max_delQTY))
+            
+            
+            var tot_del_qty = $('#delivered').val();
+
+            var allot_qty = $('#allot_qty').val();
+
+            var max_delQTY = parseFloat(allot_qty)- parseFloat(tot_del_qty);
+
+           // alert(max_delQTY);
+
+
+            if(parseFloat(del_qty).toFixed(3) > parseFloat(max_delQTY).toFixed(3))
             {
                 $('#alert1').show();
                 $('#del_qty').css('border-color', 'red');

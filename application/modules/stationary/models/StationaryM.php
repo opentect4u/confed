@@ -896,6 +896,15 @@
 
         }
 
+        public function f_get_billCollectionMrno()
+        {
+
+            $sql = $this->db->query(" SELECT distinct lnk_sl_no ,trans_dt,mr_no 
+                                      FROM td_stn_collection");
+            return $sql->result();
+
+        }
+
         
         public function addNewCollection($sl_no,$trans_dt, $project,$supplier, $mode,$chq_no, $mr_no, $amount, $remarks, $created_by, $created_dt, $Unit_count )
         {
@@ -947,11 +956,11 @@
         public function f_get_billCollection_editData($lnk_sl_no)
         {
 
-            $sql = $this->db->query("select a.sl_no, b.name as 'project',
-            a.trans_dt,a.supplier,a.amount,a.mode,a.mr_no,a.remarks,a.created_by,a.created_dt,a.lnk_sl_no
-            from  td_stn_collection a,md_stn_project b
-            where a.project=b.project_cd and a.lnk_sl_no = $lnk_sl_no ");
-            /*AND bill_no = '$bill_no'*/ 
+            $sql = $this->db->query("select sl_no, project,
+            trans_dt,supplier,amount,mode,mr_no,remarks,created_by,created_dt,lnk_sl_no
+            from  td_stn_collection 
+            where lnk_sl_no = $lnk_sl_no ");
+
             return $sql->result();
 
         }
@@ -963,7 +972,6 @@
             $sql = $this->db->query(" SELECT c.name AS project FROM td_stn_collection a, md_stn_project c
                                         WHERE a.project = c.project_cd
                                          AND a.lnk_sl_no = $lnk_sl_no");
-                                //   AND a.bill_no = '$bill_no'  
 
             return $sql->row();
 
@@ -994,28 +1002,15 @@
 
         }
 
-        public function updateCollection($lnk_sl_no, $sl_no,$trans_dt, $supplier, $project, $mode, $mr_no, $amount, $remarks, $modified_by,$modified_dt)
+        public function updateCollection($value,$where)
         {
+            
+                $this->db->set($value);
 
-            $value = array('lnk_sl_no'  => $lnk_sl_no,
-                            // 'order_no' => $order_no,
-                            'sl_no'       => $sl_no,
-                            'trans_dt' => $trans_dt,
-                            'supplier'    => $supplier,
-                            'project'     => $project,
-                            'mode'        => $mode,
-                            'mr_no'       => $mr_no,
-                            'amount'      => $amount,
-                            'remarks'     => $remarks);
-                            //  'modified_by' => $modified_by,
-                            //  'modified_dt' => $modified_dt );
-
-            $this->db->where('lnk_sl_no', $lnk_sl_no);
-            // $this->db->last_query();
-            // die();
-            // $this->db->where('bill_no', $bill_no);
-            $this->db->update('td_stn_collection', $value);
-
+                $this->db->where($where);
+            
+                $this->db->update('td_stn_collection');
+            
         }
 
 
@@ -1436,8 +1431,35 @@
 
 
 
+    //For Editing row
 
+        public function f_edit($table_name, $data_array, $where) {
+            $this->db->where($where);
+            $this->db->update($table_name, $data_array);
 
+            return;
+
+        }
+    
+    //For Deliting row
+
+        public function f_delete($table_name, $where) {
+
+            $this->db->delete($table_name, $where);
+    
+            return;
+    
+        }
+
+    //For Inserting Multiple Row
+
+    public function f_insert_multiple($table_name, $data_array){
+
+        $this->db->insert_batch($table_name, $data_array);
+
+        return;
+
+    }
 
 
 

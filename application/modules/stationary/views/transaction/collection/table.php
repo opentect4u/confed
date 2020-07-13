@@ -32,7 +32,8 @@
                 <tr>
                     <th>Sl No</th>
                     <th>Date</th>
-                     <th>Supplier.</th> 
+                    <th>Supplier.</th> 
+                    <th>Mr.No.</th>
                     <th>Amount(Rs)</th>
                     <th>Option</th>
                     <th>Option</th>
@@ -49,8 +50,17 @@
                     <tr>
 
                         <td><?php echo $key->lnk_sl_no; ?></td>
-                        <td><?php echo $key->trans_dt; ?></td>
+                        <td><?php echo date('d/m/Y',strtotime($key->trans_dt)); ?></td>
                         <td><?php echo $key->supplier; ?></td> 
+                        <td><?php 
+                                foreach($mrno as $key1){
+                                    if($key1->lnk_sl_no == $key->lnk_sl_no){
+                                        echo $key1->mr_no.',';
+                                    }
+
+                                }
+                            ?>
+                        </td>
                         <td><?php echo $key->amount; ?></td> 
                         
                         <td><a href="<?php echo site_url('stationary/editBillCollection/'.$key->lnk_sl_no); ?>" ><i class="fa fa-edit fa-fw fa-2x"></i></a></td>
@@ -76,6 +86,21 @@
     $(document).ready(function() {
         $('#dataTables-example').DataTable();
     });
+</script>
+
+<script>
+   
+    $(document).ready(function() {
+
+    $('.confirm-div').hide();
+
+    <?php if($this->session->flashdata('msg')){ ?>
+
+    $('.confirm-div').html('<?php echo $this->session->flashdata('msg'); ?>').show();
+
+    });
+
+    <?php } ?>
 </script>
 
 
