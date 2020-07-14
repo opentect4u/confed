@@ -1065,8 +1065,7 @@
 
     //**************** For transaction/collection Section ****************//
 
-        public function collection()
-        {
+        public function collection(){                           //List view of all collection
 
             $this->load->view('post_login/main');
 
@@ -1081,8 +1080,7 @@
         }
 
 
-        public function addCollectionBill()
-        {
+        public function addCollectionBill(){                        //Opening of new collection screen
 
             $this->load->view('post_login/main');
 
@@ -1094,24 +1092,58 @@
 
         }
 
-        public function addNewCollection()
-        {
+        public function addNewCollection(){                             //Insert New collection entry
 
-            if($this->session->userdata('loggedin'))
-            {
-                $created_by   =  $this->session->userdata('loggedin')->user_name; 
-            }
-
-            $created_dt       =     date('y-m-d H:i:s');
             
-            if($_SERVER['REQUEST_METHOD']=="POST")
-            {
-                $slNo = $this->StationaryM->f_get_collection_lnk_no();
+            if($_SERVER['REQUEST_METHOD']=="POST"){
+
+                $select = array(
+                    "max(lnk_sl_no)sl_no"
+                );
+
+                $slNo  = $this->StationaryM->f_get_particulars('td_stn_collection',$select,NULL,1);
+
                 $sl_no = $slNo->sl_no + 1;
-                $trans_dt          =       $_POST['trans_dt'];
+
+                //$slNo = $this->StationaryM->f_get_collection_lnk_no();
+
+                for($j=0; $j < count($this->input->post('mr_no')); $j++){
+
+                    $data_array[]     =   array(
+
+                        "lnk_sl_no"     =>  $sl_no,
+
+                        "trans_dt"      =>  $this->input->post('trans_dt'),
+
+                        "project"       =>  $this->input->post('project')[$j],
+                        
+                        "supplier"      =>  $this->input->post('supplier'),
+
+                        "mode"          =>  $this->input->post('mode')[$j],
+
+                        "mr_no"         =>  $this->input->post('mr_no')[$j],
+
+                        "amount"        =>  $this->input->post('amount')[$j],
+
+                        "chq_no"        =>  $this->input->post('chq_no')[$j],
+
+                        "remarks"       =>  $this->input->post('remarks')[$j],
+
+                        "created_by"    =>  $this->session->userdata('loggedin')->user_name,
+
+                        "created_dt"    =>  date('y-m-d H:i:s')
+                    );
+                }
+
+                $this->StationaryM->f_insert_multiple('td_stn_collection', $data_array);
+
+                $this->session->set_flashdata('msg', 'Successfully added!');
+
+                redirect('stationary/collection');
+                
+                /*$trans_dt          =       $_POST['trans_dt'];
                 $project           =       $_POST['project'];
-                // $order_no       =       $_POST['order_no'];
-                // $bill_no        =       $_POST['bill_no'];
+               
                 $supplier          =       $_POST['supplier'];
                 $mode              =       $_POST['mode'];
                 $mr_no             =       $_POST['mr_no'];
@@ -1120,18 +1152,15 @@
                 $remarks           =       $_POST['remarks'];
                 $Unit_count        =       count($mr_no);  
                 $this->StationaryM->addNewCollection($sl_no,$trans_dt, $project,$supplier, $mode,$chq_no  , $mr_no, $amount, $remarks, $created_by, $created_dt, $Unit_count );
-                // $this->db->last_query();
-                // die();
-                // print_r($slNo );
-                // die();
+               
                 echo "<script> alert('Successfully Saved');
-                document.location= 'collection' </script>";
+                document.location= 'collection' </script>";*/
 
             }
-            else
-            {
-                echo "<script> alert('Sorry! Select Again.');
-                document.location= 'addCollectionBill' </script>";
+
+            else{
+
+                redirect('stationary/collection');
             }
 
         }
@@ -1165,26 +1194,21 @@
         }
 
 
-        public function editBillCollection($lnk_sl_no)
-        {
+        public function editBillCollection($lnk_sl_no){               //Opening of Edit screen for a collection entry
 
             $this->load->view('post_login/main');
 
             $editData['data']           = $this->StationaryM->f_get_billCollection_editData($lnk_sl_no);  
-            //$editData['project']        = $this->StationaryM->f_get_billCollectionEdit_project($lnk_sl_no);  
-            //$editData['supplier']       = $this->StationaryM->f_get_billCollectionEdit_supplier($lnk_sl_no);  
             $editData['supplierAll']    = $this->StationaryM->f_get_supplierData();
-            $editData['projectsAll']    = $this->StationaryM->f_get_projectData();
-            // $editData['saleAmount'] = $this->StationaryM->f_get_billCollectionEdit_saleAmount($sl_no);  
+            $editData['projectsAll']    = $this->StationaryM->f_get_projectData();  
 
             $this->load->view('transaction/collection/edit', $editData);
 
             $this->load->view('post_login/footer');
-
         }
 
 
-        public function updateCollection(){
+        public function updateCollection(){                         //Update an existing collection entry                       
 
             if($_SERVER['REQUEST_METHOD']=="POST"){
 
@@ -1232,13 +1256,12 @@
 
         }
 
-
-        public function deleteBillCollection($lnk_sl_no)
-        {
+        /*public function deleteBillCollection($lnk_sl_no){                       //Delete a collection entry
             $this->StationaryM->deleteBillCollection($lnk_sl_no);
+            f_delete('')
             $this->collection();
 
-        }
+        }*/
 
 
 

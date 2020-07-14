@@ -1,7 +1,7 @@
 
 <div class="wraper">      
 
-    <div class="col-md-8 container form-wraper">
+    <div class="col-md-10 container form-wraper" style="margin-left: 120px;">
 
         <form method="POST" id="form" role="form" name="add_form" action="<?php echo site_url("stationary/addNewCollection");?>" onsubmit="return validate()" >
             
@@ -21,24 +21,25 @@
                     <input type="date" name="trans_dt" class="form-control required" id="trans_dt" required>
                         
                 </div>
-                <div class="form-group row">
+                
+            </div>
 
-<label for="supplier_cd" class="col-sm-2 col-form-label">Supplier<font color="red">*</font></label>
+            <div class="form-group row">
 
-<div class="col-sm-4">
+                <label for="supplier_cd" class="col-sm-2 col-form-label">Supplier<font color="red">*</font></label>
 
-    <select name="supplier" id="supplier" class="form-control required" required>
-        <option value="0">Select Supplier</option>
-        <?php foreach($supplier as $supName){ ?>
-            <option value="<?php echo $supName->sl_no; ?>"><?php echo $supName->name; ?></option>
-        <?php } ?>
-    </select>
+                <div class="col-sm-4">
 
-</div>
+                    <select name="supplier" id="supplier" class="form-control required" required>
+                        <option value="0">Select Supplier</option>
+                        <?php foreach($supplier as $supName){ ?>
+                            <option value="<?php echo $supName->sl_no; ?>"><?php echo $supName->name; ?></option>
+                        <?php } ?>
+                    </select>
 
-</div>
-   
- </div>
+                </div>
+
+            </div>
 
       <div class="form-group">
 
@@ -47,8 +48,8 @@
     <thead>
 
         <th style= "text-align: center">MR No.</th>  
-        <th style= "text-align: center">Project.</th>
-        <th style= "text-align: center">Amount.</th>
+        <th style= "text-align: center">Project</th>
+        <th style= "text-align: center">Amount</th>
         <th style= "text-align: center">Pay Type</th>
         <th style= "text-align: center">Chq No.</th>
         <th style= "text-align: center">Remarks</th>
@@ -82,7 +83,7 @@
         </td>
         
         <td>
-            <input type="text" name="amount[]"  style="width:80px" class="form-control required" id="amount" required>                            
+            <input type="number" name="amount[]"  style="width:80px" class="form-control required" id="amount" required>                            
         </td>
         <td>
                     <select name="mode[]" id="mode" style="width:70px" class="form-control required"  >
@@ -94,10 +95,10 @@
 
      </td>
      <td>
-            <input type="text" name="chq_no[]"  style="width:80px" class="form-control required" id="chq_no" >                            
+            <input type="text" name="chq_no[]"  style="width:80px" class="form-control" id="chq_no" >                            
         </td>
      <td>
-            <input type="text" name="remarks[]"  style="width:100px" class="form-control required" id="remarks" >                            
+            <input type="text" name="remarks[]"  style="width:100px" class="form-control" id="remarks" >                            
         </td>
     </tr>
 
@@ -203,7 +204,7 @@
                                         +string
                                     +'<select>'
                                 +'</td>'
-                                +'<td><input type="text" name="amount[]"  style="width:80px" class="form-control required " id="amount" required>'
+                                +'<td><input type="number" name="amount[]"  style="width:80px" class="form-control required " id="amount" required>'
                                 +'</td>'
                                 +'<td>'
                                     +'<select name="mode[]" style="width:70px" id="mode" class= "form-control required " required>'
@@ -213,9 +214,9 @@
                             +'<option value="cheque">Cheque</option>'
                                     +'<select>'
                                 +'</td>'
-                                +'<td><input type="text" name="chq_no[]"  style="width:80px" class="form-control required " id="chq_no" required>'
+                                +'<td><input type="text" name="chq_no[]"  style="width:80px" class="form-control " id="chq_no" >'
                                 +'</td>'
-                                +'<td><input type="text" name="remarks[]"  style="width:100px" class="form-control required " id="remarks" required>'
+                                +'<td><input type="text" name="remarks[]"  style="width:100px" class="form-control " id="remarks">'
                                 +'</td>'
                                 +'<td>'
                                     +'<button class="btn btn-danger" type= "button" data-toggle="tooltip" data-original-title="Remove Row" data-placement="bottom" id="removeRow"><i class="fa fa-remove" aria-hidden="true"></i></button>'

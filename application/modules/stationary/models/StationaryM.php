@@ -89,13 +89,13 @@
 
 
 
-        public function f_get_collection_lnk_no()
+       /* public function f_get_collection_lnk_no()
         {
 
             $sql = $this->db->query(" SELECT MAX(lnk_sl_no) AS sl_no FROM td_stn_collection "); 
             return $sql->row();
 
-        }
+        }*/
         public function js_get_supplier_cur_RenewalStatus($sl_no)
         {
 
@@ -906,7 +906,7 @@
         }
 
         
-        public function addNewCollection($sl_no,$trans_dt, $project,$supplier, $mode,$chq_no, $mr_no, $amount, $remarks, $created_by, $created_dt, $Unit_count )
+        /*public function addNewCollection($sl_no,$trans_dt, $project,$supplier, $mode,$chq_no, $mr_no, $amount, $remarks, $created_by, $created_dt, $Unit_count )
         {
             for($j=0; $j<$Unit_count ; $j++)
             {
@@ -926,7 +926,7 @@
 
             $this->db->insert('td_stn_collection', $value);              
             }             
-        }
+        }*/
 
         public function js_get_collection_orderForProject($project_cd) // For JS
         {
@@ -1429,6 +1429,35 @@
 
         }
 
+    //For selecting row
+
+        public function f_get_particulars($table_name, $select=NULL, $where=NULL, $flag) {
+            
+            if(isset($select)) {
+
+                $this->db->select($select);
+
+            }
+
+            if(isset($where)) {
+
+                $this->db->where($where);
+
+            }
+
+            $result		=	$this->db->get($table_name);
+
+            if($flag == 1) {
+
+                return $result->row();
+                
+            }else {
+
+                return $result->result();
+
+            }
+
+        }
 
 
     //For Editing row
@@ -1460,11 +1489,6 @@
         return;
 
     }
-
-
-
-
-
-    }
+}
 
 ?>
