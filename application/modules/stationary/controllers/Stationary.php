@@ -1093,7 +1093,6 @@
         }
 
         public function addNewCollection(){                             //Insert New collection entry
-
             
             if($_SERVER['REQUEST_METHOD']=="POST"){
 
@@ -1141,21 +1140,6 @@
 
                 redirect('stationary/collection');
                 
-                /*$trans_dt          =       $_POST['trans_dt'];
-                $project           =       $_POST['project'];
-               
-                $supplier          =       $_POST['supplier'];
-                $mode              =       $_POST['mode'];
-                $mr_no             =       $_POST['mr_no'];
-                $amount            =       $_POST['amount'];
-                $chq_no            =       $_POST['chq_no'];
-                $remarks           =       $_POST['remarks'];
-                $Unit_count        =       count($mr_no);  
-                $this->StationaryM->addNewCollection($sl_no,$trans_dt, $project,$supplier, $mode,$chq_no  , $mr_no, $amount, $remarks, $created_by, $created_dt, $Unit_count );
-               
-                echo "<script> alert('Successfully Saved');
-                document.location= 'collection' </script>";*/
-
             }
 
             else{
@@ -1166,14 +1150,14 @@
         }
 
 
-        public function js_get_collection_orderForProject()// For JS
+        /*public function js_get_collection_orderForProject()// For JS
         {
 
             $project_cd      =      $this->input->get('project_cd');
             $result = $this->StationaryM->js_get_collection_orderForProject($project_cd);
             echo json_encode($result);
 
-        }
+        }*/
 
         public function js_get_collection_billForOrder() // For JS
         {
@@ -1256,12 +1240,21 @@
 
         }
 
-        /*public function deleteBillCollection($lnk_sl_no){                       //Delete a collection entry
-            $this->StationaryM->deleteBillCollection($lnk_sl_no);
-            f_delete('')
-            $this->collection();
+        public function deleteBillCollection($lnk_sl_no){                       //Delete a collection entry
 
-        }*/
+            //$this->StationaryM->deleteBillCollection($lnk_sl_no);
+
+            $where = array(
+                'lnk_sl_no'     =>  $lnk_sl_no
+            );
+
+            $this->StationaryM->f_delete('td_stn_collection',$where);
+
+            $this->session->set_flashdata('msg', 'Successfully deleted!');
+
+            redirect('stationary/collection');
+
+        }
 
 
 

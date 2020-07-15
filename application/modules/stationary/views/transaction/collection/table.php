@@ -35,8 +35,8 @@
                     <th>Supplier.</th> 
                     <th>Mr.No.</th>
                     <th>Amount(Rs)</th>
-                    <th>Option</th>
-                    <th>Option</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
 
             </thead>

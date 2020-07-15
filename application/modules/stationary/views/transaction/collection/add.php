@@ -130,14 +130,14 @@
 
     $(document).ready(function()
     {
-        $('#refNo').hide();
+        /*$('#refNo').hide();
         
         // <!-- To get Order No as per Project Selected  -->
 
         $('#project_cd').on( "change", function()
         {
             //console.log($(this).val());
-            $.get('<?php echo site_url("stationary/js_get_collection_orderForProject");?>',{ project_cd: $(this).val() })
+            $.get('<?php //echo site_url("stationary/js_get_collection_orderForProject");?>',{ project_cd: $(this).val() })
                                                     
             .done(function(data)
             {
@@ -154,10 +154,10 @@
 
             });
 
-        });
+        });*/
 
         // To show or hide the Ref No section -->  
-        $('#mode').on( "change", function()
+        /*$('#mode').on( "change", function()
         {
 
             var mode = $(this).val();
@@ -170,7 +170,7 @@
                 $('#refNo').hide();
             }
 
-        });
+        });*/
 
     });
 

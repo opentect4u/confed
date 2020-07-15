@@ -928,14 +928,14 @@
             }             
         }*/
 
-        public function js_get_collection_orderForProject($project_cd) // For JS
+       /* public function js_get_collection_orderForProject($project_cd) // For JS
         {
 
             $sql = $this->db->query(" SELECT DISTINCT b.order_no FROM td_stn_order a, td_stn_saleBill b WHERE a.c_order_no = b.order_no
                                         AND a.project_cd = $project_cd ");
             return $sql->result();
 
-        }
+        }*/
 
         public function js_get_collection_billForOrder($order_no) // For JS
         {
@@ -1014,13 +1014,12 @@
         }
 
 
-        public function deleteBillCollection($lnk_sl_no)
+        /*public function deleteBillCollection($lnk_sl_no)
         {
 
             $sql = $this->db->query(" DELETE FROM td_stn_collection WHERE lnk_sl_no = $lnk_sl_no "); 
-            /*AND bill_no = '$bill_no'*/
-
-        }
+            
+        }*/
 
 
     // **************** For Transaction / Payment *************************** //
