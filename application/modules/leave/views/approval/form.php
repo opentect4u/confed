@@ -28,11 +28,13 @@
                     <label for="leave_type" class="col-sm-2 col-form-label">Leave:<font color="red">*</font></label>
                     <div class="col-sm-4">
 
-                        <select name="leave_type" id="leave_type" class= "form-control required" readonly>
+                        <!--<select name="leave_type" id="leave_type" class= "form-control required" readonly>
                         
-                            <option value="<?php echo $key->leave_type; ?>"><?php echo $key->leave_type; ?></option>
+                            <option value="<?php //echo $key->leave_type; ?>"><?php //echo $key->leave_type; ?></option>
                             
-                        </select>
+                        </select>-->
+
+                        <input type="text" name= "leave_type" value= "<?php echo $key->leave_type; ?>" id= "leave_type" class= "form-control required" readonly>
                         
                     </div>
 
