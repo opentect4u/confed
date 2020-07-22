@@ -232,7 +232,7 @@
         public function f_get_leaveAppliedDtls($emp_cd)
         {
 
-            $sql = $this->db->query(" SELECT * FROM td_leave_dtls WHERE emp_no = $emp_cd AND 
+            $sql = $this->db->query(" SELECT * FROM td_leave_dtls WHERE emp_no ='$emp_cd' AND 
                                     YEAR(trans_dt) = YEAR(CURDATE()) AND trans_type = 'T' ");
             return $sql->result();
 
@@ -265,7 +265,7 @@
         public function f_get_leaveApply_employeeName($emp_no)
         {
 
-            $sql = $this->db->query(" SELECT emp_name FROM md_employee WHERE emp_code = $emp_no ");
+            $sql = $this->db->query(" SELECT emp_name FROM md_employee WHERE emp_code = '$emp_no' ");
             return $sql->row();
 
         }
@@ -460,43 +460,37 @@ $sql = $this->db->query(" SELECT  cl_bal, el_bal, ml_bal, od_bal                
 
         }
 
+
         public function approveLeaveApplication($trans_dt, $trans_cd, $approval_status, $approved_by, $approved_dt,$no_of_days,$leave_type,$cl_bal,$el_bal,$ml_bal)
         {
             
-          
-if ($leave_type='CL') {
+            if ($leave_type=='CL') {
+                    $value = array('approval_status' => $approval_status,
+                    'approved_by' => $approved_by,
+                    'approved_dt' => $approved_dt,
+                    'cl_bal'=>  $cl_bal - $no_of_days);
+            }
 
-    $value = array('approval_status' => $approval_status,
-    'approved_by' => $approved_by,
-    'approved_dt' => $approved_dt,
-    'cl_bal'=>  $cl_bal - $no_of_days);
-}
-    if ($leave_type='ML') {
-     $value = array('approval_status' => $approval_status,
-    'approved_by' => $approved_by,
-    'approved_dt' => $approved_dt,
-    'ml_bal'=>  $ml_bal - $no_of_days);  
-     
-    } 
-    
-    if ($leave_type='EL') {
-        $value = array('approval_status' => $approval_status,
-       'approved_by' => $approved_by,
-       'approved_dt' => $approved_dt,
-       'el_bal'=>  $el_bal - $no_of_days);  
-        
-       } 
+            if ($leave_type=='ML') {
+                     $value = array('approval_status' => $approval_status,
+                    'approved_by' => $approved_by,
+                    'approved_dt' => $approved_dt,
+                    'ml_bal'=>  $ml_bal - $no_of_days);  
+            } 
 
-          
-                       
-                     
+            if ($leave_type=='EL') {
+                $value = array('approval_status' => $approval_status,
+               'approved_by' => $approved_by,
+               'approved_dt' => $approved_dt,
+               'el_bal'=>  $el_bal - $no_of_days);  
+            } 
 
-            $this->db->where('trans_dt', $trans_dt);
-            $this->db->where('trans_cd', $trans_cd);
-            $this->db->where('leave_type', $leave_type);
-        
-            $this->db->update('td_leave_dtls', $value);
-           
+                           
+                $this->db->where('trans_dt', $trans_dt);
+                $this->db->where('trans_cd', $trans_cd);
+                $this->db->where('leave_type', $leave_type);
+            
+                $this->db->update('td_leave_dtls', $value);
         }
 
 
