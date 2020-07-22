@@ -752,20 +752,25 @@
             $trans_dt           =       $_POST['trans_dt'];
             $trans_cd           =       $_POST['trans_cd'];
             $approval_status    =       'A';
-            $no_of_days         =   $_POST['no_of_days'];
-            $leave_type         =   $_POST['leave_type'];
-            $cl_bal             =   $_POST['cl_bal'];
-            $el_bal             =   $_POST['el_bal'];
-            $ml_bal             =   $_POST['ml_bal'];
-            // print_r($cl_bal );
-            // die();
+            $no_of_days         =       $_POST['no_of_days'];
+            $leave_type         =       $_POST['leave_type'];
+            $cl_bal             =       $_POST['cl_bal'];
+            $el_bal             =       $_POST['el_bal'];
+            $ml_bal             =       $_POST['ml_bal'];
+             /*echo($cl_bal )."<br>";
+             echo($el_bal )."<br>";
+             echo($ml_bal )."<br>";
+             echo($leave_type )."<br>";
+             die();*/
 
             $approved_by = $this->session->userdata('loggedin')->user_name;
             $approved_dt = date('Y-m-d');
 
+            //echo $leave_type;die;
+
             $this->LeaveM->approveLeaveApplication($trans_dt, $trans_cd, $approval_status, $approved_by, $approved_dt,$no_of_days,$leave_type,$cl_bal,$el_bal,$ml_bal);
-        //    echo $this->db->last_query();
-        //    die();
+                //echo $this->db->last_query();
+               //die();
             //redirect('leave/firstApproval');
             echo "<script> alert('Successfully Updated');
                     document.location= 'firstApproval' </script>";
