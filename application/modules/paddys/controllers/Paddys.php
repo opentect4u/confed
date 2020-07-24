@@ -5702,109 +5702,38 @@ class Paddys extends MX_Controller {
         }
 
     }
-//Wqsc details report
+//Wqsc details report (billno wise)
 //Procurement to Delivery Report
 public function f_wqscdetails_report(){
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        //Count Distinct Society group by Society
-        $select =   array(
+        $poolType       =   $this->input->post('pool_type');
 
-            "t.dist", "m.district_name", "SUM(t.count) count"
+        $billNo         =   $this->input->post('bill_no');
 
-        );  
+        $select         =   array(
+            "pool_type","dis_cd","wqsc_no","analysis_no",
+            "bill_no","trn_dt","no_bags","qty","remarks",
+            "kms_yr"
+        );
 
-        $sql = "SELECT dist, soc_id, count(DISTINCT mill_id) count FROM td_received WHERE trans_dt BETWEEN '".$this->input->post('from_date')."' AND '".$this->input->post('to_date')."' GROUP BY dist, soc_id"; 
+        $where          =   array(
+            "pool_type"     =>  $poolType,
 
-        $where  =   array(
-
-            "m.district_code = t.dist GROUP BY t.dist" => NULL,
+            "bill_no"       =>  $billNo
 
         );
 
-        // $data['dist_dtls'] =   $this->Paddy->f_mill_count_new($this->input->post('from_date'), $this->input->post('to_date'));
-        $data['dist_dtls'] =   $this->Paddy->f_mill_count($this->input->post('from_date'), $this->input->post('to_date'));
-          
-        //Society Name wise collection
-        unset($select);
-        unset($where);
-        unset($sql);
-
-        $select =   array(
-
-            "t.dist", "r.soc_id", "m.soc_name", "r.farmer_no", "t.no_of_camp",
-
-            "t.no_of_farmer", "t.paddy_qty", "d.count","(SELECT GROUP_CONCAT(CONCAT(q.bill_no))  FROM td_bill q
-            where q.soc_id=d.soc_id
-            and q.dist=d.dist) as all_bill_no"
-
+        $select1        =   array(
+            "district_code","district_name"
         );
 
-        //Total Register Farmer
-        $sql  = "SELECT soc_id, SUM(farmer_no) farmer_no FROM td_reg_farmer GROUP BY soc_id";
-        // echo $this->db->last_query();
+        $data['wqsc']   =   $this->Paddy->f_get_particulars('td_wqsc_sheet',$select,$where,0);
+
+        $data['dist']   =   $this->Paddy->f_get_particulars('md_district',$select1,NULL,0);
+
       
-          //Total camp, farmer, paddy collection
-        $sql1 = "SELECT soc_id,
-                        dist,
-                        SUM(no_of_camp) no_of_camp,
-                        SUM(no_of_farmer) no_of_farmer,
-                        SUM(paddy_qty) paddy_qty
-                                                FROM td_collections WHERE trans_dt BETWEEN '".$this->input->post('from_date')."' AND '".$this->input->post('to_date')."' 
-                                                GROUP BY soc_id, dist";
-        //Mill Id Society wise
-        $sql2 = "SELECT dist, soc_id, count(DISTINCT mill_id) count FROM td_received WHERE trans_dt BETWEEN '".$this->input->post('from_date')."' AND '".$this->input->post('to_date')."' GROUP BY dist, soc_id"; 
-        // print_r($sql1 );
-        // die();
-        $where = array(
-
-            "m.sl_no = r.soc_id"    => NULL,
-
-            "m.sl_no = t.soc_id"    => NULL,
-
-             "m.sl_no = d.soc_id"    => NULL,
-          
-        );
-    //   echo $this->db->last_query();
-    //     die();
-        $data['soc_dtls'] =   $this->Paddy->f_get_particulars("md_society m, ($sql) r, ($sql1) t, ($sql2) d", $select, $where, 0);
-        //  echo var_dump($data);
-        //  die();
-        //Society wise Paddy Distribution
-        unset($select);
-        unset($where);
-        unset($sql);
-        unset($sql1);
-        // unset($sql2);
-
-        $select =   array(
-
-            "dist.soc_id", "dist.mill_id", "m.mill_name",
-            
-            "dist.distribute"
-
-        );
-
-        $where  =   array(
-
-            "m.sl_no = dist.mill_id" =>  NULL
-            
-        );
-
-        //Paddy distribution
-        $sql = "SELECT soc_id, mill_id, ifnull(SUM(paddy_qty), 0) distribute FROM td_received GROUP BY soc_id, mill_id ORDER BY soc_id";
-
-        $data['mill_dtls']   =   $this->Paddy->f_get_particulars("md_mill m, ($sql) dist", $select, $where, 0);
-
-        foreach($data['mill_dtls'] as $key => $list){
-
-            $details = $this->Paddy->f_get_paddy_dtls($list->soc_id, $list->mill_id);
-
-            $data['mill_dtls'][$key] = (object)array_merge((array)$data['mill_dtls'][$key], $details);
-            
-        }
-
         $this->load->view('post_login/main');
 
         $this->load->view("reports/wqscdetails", $data);
