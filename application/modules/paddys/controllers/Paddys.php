@@ -4378,9 +4378,9 @@ class Paddys extends MX_Controller {
     public function f_payment_edit() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
-            $kms_year=$this->session->userdata('kms_yr');
+            $kms_year = $this->session->userdata('kms_yr');
 
-            $where1 = array('pmt_bill_no='=> $this->input->post('pmt_bill_no'),'kms_year'=>$kms_year);
+            $where1 = array('pmt_bill_no='=> $this->input->post('pmt_bill_no'),'kms_year' => $kms_year);
             $where = array('pmt_bill_no='=> $this->input->post('pmt_bill_no'));
 
             $this->Paddy->f_delete('td_payment_bill', $where1);
@@ -4396,7 +4396,7 @@ class Paddys extends MX_Controller {
     
                     // "kms_year"              =>  $this->kms_year,
 
-                    "kms_year"      => $this->session->userdata('kms_yr'),
+                    "kms_year"             => $this->session->userdata('kms_yr'),
 
                     "soc_id"                =>  $this->input->post('soc_name'),
 
@@ -4426,7 +4426,7 @@ class Paddys extends MX_Controller {
 
                     "rice_type"             =>  $this->input->post('rice_type'),
 
-                    "pool_type"             =>  $this->input->post('pool_type')[$i],
+                    "pool_type"             =>  $this->input->post('pool_type'),
     
                     "created_by"            =>  $this->session->userdata('loggedin')->user_name,
     
@@ -4578,11 +4578,45 @@ class Paddys extends MX_Controller {
         echo json_encode($data);
 
     }
+    // Confed Bill List
+    public function f_confedbilllist(){
+
+        $select =   array(
+            
+            'bill_no'
+
+        );
+                  
+        $where  =   array(
+
+            "kms_yr"     => $this->session->userdata('kms_yr'),
+
+            'pool_type'  => $this->input->get('pool_type'),
+
+            'rice_type'  => $this->input->get('rice_type'),
+
+            "dist"      => $this->input->get('dist'),
+
+            'block'     => $this->input->get('block'),
+
+            'soc_id'    => $this->input->get('soc_id'),
+
+            'mill_id'   => $this->input->get('mill_id')
+
+        );
+
+        $data = $this->Paddy->f_get_particulars("td_bill", $select, $where, 0);
+
+        echo json_encode($data);
+
+    }
 
     //Bill Details
     public function f_billDetails(){
 
-        $rice = $this->Paddy->f_get_particulars('td_bill', array('rice_type'), array('kms_yr' => $this->kms_year, 'pool_type' => $this->input->get('pool_type'), 'bill_no' => $this->input->get('billNo')), 1);
+       // $rice = $this->Paddy->f_get_particulars('td_bill', array('rice_type'), array('kms_yr' => $this->kms_year, 'pool_type' => $this->input->get('pool_type'), 'bill_no' => $this->input->get('billNo')), 1);
+
+         $rice = $this->Paddy->f_get_particulars('td_bill', array('rice_type'), array('kms_yr' => $this->session->userdata('kms_yr'), 'pool_type' => $this->input->get('pool_type'), 'bill_no' => $this->input->get('billNo')), 1);
         
         if($rice->rice_type == 'P'){
             //Retrive Bill Details
@@ -6687,6 +6721,7 @@ public function f_wqscdetails_report(){
 
             );
 
+
             $payment['charges']    =   $this->Paddy->f_get_particulars("td_payment_bill_dtls t, md_comm_params m", $select, $where, 0);
 
             $this->load->view('post_login/main');
@@ -6701,6 +6736,9 @@ public function f_wqscdetails_report(){
             //For Current Date
             $payment['sys_date']   =   $_SESSION['sys_date'];
 
+            //District List
+            $payment['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+
             $this->load->view('post_login/main');
 
             $this->load->view("reports/payment", $payment);
@@ -6710,6 +6748,25 @@ public function f_wqscdetails_report(){
         }
 
     }
+
+
+     // Payment Bill List
+    public function f_paymentbilllist(){
+                
+
+            $dist     = $this->input->get('dist');
+        
+            $soc_id    = $this->input->get('soc_id');
+
+            $mill_id   = $this->input->get('mill_id');
+
+        $data = $this->Paddy->f_get_paymentslist($dist,$soc_id,$mill_id);
+        
+        echo json_encode($data);
+
+    }
+
+
 /////////////////////////////////
 public function js_get_bill()
 		{

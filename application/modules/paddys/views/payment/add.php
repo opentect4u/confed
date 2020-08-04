@@ -102,8 +102,13 @@
                 <label for="totPaddy" class="col-sm-1 col-form-label">Total Paddy:</label>
 
                 <div class="col-sm-5">
-
-                    <input type="text"
+                  
+                       <input type="text"
+                            class="form-control required"
+                            name="dedede"
+                            id="totPaddys" readonly="" 
+                        />
+                    <input type="hidden"
                             class="form-control required"
                             name="totPaddy"
                             id="totPaddy"
@@ -114,8 +119,13 @@
                 <label for="totCmr" class="col-sm-1 col-form-label">Total CMR:</label>
 
                 <div class="col-sm-5">
-
-                    <input type="text"
+                     <input type="text"
+                            class="form-control required"
+                            name="dededess"
+                            id="totCmrs" readonly
+                        />
+                   
+                    <input type="hidden"
                             class="form-control required"
                             name="totCmr"
                             id="totCmr"
@@ -202,7 +212,7 @@
                         <th>Date</th>
                         <th>Quantity of Paddy <br>(Qtls)</th>
                         <th>Quantity of CMR<br>(Qtls)</th>
-                        <th>Total Butta</th>
+                        <th>Total Butta(RS)</th>
                         <th><button type="button" class="btn btn-success addAnother"><i class="fa fa-plus"></i></button></th>
 
                     </tr>
@@ -213,12 +223,22 @@
                     <tr>
                         <td><input type="text" class="form-control mill_bill_no" name="mill_bill_no[]" required></td>
                         <td><input type="date" class="form-control mill_bill_date" name="mill_bill_date[]" required></td>
-                        <td><input type="text" class="form-control confed_bill_no" name="confed_bill_no[]" required></td>
-                        <td><input type="date" class="form-control confed_bill_date" name="confed_bill_date[]" required></td>
-                        <td><input type="text" class="form-control qty_paddy" name="qty_paddy[]" required></td>
-                        <td><input type="text" class="form-control qty_cmr" name="qty_cmr[]" required></td>
+                        <td>
+                           <select type="text" class="form-control confed_bill_no required" name="confed_bill_no[]" id="confed_bill_no">
+                           <option value="">Select</option>    
+                           </select>
+                        <!--     <input type="text" class="form-control confed_bill_no" name="confed_bill_no[]" required> -->
+                        </td>
+                        <td><input type="date" class="form-control confed_bill_dates" name="confed_bill_dates[]" readonly>
+                                    <input type="hidden" class="form-control confed_bill_date" name="confed_bill_date[]" value="">
+                        </td>
+                        <td><input type="text" class="form-control qty_paddys" name="qty_paddys[]" readonly>
+                            <input type="hidden" class="form-control qty_paddy" name="qty_paddy[]" ></td>
+                        <td><input type="text" class="form-control qty_cmrs" name="qty_cmrs[]" readonly>
+                            <input type="hidden" class="form-control qty_cmr" name="qty_cmr[]" >
+                        </td>
                         <td><input type="text" class="form-control qty_butta" name="qty_butta[]"></td>
-                        <td><button type="button" class="btn btn-default view"><i class="fa fa-eye"></i></button></td>
+                        <td></td>
                     </tr>
                 </tbody> 
 
@@ -469,42 +489,87 @@
 </script>
 
 <script>
-    $(document).ready(function(){
+    $('#pool_type').change(function(){
 
-        /* $('#mill_name').change(function(){
+            //For District wise Block
+            $.get( 
 
-            $.get('<?php echo site_url("paddy/totPdyNdCMR"); ?>',
-                {
-                    soc_id:  $('#soc_name').val(),
-                    mill_id: $(this).val()
+                '<?php echo site_url("paddy/confedbilllist");?>',
+
+                { 
+                    dist: $('#dist').val(),
+                    block: $('#block').val(),
+                    soc_id: $('#soc_name').val(),
+                    mill_id: $('#mill_name').val(),
+                    pool_type: $(this).val(),
+                    rice_type: $('#rice_type').val()
                 }
+
             ).done(function(data){
 
-                let value = JSON.parse(data);
+                var string = '<option value="">Select</option>';
 
-                $('#totPaddy').val(value.paddy_qty * 10);
-                $('#totCmr').val(value.cmr_qty * 10);
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.bill_no + '">' + value.bill_no + '</option>'
+
+                });
+
+                $('#confed_bill_no').html(string);
+               
+                
+
             })
 
-        }); */
-
-    });
+        });
 </script>
 
 <script>
     $(document).ready(function(){
 
+         var inc = 0;
+
         $('.addAnother').click(function(){
+                inc++;
+
+            $.get( 
+
+                '<?php echo site_url("paddy/confedbilllist");?>',
+
+                { 
+                    dist: $('#dist').val(),
+                    block: $('#block').val(),
+                    soc_id: $('#soc_name').val(),
+                    mill_id: $('#mill_name').val(),
+                    pool_type: $('#pool_type').val(),
+                    rice_type: $('#rice_type').val()
+                }
+
+            ).done(function(data){
+
+                var string = '<option value="">Select</option>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.bill_no + '">' + value.bill_no + '</option>'
+
+                });
+                console.log('confed_bill_nos'+inc);
+               
+               $('#confed_bill_nos'+inc).html(string);
+                
+
+            })
 
             let row = '<tr>' +
                         '<td><input type="text" class="form-control mill_bill_no" name="mill_bill_no[]"></td>' +
                         '<td><input type="date" class="form-control mill_bill_date" name="mill_bill_date[]"></td>' +
-                        '<td><input type="text" class="form-control confed_bill_no" name="confed_bill_no[]"></td>' +
-                        '<td><input type="date" class="form-control confed_bill_date" name="confed_bill_date[]"></td>' +
-                        '<td><input type="text" class="form-control qty_paddy" name="qty_paddy[]"></td>' +
-                        '<td><input type="text" class="form-control qty_cmr" name="qty_cmr[]"></td>' +
+                        '<td><select type="text" class="form-control confed_bill_no required" name="confed_bill_no[]" id="confed_bill_nos'+inc+'"><option value="">Select</option></select></td>' +
+                        '<td><input type="date" class="form-control confed_bill_dates" name="confed_bill_dates[]" readonly><input type="hidden" class="form-control confed_bill_date" name="confed_bill_date[]"></td>' +
+                        '<td><input type="text" class="form-control qty_paddys" name="qty_paddys[]" readonly><input type="hidden" class="form-control qty_paddy" name="qty_paddy[]"></td>' +
+                        '<td><input type="text" class="form-control qty_cmrs" name="qty_cmrs[]" readonly><input type="hidden" class="form-control qty_cmr" name="qty_cmr[]"></td>' +
                         '<td><input type="text" class="form-control qty_butta" name="qty_butta[]"></td>' +
-                        '<td><button type="button" class="btn btn-default view"><i class="fa fa-eye"></i></button><button type="button" class="btn btn-danger removeRow"><i class="fa fa-remove"></i></button></td>' +
+                        '<td><button type="button" class="btn btn-danger removeRow"><i class="fa fa-remove"></i></button></td>' +
                       '</tr>';
             
             $('#intro').append(row);
@@ -577,15 +642,22 @@
                 data = JSON.parse(data);
 
                 $('.confed_bill_date:eq('+indexNo+')').val(data.bill_dt);
+                $('.confed_bill_dates:eq('+indexNo+')').val(data.bill_dt);
                 // $('.qty_paddy:eq('+indexNo+')').val(data.paddy_qty * 10);
                 $('.qty_paddy:eq('+indexNo+')').val(data.paddy_qty );
+                $('.qty_paddys:eq('+indexNo+')').val(data.paddy_qty );
                 // $('.qty_cmr:eq('+indexNo+')').val(data.sub_tot_cmr_qty * 10);
                 $('.qty_cmr:eq('+indexNo+')').val(data.sub_tot_cmr_qty );
+                 $('.qty_cmrs:eq('+indexNo+')').val(data.sub_tot_cmr_qty );
                 $('.qty_butta:eq('+indexNo+')').val(data.butta_cut);
                 $('.view:eq('+indexNo+')').attr('id', data.bill_no);
 
                 $('.tot_paddy').val(sumValuesOf('qty_paddy').toFixed(0));
+                $('#totPaddy').val(sumValuesOf('qty_paddy').toFixed(0));
+                $('#totPaddys').val(sumValuesOf('qty_paddy').toFixed(0));
                 $('.tot_cmr').val(sumValuesOf('qty_cmr').toFixed(0));
+                $('#totCmr').val(sumValuesOf('qty_cmr').toFixed(0));
+                $('#totCmrs').val(sumValuesOf('qty_cmr').toFixed(0));
                 $('.tot_butta').val(sumValuesOf('qty_butta'));
                 $('.less_butta').val(sumValuesOf('qty_butta'));
                 
@@ -696,6 +768,12 @@
             $('.tot_cmr').val(sumValuesOf('qty_cmr').toFixed(0));
             $('.tot_butta').val(sumValuesOf('qty_butta'));
             
+        });
+
+        $('#intro').on('change', '.qty_butta', function(){
+        
+            $('.tot_butta').val(sumValuesOf('qty_butta'));
+            $('.less_butta').val(sumValuesOf('qty_butta'));
         });
 
         $("#intro1").on('click', '.removeRow',function(){

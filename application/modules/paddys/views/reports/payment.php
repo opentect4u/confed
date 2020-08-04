@@ -74,9 +74,94 @@ tr:hover {background-color: #f5f5f5;}
 
                 <div class="form-header">
                 
-                    <h4>Society Payment Report</h4>
+                    <h4> Payment Report</h4>
                 
                 </div>
+
+                 <div class="form-group row">
+
+                <label for="dist" class="col-sm-2 col-form-label">District:</label>
+
+                <div class="col-sm-4">
+
+                    <select name="dist" id="dist" class="form-control required">
+
+                        <option value="">Select</option>
+
+                        <?php
+
+                            foreach($dist as $dlist){
+
+                        ?>
+
+                            <option value="<?php echo $dlist->district_code;?>"><?php echo $dlist->district_name;?></option>
+
+                        <?php
+
+                            }
+
+                        ?>     
+
+                    </select>
+
+                </div>
+
+                <label for="block" class="col-sm-2 col-form-label">Block:</label>
+
+                <div class="col-sm-4">
+
+                    <select name="block" id="block" class="form-control required">
+
+                        <option value="">Select</option>    
+
+                        <option value="">Select District First</option>    
+
+                    </select>
+
+                </div>
+
+            </div>
+
+             <div class="form-group row">
+
+                <label for="soc_name" class="col-sm-2 col-form-label">Society Name:</label>
+
+                <div class="col-sm-4">
+
+                    <select type="text"
+                        class="form-control required sch_cd"
+                        name="soc_name"
+                        id="soc_name"
+                    >
+
+                        <option value="">Select</option>    
+
+                        <option value="">Select Block First</option>    
+
+                    </select>    
+
+                </div>
+
+                <label for="mill_name" class="col-sm-2 col-form-label">Mill Name:</label>
+
+                <div class="col-sm-4">
+
+                    <select type="text"
+                        class="form-control required sch_cd"
+                        name="mill_name"
+                        id="mill_name"
+                    >
+
+                        <option value="">Select</option>    
+
+                        <option value="">Select District First</option>    
+
+
+                    </select>
+
+                </div>
+
+              </div>  
 
                 <div class="form-group row">
 
@@ -84,15 +169,30 @@ tr:hover {background-color: #f5f5f5;}
 
                     <div class="col-sm-10">
 
-                        <input type="text"
+
+                           <select type="text"
+                        class="form-control required sch_cd"
+                        name="pmt_bill_no"
+                        id="pmt_bill_no"
+                    >
+
+                        <option value="">Select</option>    
+
+                      
+
+
+                    </select>
+
+                       <!--  <input type="text"
                             name="pmt_bill_no"
                             class="form-control required"
                             id="pmt_bill_no"
-                        />  
+                        />   -->
 
                     </div>
+                </div>
                     <!-- <div class="form-group row"> -->
-                  
+                   <div class="form-group row">
                     <label for="pool_type" class="control-lebel col-sm-2 col-form-label">Pool Type:</label>
             
                     <div class="col-sm-10">
@@ -399,3 +499,140 @@ tr:hover {background-color: #f5f5f5;}
     }
 
     ?> 
+
+    <script>
+
+    $(document).ready(function(){
+
+        var i = 0;
+
+        $('#dist').change(function(){
+
+            //For District wise Block
+            $.get( 
+
+                '<?php echo site_url("paddy/blocks");?>',
+
+                { 
+
+                    dist: $(this).val()
+
+                }
+
+            ).done(function(data){
+
+                var string = '<option value="">Select</option>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.sl_no + '">' + value.block_name + '</option>'
+
+                });
+
+                $('#block').html(string);
+
+            });
+            
+            //For District wise Mill
+            $.get( 
+
+                '<?php echo site_url("paddy/mills");?>',
+
+                { 
+
+                    dist: $(this).val()
+
+                }
+
+                ).done(function(data){
+
+                var string = '<option value="">Select</option>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.sl_no + '">' + value.mill_name + '</option>'
+
+                });
+
+                $('#mill_name').html(string);
+
+            });
+
+        });
+
+    });
+
+</script>
+
+<script>
+
+    $(document).ready(function(){
+
+        var i = 0;
+
+        $('#block').change(function(){
+
+            $.get( 
+
+                '<?php echo site_url("paddy/societies");?>',
+
+                { 
+
+                    block: $(this).val()
+
+                }
+
+            ).done(function(data){
+
+                var string = '<option value="">Select</option>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.sl_no + '">' + value.soc_name + '</option>'
+
+                });
+
+                $('#soc_name').html(string);
+
+            });
+
+        });
+
+    });
+
+</script>
+<script>
+    $('#mill_name').change(function(){
+
+            //For District wise Block
+            $.get( 
+
+                '<?php echo site_url("paddy/paymentbilllist");?>',
+
+                { 
+                    dist: $('#dist').val(),
+                    
+                    soc_id: $('#soc_name').val(),
+                   
+                    mill_id: $(this).val(),
+                  
+                }
+
+            ).done(function(data){
+
+                var string = '<option value="">Select</option>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.pmt_bill_no + '">' + value.pmt_bill_no + '</option>'
+
+                });
+
+                $('#pmt_bill_no').html(string);
+               
+                
+
+            })
+
+        });
+</script>

@@ -1,0 +1,17 @@
+Changes for Mill payment
+**********************************************
+1 controller--  Paddys->Controller->Paddys
+
+2  Model---
+
+3  View----    Paddys->View->Payment(Add,Edit)
+
+Changes for payment Report
+**********************************************
+
+
+1 controller--  Paddys->Controller->Paddys
+
+2  Model---     Paddys->Model->Paddy
+
+3  View----    Paddys->View->Reports(Payment)

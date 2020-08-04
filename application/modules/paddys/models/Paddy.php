@@ -429,6 +429,26 @@ group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name
         
     }
 
+     //Payment Details
+    public function f_get_paymentslist($dist,$soc_id,$mill_id){
+
+        $kms_year=$this->session->userdata('kms_yr');
+        
+             $sql =$sql = "SELECT pmt_bill_no 
+
+                    FROM td_payment_bill 
+                    WHERE dist = '$dist' 
+                    AND soc_id = '$soc_id'
+                    AND mill_id = '$mill_id' 
+                    AND kms_year ='$kms_year'
+                    group by  `pmt_bill_no`,`pool_type`,`trans_dt`";
+
+                    $result = $this->db->query($sql);     
+        
+        return $result->result();
+        
+    }
+
     //Only One Payment
     public function f_get_payment($pmt_bill_no,$pool_type){
  

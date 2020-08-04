@@ -19,8 +19,8 @@
                 <label for="dist" class="col-sm-1 col-form-label">District:</label>
 
                 <div class="col-sm-5">
-
-                    <select name="dist" id="dist" class="form-control required">
+                     <input type="hidden" name="dist" value="<?php echo $payment_dtls->dist; ?>">
+                    <select name="distss" id="distsss" class="form-control" disabled>
 
                         <option value="">Select</option>
 
@@ -47,8 +47,8 @@
                 <label for="block" class="col-sm-1 col-form-label">Block:</label>
 
                 <div class="col-sm-5">
-
-                    <select name="block" id="block" class="form-control required">
+                      <input type="hidden" name="block" value="<?php echo $payment_dtls->block; ?>">
+                    <select name="blocksss" id="blocksss" class="form-control" disabled>
 
                         <option value="">Select</option>    
 
@@ -63,13 +63,13 @@
             <div class="form-group row">
 
                 <label for="soc_name" class="col-sm-1 col-form-label">Society Name:</label>
-
+                  <input type="hidden" name="soc_name" value="<?php echo $payment_dtls->soc_id; ?>">
                 <div class="col-sm-5">
 
                     <select type="text"
                         class="form-control required sch_cd"
-                        name="soc_name"
-                        id="soc_name"
+                        name="soc_namessss"
+                        id="soc_namessss"  disabled
                         >
 
                         <option value="">Select</option>    
@@ -81,13 +81,13 @@
                 </div>
 
                 <label for="mill_name" class="col-sm-1 col-form-label">Mill Name:</label>
-
+                  <input type="hidden" name="mill_name" value="<?php echo $payment_dtls->mill_id; ?>">
                 <div class="col-sm-5">
 
                     <select type="text"
                         class="form-control required sch_cd"
-                        name="mill_name"
-                        id="mill_name"
+                        name="mill_namesss" disabled
+                        id="mill_namessss"
                     >
 
                         <option value="">Select</option>    
@@ -106,11 +106,17 @@
 
                 <div class="col-sm-5">
 
-                    <input type="text"
+                    <input type="hidden"
                             class="form-control required"
                             name="totPaddy"
                             id="totPaddy"
                             value="<?php echo $payment_dtls->tot_paddy; ?>"
+                        />
+                          <input type="text"
+                            class="form-control required"
+                            name="totPaddyssss"
+                            id="totPaddyssss"
+                            value="<?php echo $payment_dtls->tot_paddy; ?>" readonly
                         />
 
                 </div>
@@ -119,13 +125,18 @@
 
                 <div class="col-sm-5">
 
-                    <input type="text"
+                    <input type="hidden"
                             class="form-control required"
                             name="totCmr"
                             id="totCmr"
                             value="<?php echo $payment_dtls->tot_cmr; ?>"
                         />
-
+                        <input type="text"
+                            class="form-control required"
+                            name="totCmrssded"
+                            id="totCmrssded"
+                            value="<?php echo $payment_dtls->tot_cmr; ?>" readonly
+                        />
                 </div>
 
             </div>
@@ -146,13 +157,11 @@
                 </div>
 
                 <label for="rice_type" class="col-sm-1 col-form-label">Rice Type:</label>
-
+                 <input type="hidden" name="rice_type" value="<?php echo $payment_dtls->rice_type; ?>">
                 <div class="col-sm-5">
 
-                    <select class="form-control required"
-                            name="rice_type"
-                            id="rice_type"
-                        >
+                    <select class="form-control" disabled
+                            name="rice_typess">
 
                         <option>Select</option>
 
@@ -169,12 +178,11 @@
             <div class="form-group row">
 
                 <label for="pool_type" class="col-sm-1 col-form-label">Pool Type:</label>
-
+                 <input type="hidden" name="pool_type" value="<?php echo $payment_dtls->pool_type; ?>">
                 <div class="col-sm-5">
 
-                    <select class="form-control required"
-                            name="pool_type"
-                            id="pool_type"
+                    <select class="form-control" name="pool_typesss" disabled 
+                            id="pool_typessss"
                         >
 
                         <option>Select</option>
@@ -207,8 +215,8 @@
                         <th>Date</th>
                         <th>Quantity of Paddy <br>(Qtls)</th>
                         <th>Quantity of CMR<br>(Qtls)</th>
-                        <th>Total Butta</th>
-                        <th><button type="button" class="btn btn-success addAnother"><i class="fa fa-plus"></i></button></th>
+                        <th>Total Butta(Rs)</th>
+                        <th><!-- <button type="button" class="btn btn-success addAnother"><i class="fa fa-plus"></i></button> --></th>
 
                     </tr>
 
@@ -235,30 +243,50 @@
                                     value="<?php echo $b_dtls->mill_bill_dt; ?>"
                                     >
                             </td>
-                            <td><input type="text" 
+                            <td><input type="hidden" 
                                     class="form-control confed_bill_no required" 
                                     name="confed_bill_no[]"
                                     value="<?php echo $b_dtls->con_bill_no; ?>"
                                     >
-                                    
+                                    <input type="text" 
+                                    class="form-control" 
+                                    name="confed_bill_noddddd[]"
+                                    value="<?php echo $b_dtls->con_bill_no; ?>" readonly
+                                    >
                             </td>
-                            <td><input type="date" 
+                            <td><input type="hidden" 
                                     class="form-control confed_bill_date required" 
                                     name="confed_bill_date[]"
                                     value="<?php echo $b_dtls->con_bill_dt; ?>"
                                     >
+                                    <input type="text" 
+                                    class="form-control" 
+                                    name="confed_bill_datedfrftgg[]"
+                                    value="<?php echo $b_dtls->con_bill_dt; ?>" readonly
+                                    >
                             </td>
-                            <td><input type="text" 
+                            <td><input type="hidden" 
                                     class="form-control qty_paddy required" 
                                     name="qty_paddy[]" 
                                     value="<?php echo $b_dtls->paddy_qty; ?>"
                                     >
+                                    <input type="text" 
+                                    class="form-control" 
+                                    name="qty_paddyhdjhadj[]"  
+                                    value="<?php echo $b_dtls->paddy_qty; ?>" readonly
+                                    >
                                     
                             </td>
-                            <td><input type="text" 
+                            <td><input type="hidden" 
                                     class="form-control qty_cmr required" 
                                     name="qty_cmr[]" 
                                     value="<?php echo $b_dtls->paddy_cmr; ?>"
+                                    >
+
+                                    <input type="text" 
+                                    class="form-control" 
+                                    name="qty_cmxajhdjd[]" 
+                                    value="<?php echo $b_dtls->paddy_cmr; ?>" readonly
                                     >
                                     
                             </td>
@@ -274,7 +302,7 @@
                                     if($flag){
                                         ?>
                                         
-                                        <button type="button" class="btn btn-danger removeRow"><i class="fa fa-remove"></i></button>
+                                       <!--  <button type="button" class="btn btn-danger removeRow"><i class="fa fa-remove"></i></button> -->
 
                                         <?php
                                     }
@@ -516,7 +544,7 @@
 
                     });
 
-                    $('#block').html(string);
+                    $('#blocksss').html(string);
 
                 });    
 
@@ -553,7 +581,7 @@
 
                     });
 
-                    $('#mill_name').html(string);
+                    $('#mill_namessss').html(string);
 
                 });
                 
@@ -595,7 +623,7 @@
 
                     });
 
-                    $('#soc_name').html(string);
+                    $('#soc_namessss').html(string);
 
                 });
 
@@ -613,7 +641,7 @@
 
         });
 
-        $('#block').change(function(){
+        $('#blocksss').change(function(){
             
             socGroup($(this).val());
 
@@ -755,6 +783,14 @@
 
             });
 
+        });
+
+        $('#intro').on('change', '.qty_butta', function(){
+        
+            $('.tot_butta').val(sumValuesOf('qty_butta'));
+            $('.less_butta').val(sumValuesOf('qty_butta'));
+
+            $('.payble_amount').val(sumValuesOf('paybel') - val(sumValuesOf('qty_butta')));
         });
 
         $('.less_butta').change(function(){
