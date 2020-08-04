@@ -165,7 +165,7 @@ tr:hover {background-color: #f5f5f5;}
 
                 <div class="form-group row">
 
-                    <label for="pmt_bill_no" class="control-lebel col-sm-2 col-form-label">Bill No:</label>
+                    <label for="pmt_bill_no" class="control-lebel col-sm-2 col-form-label">Payment No:</label>
 
                     <div class="col-sm-10">
 
