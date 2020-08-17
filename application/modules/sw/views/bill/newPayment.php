@@ -47,8 +47,8 @@
                     <div class="col-sm-4">
                         
                         <select name="entry_type" id="entry_type" class= "form-control required" required>
-                            <option value="Regular">Regular Entry</option>
-                            <option value="Backlog">Backlog Entry</option>
+                            <option value="1">Regular Entry</option>
+                            <option value="2">Backlog Entry</option>
                         </select>
 
                     </div>
@@ -196,6 +196,7 @@
         $('#td_cdpo_no').hide();
         
         var entryType = $('#entry_type').val();
+
         if(entryType == 1)
         {
             $('#th_cdpo').hide();
@@ -208,6 +209,7 @@
         {
 
             var entryType = $('#entry_type').val();
+
             if(entryType == 1)
             {
                 $('#th_cdpo').hide();
@@ -321,7 +323,7 @@
 
                 $('.td_cdpo_no').hide();
                 $('.td_order_no').hide();
-                //$('.td_cdpo').hide();
+                $('.td_cdpo').hide();
                 if(entryType == 1)
                 {
                     $('.td_cdpo').hide();
