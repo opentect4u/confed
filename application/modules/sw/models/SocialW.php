@@ -7,12 +7,54 @@
 
     // ********* For Product Master ******* //
 
+        public function f_get_particulars($table_name, $select=NULL, $where=NULL, $flag) {
+        
+        if(isset($select)) {
+
+            $this->db->select($select);
+
+        }
+
+        if(isset($where)) {
+
+            $this->db->where($where);
+
+        }
+
+        $result     =   $this->db->get($table_name);
+
+        if($flag == 1) {
+
+            return $result->row();
+            
+        }else {
+
+            return $result->result();
+
+        }
+
+       }
+
         public function f_get_item_table()
         {
 
             $sql = $this->db->query(" SELECT * FROM md_sw_product ");
             return $sql->result();
 
+        }
+        public function get_pb_detail($pb_no){
+
+             $sql = $this->db->query("SELECT hsn_no,purchase_dt,tot_amnt,cdpo_no FROM td_sw_delivery WHERE pb_no = '$pb_no'
+                                        order by purchase_dt desc
+                                    ");
+            return $sql->row();
+        }
+        public function get_sb_detail($bill_no){
+
+             $sql = $this->db->query("SELECT sale_dt,tot_amnt,cdpo_no FROM td_sw_sale WHERE bill_no = '$bill_no'
+                                        order by sale_dt desc
+                                    ");
+            return $sql->row();
         }
 
         public function js_get_check_duplicateItem($hsn_no)
@@ -1058,41 +1100,25 @@
 
             for($i =0; $i<$row; $i++)
             {    
-                if($entry_type == 1)
-                {
-                    $value = array( 'sl_no' => $sl_no+$i,
-                                'trans_dt' => $trans_dt,
+             
+                    $value = array('sl_no'    => $sl_no+$i,
+                                'trans_dt'    => $trans_dt,
                                 'payment_key' => $paymentKey,
-                                'cdpo_no' => $cdpo_no[$i],
-                                'pb_no' => $pb_no[$i],
-                                'pb_dt' => $pb_dt[$i],
-                                'pb_amnt' => $pb_amnt[$i],
-                                'sb_no' => $sb_no[$i],
-                                'sb_dt' => $sb_dt[$i],
-                                'sb_amnt' => $sb_amnt[$i],
-                                'mr_no' => $mr_no[$i],
-                                'remarks' => $remarks,
-                                'created_by' => $created_by,
-                                'created_dt' => $created_dt );
+                                'dist'        => $dist_cd,
+                                'cdpo_no'     => $cdpo_no[$i],
+                                'pb_no'       => $pb_no[$i],
+                                'pb_dt'       => $pb_dt[$i],
+                                'pb_amnt'     => $pb_amnt[$i],
+                                'hsn_no'      => $hsn_no[$i],
+                                'sb_no'       => $sb_no[$i],
+                                'sb_dt'       => $sb_dt[$i],
+                                'sb_amnt'     => $sb_amnt[$i],
+                                'mr_no'       => $mr_no[$i],
+                                'remarks'     => $remarks,
+                                'created_by'  => $created_by,
+                                'created_dt'  => $created_dt );
 
-                }
-                else
-                {
-                    $value = array( 'sl_no' => $sl_no+$i,
-                                'trans_dt' => $trans_dt,
-                                'payment_key' => $paymentKey,
-                                'cdpo_no' => $cdpo[$i],
-                                'pb_no' => $pb_no[$i],
-                                'pb_dt' => $pb_dt[$i],
-                                'pb_amnt' => $pb_amnt[$i],
-                                'sb_no' => $sb_no[$i],
-                                'sb_dt' => $sb_dt[$i],
-                                'sb_amnt' => $sb_amnt[$i],
-                                'mr_no' => $mr_no[$i],
-                                'remarks' => $remarks,
-                                'created_by' => $created_by,
-                                'created_dt' => $created_dt );
-                }
+              
 
                 //var_dump($sb_dt); die;
 
@@ -1105,24 +1131,27 @@
         public function f_get_editPaymentData($trans_dt, $sl_no, $payment_key)
         {
 
-            $sql = $this->db->query(" SELECT a.trans_dt, a.sl_no, a.payment_key, a.pb_no, a.pb_dt, a.pb_amnt, a.sb_no, a.sb_dt, a.sb_amnt, a.mr_no, b.cdpo, a.remarks
+            $sql = $this->db->query(" SELECT a.trans_dt, a.sl_no, a.payment_key,a.dist, a.pb_no, a.pb_dt, a.pb_amnt,a.hsn_no, a.sb_no, a.sb_dt, a.sb_amnt, a.mr_no, b.cdpo, a.remarks,a.cdpo_no
                                     FROM td_sw_payment a, md_sw_project b WHERE a.cdpo_no = b.sl_no AND a.trans_dt = '$trans_dt' AND a.sl_no = $sl_no AND a.payment_key = '$payment_key' ");
             
             return $sql->result();
 
         }
 
-        public function UpdatePaymentEntry($trans_dt, $sl_no, $payment_key, $pb_no, $pb_dt, $pb_amnt, $sb_no, $sb_dt, $sb_amnt, $mr_no, $remarks, $modified_by, $modified_dt)
+        public function UpdatePaymentEntry($trans_dt, $sl_no, $payment_key,$dist_cd, $pb_no, $pb_dt, $pb_amnt,$hsn_no,$cdpo_no,$sb_no, $sb_dt, $sb_amnt, $mr_no, $remarks, $modified_by, $modified_dt)
         {
 
-            $value = array( 'pb_no' => $pb_no,
-                            'pb_dt' => $pb_dt,
-                            'pb_amnt' => $pb_amnt,
-                            'sb_no' => $sb_no,
-                            'sb_dt' => $sb_dt,
-                            'sb_amnt' => $sb_amnt,
-                            'mr_no' => $mr_no,
-                            'remarks' => $remarks,
+            $value = array( 'dist'     => $dist_cd,
+                            'cdpo_no'     => $cdpo_no,
+                            'pb_no'       => $pb_no,
+                            'pb_dt'       => $pb_dt,
+                            'pb_amnt'     => $pb_amnt,
+                            'hsn_no'      => $hsn_no,
+                            'sb_no'       => $sb_no,
+                            'sb_dt'       => $sb_dt,
+                            'sb_amnt'     => $sb_amnt,
+                            'mr_no'       => $mr_no,
+                            'remarks'     => $remarks,
                             'modified_by' => $modified_by,
                             'modified_dt' => $modified_dt );
 
@@ -1149,6 +1178,13 @@
         {
 
             $sql = $this->db->query(" SELECT cdpo, sl_no FROM md_sw_project WHERE dist_cd = $dist_cd ");
+            return $sql->result();
+
+        }
+        public function js_get_project()
+        {
+
+            $sql = $this->db->query("SELECT cdpo, sl_no FROM md_sw_project");
             return $sql->result();
 
         }

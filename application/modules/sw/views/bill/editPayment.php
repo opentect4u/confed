@@ -9,7 +9,7 @@
 
                 <div class="form-header">
                 
-                    <h4>Add New Payment</h4>
+                    <h4>Edit New Payment</h4>
                 
                 </div>
                 <?php foreach($data as $key){ ?>
@@ -23,11 +23,22 @@
                         </div>
                         <input type="hidden" name= "sl_no" value= "<?php echo $key->sl_no; ?>" id= "sl_no" class= "form-control required" required>
                         <!-- <input type="hidden" name= "payment_key" value= "<?php //echo $key->payment_key; ?>" id= "payment_key" class= "form-control required" required> -->
-                        
-                        <label for="payment_key" class="col-sm-2 col-form-label">Date:<font color= "red">*</font></label>
+                    <input type="hidden" name="payment_key" value= "<?php echo $key->payment_key; ?>" id= "payment_key" class= "form-control required" readonly>
+                        <label for="payment_key" class="col-sm-2 col-form-label">District:<font color= "red">*</font></label>
 
                         <div class="col-sm-4">
-                            <input type="text" name= "payment_key" value= "<?php echo $key->payment_key; ?>" id= "payment_key" class= "form-control required" readonly>
+                         
+                             <select name="dist_cd" id="dist_cd" class= "form-control required" required>
+                        <option value="0">Select District</option>
+                        <?php
+                            foreach($dist as $data)
+                            { 
+                            ?>
+                                <option value="<?php echo ($data->district_code); ?>"  <?php if($data->district_code == $key->dist){ echo "selected";} ?>><?php echo ($data->district_name); ?></option>
+                        <?php
+                            }
+                            ?>
+                        </select>
                         </div>
 
                     </div>
@@ -44,6 +55,7 @@
                                     <th style= "text-align: center">PB No</th>
                                     <th style= "text-align: center">PB Date</th>
                                     <th style= "text-align: center">PB Amount</th>
+                                    <th style= "text-align: center">Item</th>
                                     <th style= "text-align: center">Project</th>
                                     <th style= "text-align: center">SB No</th>
                                     <th style= "text-align: center">SB Date</th>
@@ -68,7 +80,34 @@
                                     </td>
 
                                     <td>
-                                        <input type="text" name="cdpo" value= "<?php echo $key->cdpo; ?>" class="form-control required" id="cdpo" required>
+                                    <select name="hsn_no" id="hsn_no" class= "form-control" style="width:130px" required>
+                                        <option value="">Select</option>
+                                         <?php
+                                            foreach($item as $key1)
+                                            { ?>
+                                            <option value="<?php echo $key1->hsn_no; ?>" <?php if($key1->hsn_no == $key->hsn_no){ echo "selected";} ?> ><?php echo $key1->item_name; ?></option>
+                                            <?php
+                                            } ?>
+                                            
+                                    </select>
+                                    </td>
+
+                                    <td>
+                                         <select name="cdpo" id="cdpo" class= "form-control" style="width:130px" required>
+                                        <option value="">Select</option>
+                                         <?php
+                                            foreach($projects as $keys)
+                                            { ?>
+                                            <option value="<?php echo $keys->sl_no; ?>" <?php if($keys->sl_no == $key->cdpo_no){ echo "selected";} ?> ><?php echo $keys->cdpo; ?></option>
+                                            <?php
+                                            } ?>
+                                            
+                                         </select>
+
+
+
+<!-- 
+                                        <input type="text" name="cdpo" value= "<?php //echo $key->cdpo; ?>" class="form-control required" id="cdpo" required> -->
                                     </td>
 
                                     <td>
@@ -103,7 +142,7 @@
 
                         <label for="remarks" class="col-sm-2 col-form-label">Remarks<font color="red">*</font></label>
                         
-                        <div class="col-sm-4">
+                        <div class="col-sm-9">
 
                             <textarea name="remarks" id="remarks" class="form-control required" cols="200" rows="2"><?php echo $key->remarks; ?></textarea>
 

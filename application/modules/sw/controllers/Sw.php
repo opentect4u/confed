@@ -1396,7 +1396,6 @@
             $this->load->view('post_login/main');
 
             $tableData['data'] = $this->SocialW->get_bill_tableData();
-            //$distData['dist'] = $this->SocialW->f_get_distData();
             $this->load->view('bill/paymentTable', $tableData);
 
             $this->load->view('post_login/footer');
@@ -1407,11 +1406,35 @@
         {
 
             $this->load->view('post_login/main');
-
-            $entryData['dist'] = $this->SocialW->f_get_distData();
+            $entryData['dist']     = $this->SocialW->f_get_distData();
+            $entryData['item']     = $this->SocialW->f_get_rateChart_productData();
+            $entryData['projects'] = $this->SocialW->js_get_project();
             $this->load->view('bill/newPayment', $entryData);
 
             $this->load->view('post_login/footer');
+
+        }
+
+        public function js_get_pb_details()
+        {
+
+            $pb_no   =  $this->input->get('pb_no');
+            $dist_cd   =  $this->input->get('dist_cd');
+
+            $result = $this->SocialW->get_pb_detail($pb_no);
+
+            echo json_encode($result);
+
+        }
+        public function js_get_sb_details()
+        {
+
+            $bill_no   =  $this->input->get('bill_no');
+            $dist_cd   =  $this->input->get('dist_cd');
+
+            $result = $this->SocialW->get_sb_detail($bill_no);
+
+            echo json_encode($result);
 
         }
 
@@ -1456,6 +1479,7 @@
                 $pb_no                  =           $_POST['pb_no'];
                 $pb_dt                  =           $_POST['pb_dt'];
                 $pb_amnt                =           $_POST['pb_amnt'];
+
                 $hsn_no                 =           $_POST['hsn_no'];
                 $sb_no                  =           $_POST['sb_no'];
                 $sb_dt                  =           $_POST['sb_dt'];
@@ -1463,7 +1487,7 @@
                 $sb_amnt                =           $_POST['sb_amnt'];
                 $mr_no                  =           $_POST['mr_no'];
                 $cdpo                   =           $_POST['cdpo'];
-                $cdpo_no                =           $_POST['cdpo_no'];
+                $cdpo_no                =           $_POST['cdpo'];
                 $order_no               =           $_POST['order_no'];
                 $remarks                =           $_POST['remarks'];
 
@@ -1494,9 +1518,10 @@
             $trans_dt = $this->input->get('trans_dt');
             $sl_no = $this->input->get('sl_no');
             $payment_key = $this->input->get('key');
-            
-            $editData['data'] = $this->SocialW->f_get_editPaymentData($trans_dt, $sl_no, $payment_key);
-
+            $editData['dist']    = $this->SocialW->f_get_distData();
+            $editData['data']     = $this->SocialW->f_get_editPaymentData($trans_dt, $sl_no, $payment_key);
+            $editData['item']     = $this->SocialW->f_get_rateChart_productData();
+            $editData['projects'] = $this->SocialW->js_get_project();
             $this->load->view('bill/editPayment', $editData);
 
             $this->load->view('post_login/footer');
@@ -1518,18 +1543,20 @@
                 $trans_dt               =       $_POST['trans_dt'];
                 $sl_no                  =       $_POST['sl_no'];
                 $payment_key            =       $_POST['payment_key'];
+                $dist_cd                =       $_POST['dist_cd'];
                 $pb_no                  =       $_POST['pb_no'];
                 $pb_dt                  =       $_POST['pb_dt'];
                 $pb_amnt                =       $_POST['pb_amnt'];
+                $hsn_no                 =       $_POST['hsn_no'];
+                $cdpo_no                =       $_POST['cdpo'];
                 $sb_no                  =       $_POST['sb_no'];
                 $sb_dt                  =       $_POST['sb_dt'];
                 $sb_amnt                =       $_POST['sb_amnt'];
                 $mr_no                  =       $_POST['mr_no'];
-
                 $remarks                =       $_POST['remarks'];
 
                           
-                $this->SocialW->UpdatePaymentEntry( $trans_dt, $sl_no, $payment_key, $pb_no, $pb_dt, $pb_amnt, $sb_no, $sb_dt, $sb_amnt, $mr_no, $remarks, $modified_by, $modified_dt );
+                $this->SocialW->UpdatePaymentEntry( $trans_dt, $sl_no, $payment_key,$dist_cd,$pb_no, $pb_dt, $pb_amnt,$hsn_no,$cdpo_no,$sb_no, $sb_dt, $sb_amnt, $mr_no, $remarks, $modified_by, $modified_dt );
                                   
                 echo "<script> alert('Successfully Updated');
                 document.location= 'billCollection' </script>";

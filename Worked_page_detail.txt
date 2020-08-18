@@ -1,0 +1,15 @@
+
+18/08/2020
+
+Confed->application->modules->sw->view->bill->newPayment.php
+Confed->application->modules->sw->view->bill->editPayment.php
+
+Confed->application->modules->sw->Controllers->Sw.php
+Confed->application->modules->sw->Model->SociaIW.php
+
+
+
+Changes on Table td_sw_payment add two filed  
+
+       dist       int(6)
+       hsn_no     int(8)
