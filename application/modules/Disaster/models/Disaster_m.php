@@ -1868,7 +1868,7 @@ $sql = $this->db->query("SELECT DISTINCT a.sl_no, b.bdo_name,c.sdo_name sdo_name
         public function js_check_duplicateMrNo($mr_no)
         {
 
-            $sql = $this->db->query(" SELECT COUNT(*) as num_row FROM td_dm_paymentdtls WHERE mr_no = '$mr_no' ");
+            $sql = $this->db->query("SELECT COUNT(*) as num_row FROM td_dm_paymentdtls WHERE mr_no = '$mr_no' ");
             return $sql->row();
 
         }

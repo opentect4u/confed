@@ -51,9 +51,10 @@
                     <tr>
 
                         <td><?php echo $i; ?></td> 
-                        <td><?php echo date("d-m-Y", strtotime($key->cr_dt)); ?></td>
+                       
                         <td><?php echo $key->mr_no; ?></td> 
                         <td><?php echo $key->memo_no; ?></td>
+                         <td><?php echo date("d/m/Y", strtotime($key->cr_dt)); ?></td>
                       
                         <td><a href="<?php echo site_url('Disaster/editPaymentDtls?memo_no='.$key->memo_no.' '); ?>" ><i class="fa fa-edit fa-fw fa-2x"></i></a></td>
                         <td><a href="<?php echo site_url('Disaster/deletePaymentDtls?memo_no='.$key->memo_no.' '); ?>" onclick="return confirm('Are you sure you want to delete this item?');" ><i class="fa fa-trash fa-fw fa-2x"></i></a></td>
