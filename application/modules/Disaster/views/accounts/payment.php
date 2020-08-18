@@ -34,8 +34,8 @@
 
                 <div class="col-sm-4">
 
-                    <select type="text" name="memo_no" class="form-control required" id="memo_no" >
-                        <option value= "0">Select Memo</option>
+                    <select type="text" name="memo_no" class="form-control" id="memo_no" required>
+                        <option value="">Select Memo</option>
                         <?php
                             foreach($memo as $key1)
                             { 

@@ -25,7 +25,8 @@
                     <label for="date" class="col-sm-2 col-form-label">Date:</label>
                 
                     <div class="col-sm-4"> 
-                        <input type="date" name="date" value= "<?php echo $key->date; ?>" class="form-control readonly" id="date" required>                             
+                        <input type="date" name="date" value= "<?php echo $key->date; ?>" class="form-control readonly" id="date" required>  
+                          <input type="hidden" name="memo_no" value="<?php echo $key->memo_no; ?>" >                           
                     </div>
 
                 </div>
@@ -35,8 +36,10 @@
                     <label for="memo_no" class="col-sm-2 col-form-label">Memo no:<font color="red">*</font></label>
 
                     <div class="col-sm-4">
+                  
 
-                        <select type="text" name="memo_no" class="form-control required" id="memo_no" >
+
+                        <select type="text" name="memo_nos" class="form-control" id="memo_nos"  disabled>
                             <option value= "<?php echo $key->memo_no; ?>"><?php echo $key->memo_no; ?></option>
 
                         </select>
