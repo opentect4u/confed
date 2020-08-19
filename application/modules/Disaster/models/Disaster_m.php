@@ -1777,7 +1777,7 @@ $sql = $this->db->query("SELECT DISTINCT a.sl_no, b.bdo_name,c.sdo_name sdo_name
         public function f_get_max_slNo_forPayment($memo_no)
         {
 
-            $sql = $this->db->query(" SELECT MAX(sl_no) as sl_no FROM td_dm_payment WHERE memo_no = '$memo_no' ");
+            $sql = $this->db->query(" SELECT ifnull(MAX(sl_no),0) as sl_no FROM td_dm_payment WHERE memo_no = '$memo_no' ");
             return $sql->row();
 
         }
