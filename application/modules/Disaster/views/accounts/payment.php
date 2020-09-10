@@ -63,7 +63,7 @@
                 
 
             </div>
-<div class="form-group row">
+               <div class="form-group row">
 
                 <label for="tot_credited" class="col-sm-2 col-form-label">Amount Credited(Rs):<font color="red">*</font></label>
             

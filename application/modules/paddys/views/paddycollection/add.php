@@ -377,14 +377,14 @@
 
                 $('#registered').val(data);
                 
-                if(data == '0'){
+                // if(data == '0'){
 
-                    $('#submit').attr('type', 'button');
+                //     $('#submit').attr('type', 'button');
 
-                }
-                else{
-                    $('#submit').attr('type', 'submit');
-                }
+                // }
+                // else{
+                //     $('#submit').attr('type', 'submit');
+                // }
 
             });
             
@@ -456,16 +456,27 @@
 
         $('form').submit(function(event){
 
-            if(parseFloat($('#paddy_qty').val()) > parseFloat($('#workorder').val())){
+            var data = $('#registered').val();
                 
+
+            if(data == '0'){
+
+                alert("Number of register farmer Can not be Zero");
+                event.preventDefault();
+            }
+            else if(parseFloat($('#paddy_qty').val()) > parseFloat($('#workorder').val())){
+
+                alert("Paddy Qty Can not be Greater Than Work Order");
                 event.preventDefault();
             }
             else if(parseFloat($('#progressive').val()) > parseFloat($('#workorder').val())){
                 
+                alert("Progressive Qty Can not be Greater Than Work Order");
                 event.preventDefault();
             }
             else if(parseInt($('#no_of_farmer').val()) > parseInt($('#registered').val())){
 
+                alert("No of farmer Can not be Greater Than Work Order");
                 event.preventDefault();
             }
             else{

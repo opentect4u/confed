@@ -640,7 +640,6 @@
             }).done(function(data){
 
                 data = JSON.parse(data);
-
                 $('.confed_bill_date:eq('+indexNo+')').val(data.bill_dt);
                 $('.confed_bill_dates:eq('+indexNo+')').val(data.bill_dt);
                 // $('.qty_paddy:eq('+indexNo+')').val(data.paddy_qty * 10);
