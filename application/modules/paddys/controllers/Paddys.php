@@ -1158,12 +1158,14 @@ class Paddys extends MX_Controller {
 
         $where      =   array(
 
-            "t.soc_id = m.sl_no"    => NULL
-            // ,            "t.kms_year"=>$kms_year 
+            "t.soc_id = m.sl_no"    => NULL,
+            "t.kms_year"=>$kms_year 
 
         );
 
         $farmerreg['farmerreg_dtls']    =   $this->Paddy->f_get_particulars("td_reg_farmer t, md_society m", $select, $where, 0);
+        echo $this->db->last_query();
+        die();
 
         //Counting District Society wise
         unset($select);
@@ -1181,7 +1183,9 @@ class Paddys extends MX_Controller {
 
         );
 
-        $farmerreg['dist_dtls']     =   $this->Paddy->f_get_particulars("td_reg_farmer", $select, $where, 0);        
+        $farmerreg['dist_dtls']     =   $this->Paddy->f_get_particulars("td_reg_farmer", $select, $where, 0);
+
+
 
         $this->load->view('post_login/main');
 
