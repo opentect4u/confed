@@ -183,12 +183,7 @@ tr:hover {background-color: #f5f5f5;}
 
                     </select>
 
-                       <!--  <input type="text"
-                            name="pmt_bill_no"
-                            class="form-control required"
-                            id="pmt_bill_no"
-                        />   -->
-
+                  
                     </div>
                 </div>
                     <!-- <div class="form-group row"> -->
@@ -293,10 +288,11 @@ tr:hover {background-color: #f5f5f5;}
                             exit();
 
                           }
-
+                          $pool_type ="";
                           $pool = $this->input->post('pool_type');
-                          if($pool == "S"){ $pool_type = "State Pool" ;}elseif ($pool == "C") {
-                            $pool_type = "State Pool" ;
+                          if($pool == "S"){ $pool_type = "State Pool" ;}
+                          elseif ($this->input->post('pool_type') == "C") {
+                            $pool_type = "Central Pool" ;
                           }else{
                             $pool_type = "FCI" ;
                           }
@@ -631,7 +627,7 @@ tr:hover {background-color: #f5f5f5;}
 
                 $.each(JSON.parse(data), function( index, value ) {
 
-                    string += '<option value="' + value.pmt_bill_no + '">' + value.pmt_bill_no + '</option>'
+                    string += '<option value="' + value.pmt_bill_no + '">' + value.pmt_bill_no + '  ('+value.confed_bill_no+')</option>'
 
                 });
 

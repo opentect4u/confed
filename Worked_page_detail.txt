@@ -20,3 +20,7 @@ Confed->application->modules->paddys->Controllers->paddys.php
 Confed->application->modules->paddys->view->payment/add.php
 
 Confed->application->modules->paddys->view->reports/payment.php
+
+Confed->application->modules->paddys->view->reports/payment.php
+
+Confed->application->modules->paddys->models->Paddy.php

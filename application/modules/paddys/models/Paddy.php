@@ -434,7 +434,7 @@ group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name
 
         $kms_year=$this->session->userdata('kms_yr');
         
-             $sql =$sql = "SELECT pmt_bill_no 
+             $sql =$sql = "SELECT pmt_bill_no,CONCAT(min(con_bill_no),'-',max(con_bill_no)) confed_bill_no 
 
                     FROM td_payment_bill 
                     WHERE dist = '$dist' 
