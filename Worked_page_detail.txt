@@ -1,4 +1,3 @@
-
 18/08/2020
 
 Confed->application->modules->sw->view->bill->newPayment.php
@@ -13,3 +12,7 @@ Changes on Table td_sw_payment add two filed
 
        dist       int(6)
        hsn_no     int(8)
+
+Worked on 17/09/2020
+
+Confed->application->modules->paddys->Controllers->paddys.php
