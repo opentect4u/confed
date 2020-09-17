@@ -18,3 +18,5 @@ Worked on 17/09/2020
 Confed->application->modules->paddys->Controllers->paddys.php
 
 Confed->application->modules->paddys->view->payment/add.php
+
+Confed->application->modules->paddys->view->reports/payment.php

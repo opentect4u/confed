@@ -293,14 +293,21 @@ tr:hover {background-color: #f5f5f5;}
                             exit();
 
                           }
+
+                          $pool = $this->input->post('pool_type');
+                          if($pool == "S"){ $pool_type = "State Pool" ;}elseif ($pool == "C") {
+                            $pool_type = "State Pool" ;
+                          }else{
+                            $pool_type = "FCI" ;
+                          }
                     ?>
 
-                    <p style="text-align: justify;">In Connection with the Procurement during <strong>KMS-<?php echo $payment_dtls->kms_year; ?></strong> on Central Pool / State Pool Our
+                    <p style="text-align: justify;">In Connection with the Procurement during <strong>KMS-<?php echo $payment_dtls->kms_year; ?></strong> on <?php if(isset($pool)){echo $pool_type; } ?> Our
                        tagged Rice Mill <u><?php echo $payment_dtls->mill_name; ?></u> has submitted <u><?php echo count($bill_dtls); ?></u> bills which delivered 
                        the following quantity of CMR on behalf of <u><?php echo $payment_dtls->soc_name; ?></u>
                        for payment against supply of <u><?php echo $payment_dtls->tot_cmr; ?></u> Qtls CMR after milling <u><?php echo $payment_dtls->tot_paddy; ?></u> Qtls
                        Paddy to D.C F&S <u><?php echo $payment_dtls->district_name; ?></u> in which CONFED-WB has submitted sale bill with F&S
-                       department for payment as per(including GST).
+                       department for payment as per(Cost Sheet).
                     </p>
 
                     <h3><u>Details of bills are given Below:</u></h3>
@@ -478,7 +485,7 @@ tr:hover {background-color: #f5f5f5;}
                         may be realesed from ............................. Bank, A/C- ____________________________ in favour of
                         <u><?php echo $payment_dtls->mill_name; ?></u> througn RTGS/NEFT.
                         </p>
-                        <br><p>Put up to C.E.O through D.M,C.D.O & A.R.C.S for Necessary order pls.</p>
+                        <br><p>Put up to C.E.O through AM-I D.M,C.D.O & A.R.C.S for Necessary order pls.</p>
 
                     </div>
 
