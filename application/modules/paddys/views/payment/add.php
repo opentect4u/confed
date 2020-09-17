@@ -642,21 +642,22 @@
                 data = JSON.parse(data);
                 $('.confed_bill_date:eq('+indexNo+')').val(data.bill_dt);
                 $('.confed_bill_dates:eq('+indexNo+')').val(data.bill_dt);
-                // $('.qty_paddy:eq('+indexNo+')').val(data.paddy_qty * 10);
+                
                 $('.qty_paddy:eq('+indexNo+')').val(data.paddy_qty );
                 $('.qty_paddys:eq('+indexNo+')').val(data.paddy_qty );
-                // $('.qty_cmr:eq('+indexNo+')').val(data.sub_tot_cmr_qty * 10);
+              
                 $('.qty_cmr:eq('+indexNo+')').val(data.sub_tot_cmr_qty );
-                 $('.qty_cmrs:eq('+indexNo+')').val(data.sub_tot_cmr_qty );
+                $('.qty_cmrs:eq('+indexNo+')').val(data.sub_tot_cmr_qty );
                 $('.qty_butta:eq('+indexNo+')').val(data.butta_cut);
                 $('.view:eq('+indexNo+')').attr('id', data.bill_no);
 
-                $('.tot_paddy').val(sumValuesOf('qty_paddy').toFixed(0));
-                $('#totPaddy').val(sumValuesOf('qty_paddy').toFixed(0));
-                $('#totPaddys').val(sumValuesOf('qty_paddy').toFixed(0));
-                $('.tot_cmr').val(sumValuesOf('qty_cmr').toFixed(0));
-                $('#totCmr').val(sumValuesOf('qty_cmr').toFixed(0));
-                $('#totCmrs').val(sumValuesOf('qty_cmr').toFixed(0));
+                //$('.tot_paddy').val(sumValuesOf('qty_paddy').toFixed(0));
+                $('.tot_paddy').val(sumValuesOf('qty_paddy'));
+                $('#totPaddy').val(sumValuesOf('qty_paddy'));
+                $('#totPaddys').val(sumValuesOf('qty_paddy'));
+                $('.tot_cmr').val(sumValuesOf('qty_cmr'));
+                $('#totCmr').val(sumValuesOf('qty_cmr'));
+                $('#totCmrs').val(sumValuesOf('qty_cmr'));
                 $('.tot_butta').val(sumValuesOf('qty_butta'));
                 $('.less_butta').val(sumValuesOf('qty_butta'));
                 
@@ -686,11 +687,11 @@
 
                 if(action == 'P'){
 
-                    $('.amounts:eq('+indexNo+')').val(parseFloat(values.val) * parseFloat($('#totPaddy').val()));
+                    $('.amounts:eq('+indexNo+')').val((parseFloat(values.val) * parseFloat($('#totPaddy').val())).toFixed(0));
 
                 }else if(action == 'C'){
 
-                    $('.amounts:eq('+indexNo+')').val(parseFloat(values.val) * parseFloat($('#totCmr').val()));
+                    $('.amounts:eq('+indexNo+')').val((parseFloat(values.val) * parseFloat($('#totCmr').val())).toFixed(0));
 
                 }
 
@@ -702,30 +703,30 @@
                     var gr_tot      = parseFloat(tot +  gst+gst).toFixed('2');
                     
                     row.find('td:eq(3)  input').val(0);
-                    row.find('td:eq(4)  input').val(gst);
-                    row.find('td:eq(5)  input').val(gst);
-                    row.find('td:eq(6)  input').val(gr_tot);
-                    $('.payble_amount').val(sumValuesOf('tot_payble'));
-                    $('.less_butta').val(sumValuesOf('qty_butta'));
+                    row.find('td:eq(4)  input').val(gst.toFixed(0));
+                    row.find('td:eq(5)  input').val(gst.toFixed(0));
+                    row.find('td:eq(6)  input').val(gr_tot.toFixed(0));
+                    $('.payble_amount').val(sumValuesOf('tot_payble').toFixed(0));
+                    $('.less_butta').val(sumValuesOf('qty_butta').toFixed(0));
                     var tot_butta  = $('.less_butta ').val();
-                     $('.payble_amount').val(sumValuesOf('paybel')- $('.less_butta ').val());
-                     $('.tot_payble').val(sumValuesOf('paybel'));
+                     $('.payble_amount').val((sumValuesOf('paybel')- $('.less_butta ').val()).toFixed(0));
+                     $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
                 } else if (sl=='3'||sl=='4'||sl=='5'||sl=='6'||sl=='7'||sl=='15'){
                   
                     var tds         = parseFloat(row.find('td:eq(2) .amounts ').val()*(2/100));
                     var tot         = parseFloat(row.find('td:eq(2) .amounts ').val());
                     var gr_tot      = parseFloat(tot -tds ).toFixed('2');
 
-                    row.find('td:eq(3)  input').val(tds);
+                    row.find('td:eq(3)  input').val(tds.toFixed(0));
                     row.find('td:eq(4)  input').val(0);
                     row.find('td:eq(5)  input').val(0);
-                    row.find('td:eq(6)  input').val(gr_tot);
-                    $('.payble_amount').val(sumValuesOf('tot_payble'));
+                    row.find('td:eq(6)  input').val(gr_tot.toFixed(0));
+                    $('.payble_amount').val(sumValuesOf('tot_payble').toFixed(0));
                     
                     $('.less_butta').val(sumValuesOf('qty_butta'));
                     var tot_butta  = $('.less_butta ').val();
-                     $('.payble_amount').val(sumValuesOf('paybel')- $('.less_butta ').val());
-                     $('.tot_payble').val(sumValuesOf('paybel'));
+                     $('.payble_amount').val((sumValuesOf('paybel')- $('.less_butta ').val()).toFixed(0));
+                     $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
                  } else{
                     var gst         = parseFloat(row.find('td:eq(2) .amounts ').val()*(2.5/100));
                     var tot         = parseFloat(row.find('td:eq(2) .amounts ').val());
@@ -734,12 +735,12 @@
                     row.find('td:eq(3)  input').val(0);
                     row.find('td:eq(4)  input').val(0);
                     row.find('td:eq(5)  input').val(0);
-                    row.find('td:eq(6)  input').val(gr_tot);
-                    $('.payble_amount').val(sumValuesOf('tot_payble'));
-                    $('.less_butta').val(sumValuesOf('qty_butta'));
+                    row.find('td:eq(6)  input').val(gr_tot.toFixed(0));
+                    $('.payble_amount').val(sumValuesOf('tot_payble').toFixed(0));
+                    $('.less_butta').val(sumValuesOf('qty_butta').toFixed(0));
                     var tot_butta  = $('.less_butta ').val();
-                     $('.payble_amount').val(sumValuesOf('paybel')- $('.less_butta ').val());
-                     $('.tot_payble').val(sumValuesOf('paybel'));
+                     $('.payble_amount').val((sumValuesOf('paybel')- $('.less_butta ').val()).toFixed(0));
+                     $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
                 }
                
             });
@@ -748,13 +749,13 @@
 
         $('.less_butta').change(function(){
 
-            $('.payble_amount').val(sumValuesOf('paybel') - $(this).val());
+            $('.payble_amount').val((sumValuesOf('paybel') - $(this).val()).toFixed(0));
 
         });
 
         $('#intro1').on('change', '.paybel', function(){
-            $('.tot_payble').val(sumValuesOf('paybel'));
-            $('.payble_amount').val(sumValuesOf('paybel'));
+            $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
+            $('.payble_amount').val(sumValuesOf('paybel').toFixed(0));
             $('.less_butta').change();
 
         });
@@ -779,8 +780,8 @@
             
             $(this).parents('tr').remove();
           
-            $('.tot_payble').val(sumValuesOf('paybel'));
-            $('.payble_amount').val(sumValuesOf('paybel'));
+            $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
+            $('.payble_amount').val(sumValuesOf('paybel').toFixed(0));
             $('.less_butta').change();
             
         });
