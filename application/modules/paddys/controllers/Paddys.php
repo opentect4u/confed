@@ -1164,8 +1164,7 @@ class Paddys extends MX_Controller {
         );
 
         $farmerreg['farmerreg_dtls']    =   $this->Paddy->f_get_particulars("td_reg_farmer t, md_society m", $select, $where, 0);
-        echo $this->db->last_query();
-        die();
+        
 
         //Counting District Society wise
         unset($select);
