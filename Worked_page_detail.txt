@@ -24,3 +24,14 @@ Confed->application->modules->paddys->view->reports/payment.php
 Confed->application->modules->paddys->view->reports/payment.php
 
 Confed->application->modules->paddys->models->Paddy.php
+
+
+Worked on 17/09/2020
+
+add a page on Confed->application->modules->paddys->view->reports/payment_society.php
+
+Confed->application->modules->paddys->Controllers->paddys.php
+
+Confed->application->modules->paddys->models->Paddy.php
+
+Confed->application->view->post_login->main.php

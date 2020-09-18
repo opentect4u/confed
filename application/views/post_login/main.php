@@ -87,11 +87,6 @@
                                 Accounts & Finance
                             <i class="fa fa-angle-down"></i>
                         </div>
-
-                       
-
-                           
-
                         </div>
 
                     </div> -->
@@ -282,6 +277,7 @@
                                 <a href="<?php echo site_url('paddy/claim/gunny'); ?>">Claim For Gunny Bag</a>
                                 <a href="<?php echo site_url('paddy/billdetails/report'); ?>">Bill Details</a>
                                 <a href="<?php echo site_url('paddy/payment/report'); ?>">Miller's payment</a>
+                                <a href="<?php echo site_url('paddy/payment/society'); ?>">Society's payment</a>
                                 <a href="<?php echo site_url('paddy/paddydeclr/report'); ?>">Declaration</a>
                                 </div>
                             </div>    

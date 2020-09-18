@@ -529,6 +529,25 @@ group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name
         return $result->row();
         
     }
+     public function f_societypayment($pmt_bill_no,$pool_type){
+        $kms_year=$this->session->userdata('kms_yr');
+        $sql = "SELECT DISTINCT t.pmt_commission_no, t.kms_year, md.district_name, ms.soc_name,ms.block,
+                                t.tot_paddy, t.trans_dt
+                FROM td_commission_bill t, 
+                     md_society ms,
+                     md_district md
+                 WHERE t.pmt_commission_no = (SELECT DISTINCT pmt_commission_no FROM td_commission_bill WHERE pmt_commission_no ='$pmt_bill_no')
+                AND   t.soc_id      = ms.sl_no
+           
+                AND   t.dist        = md.district_code
+                AND   t.pool_type   ='$pool_type'";
+                // AND `t`.`kms_year` ='$kms_year'";
+
+        $result = $this->db->query($sql);     
+        
+        return $result->row();
+        
+    }
 
     //Documents Maintenance
     public function f_doc_maintenance($bill_no, $poolType, $kms_year){

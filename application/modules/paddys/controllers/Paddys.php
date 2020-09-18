@@ -6702,8 +6702,7 @@ public function f_wqscdetails_report(){
                 "pool_type"     => $this->input->post('pool_type')
 
             );
-        // echo $this->db->last_query();
-        //     die();
+       
             $payment['bill_dtls']    =   $this->Paddy->f_get_particulars("td_payment_bill", $select, $where, 0);
             
             //Charges for Bill Payment
@@ -6752,9 +6751,8 @@ public function f_wqscdetails_report(){
 
     }
 
-
      // Payment Bill List
-    public function f_paymentbilllist(){
+public function f_paymentbilllist(){
                 
 
             $dist     = $this->input->get('dist');
@@ -6768,6 +6766,92 @@ public function f_wqscdetails_report(){
         echo json_encode($data);
 
     }
+     //Society Payment Report
+public function f_payment_society(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            //Retriving Payment No
+            //$billNo = $this->Paddy->f_get_particulars("td_payment_bill", array('pmt_bill_no'),  array('pool_type' => $this->input->post('pool_type')), array('con_bill_no' => $this->input->post('pmt_bill_no')), 1);
+           
+            //Retriving Bill Payment Details
+            $payment['payment_dtls']    =   $this->Paddy->f_societypayment( $this->input->post('pmt_bill_no'), $this->input->post('pool_type'));
+           
+
+            $where  =   array(
+
+                "pmt_commission_no"   => $this->input->post('pmt_bill_no'),
+                "pool_type"           => $this->input->post('pool_type')
+
+            );
+       
+            $payment['bill_dtls']    =   $this->Paddy->f_get_particulars("td_commission_bill",NULL, $where, 0);
+            
+            //Charges for Bill Payment
+            unset($select);
+            unset($where);
+            $select =  array(
+
+                "tds_percentage", "deducted_amt",
+                "payble_amt"
+
+            );
+            
+            $where  =   array(
+
+             
+                "pmt_commission_no"   => $this->input->post('pmt_bill_no')
+
+            );
+
+
+            $payment['charges']    =   $this->Paddy->f_get_particulars("td_commission_bill_dtls", $select, $where, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/payment_society", $payment);
+
+            $this->load->view('post_login/footer');
+
+        }
+        else{
+
+            //For Current Date
+            $payment['sys_date']   =   $_SESSION['sys_date'];
+
+            //District List
+            $payment['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/payment_society", $payment);
+
+            $this->load->view('post_login/footer');
+
+        }
+
+    }
+        // Payment Society Bill List
+public function f_paymentsocietylist(){
+
+        $select =  array(
+
+                "con_bill_no", "pmt_commission_no"
+        );
+            
+        $where  =   array(
+
+                "dist"        => $this->input->get('dist'),
+                "soc_id"      => $this->input->get('soc_id'),
+                "kms_year"    => $this->kms_year
+        );
+                
+
+        $data     = $this->Paddy->f_get_particulars("td_commission_bill", NULL, NULL, 0);
+        
+        echo json_encode($data);
+
+}
 
 
 /////////////////////////////////
