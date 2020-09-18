@@ -299,7 +299,8 @@ tr:hover {background-color: #f5f5f5;}
                     ?>
 
                     <p style="text-align: justify;">In Connection with the Procurement during <strong>KMS-<?php echo $payment_dtls->kms_year; ?></strong> on <?php if(isset($pool)){echo $pool_type; } ?> Our
-                       agent society <u><?php //echo $payment_dtls->mill_name; ?></u> has submitted <u><?php echo count($bill_dtls); ?></u> bills  for commission payment against procurement of <u><?php echo $payment_dtls->soc_name; ?></u>
+                       agent society <u><?php //echo $payment_dtls->mill_name; ?></u><?php echo $payment_dtls->soc_name; ?> has submitted <u>
+                        <?php echo count($bill_dtls); ?></u> bills  for commission payment against procurement of <u></u><?php echo $payment_dtls->paddy_qty; ?>
                        qtls  paddy in the district of <u><?php echo $payment_dtls->district_name; ?></u>
                     </p>
 
@@ -343,9 +344,9 @@ tr:hover {background-color: #f5f5f5;}
                                     <tr>
 
                                         <td><?php echo $b_dtls->con_bill_no; ?></td>
-                                        <td><?php echo $b_dtls->con_bill_dt; ?></td>
+                                        <td><?php echo date('d/m/Y', strtotime($b_dtls->con_bill_dt)); ?></td>
                                         <td><?php echo $b_dtls->soc_bill_no; ?></td>
-                                        <td><?php echo $b_dtls->soc_bill_dt; ?></td>
+                                        <td><?php echo date('d/m/Y', strtotime($b_dtls->soc_bill_dt)); ?></td>
                                         <td><?php echo $b_dtls->paddy_qty; ?></td>
                                         <td><?php echo $b_dtls->rate_per_qtls; ?></td>
                                         <td><?php echo ($b_dtls->paddy_qty*$b_dtls->rate_per_qtls); ?></td>
@@ -404,7 +405,7 @@ tr:hover {background-color: #f5f5f5;}
                         
                         <p>Rs <u><?php echo $charge->payble_amt; ?></u> ( <?php echo getIndianCurrency(round($charge->payble_amt,0));?> ) only
                         may be realesed from ............................. Bank, A/C-No 915010065341726 in favour of
-                        <u><?php echo $payment_dtls->soc_name; ?></u> througn RTGS/NEFT.
+                        <u><?php echo $payment_dtls->soc_name; ?></u> througn Online.
                         </p>
                         <br><p>Put up to C.E.O through AM-I D.M,C.D.O & A.R.C.S for Necessary order pls.</p>
 
