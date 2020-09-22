@@ -270,7 +270,7 @@ class Paddys extends MX_Controller {
         else {
 
             //District List
-            $block['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+            $block['dist']       =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
             $this->load->view('post_login/main');
 
@@ -6764,6 +6764,82 @@ public function f_paymentbilllist(){
         $data = $this->Paddy->f_get_paymentslist($dist,$soc_id,$mill_id);
         
         echo json_encode($data);
+
+    }
+
+//Payment Voucher
+public function f_payment_voucher(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            //Retriving Payment No
+            $billNo = $this->Paddy->f_get_particulars("td_payment_bill", array('pmt_bill_no'),  array('pool_type' => $this->input->post('pool_type')), array('con_bill_no' => $this->input->post('pmt_bill_no')), 1);
+           
+            //Retriving Bill Payment Details
+            $payment['payment_dtls']    =   $this->Paddy->f_payment( $this->input->post('pmt_bill_no'), $this->input->post('pool_type'));
+            // echo $this->db->last_query();
+            // die();
+            //Bill Details
+            $select =  array(
+
+                "con_bill_no", "con_bill_dt", "mill_bill_no","pool_type",
+                "mill_bill_dt", "paddy_qty", "paddy_cmr",
+                "paddy_butta"
+
+            );
+
+            $where  =   array(
+
+                "pmt_bill_no"   => $this->input->post('pmt_bill_no'),
+                "pool_type"     => $this->input->post('pool_type')
+
+            );
+       
+            $payment['bill_dtls']    =   $this->Paddy->f_get_particulars("td_payment_bill", $select, $where, 0);
+            
+            //Charges for Bill Payment
+            unset($select);
+            unset($where);
+            $select =  array(
+
+                "m.param_name", "t.per_unit", "t.total_amt","m.sl_no",
+                "t.tds_amt", "t.cgst_amt", "t.sgst_amt",
+                "t.payble_amt"
+
+            );
+            
+            $where  =   array(
+
+                "t.account_type = m.sl_no" => NULL,
+                "t.pmt_bill_no"   => $this->input->post('pmt_bill_no')
+
+            );
+
+
+            $payment['charges']    =   $this->Paddy->f_get_particulars("td_payment_bill_dtls t, md_comm_params m", $select, $where, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/payment_voucher", $payment);
+
+            $this->load->view('post_login/footer');
+
+        }
+        else{
+
+            //For Current Date
+            $payment['sys_date']     =   $_SESSION['sys_date'];
+
+            //District List
+            $payment['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/payment_voucher", $payment);
+
+            $this->load->view('post_login/footer');
+
+        }
 
     }
      //Society Payment Report
