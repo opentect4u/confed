@@ -311,7 +311,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <div class="col-lg-4">No...............</div>
                         <div class="col-lg-4" style="text-align:center;"></div>
-                        <div class="col-lg-4" style="text-align:center;">Dated:</div>
+                        <div class="col-lg-4" style="text-align:center;">Dated:<?php echo date("d/m/Y"); ?></div>
 
                     </div>
                     
@@ -319,7 +319,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <div class="col-lg-4"></div>
                         <div class="col-lg-4" style="text-align:center;">TRANSFER</div>
-                        <div class="col-lg-4" style="text-align:center;">SP/CP</div>
+                        <div class="col-lg-4" style="text-align:center;"><?=$pool_type?></div>
 
                     </div>
 
@@ -347,14 +347,22 @@ tr:hover {background-color: #f5f5f5;}
                     <div class="col-lg-12" style="margin-bottom: 20px;">
 
                         <div class="col-lg-4">DEBIT Transportation Charge</div>
-                        <div class="col-lg-4" style="text-align:center;">A/c  <?php foreach($charges as $c_list) 
+                        <div class="col-lg-4" style="text-align:center;">A/c  <?php $transport_crg = 0;
+
+                        foreach($charges as $c_list) 
 
                                   { 
-                                if($c_list->sl_no== "4"){ ?>
+                                if($c_list->sl_no== "4" or $c_list->sl_no== "5" or $c_list->sl_no== "6" or $c_list->sl_no== "16"){ ?>
 
-                            <?php echo $c_list->total_amt; ?>
+                            <?php $transport_crg += $c_list->total_amt; ?>
 
-                                 <?php }}?></div>
+                                 <?php }
+
+
+                             }
+                             echo $transport_crg;
+
+                             ?></div>
                         <div class="col-lg-4" style="text-align:center;"></div>
 
                     </div>
@@ -377,14 +385,58 @@ tr:hover {background-color: #f5f5f5;}
                     <div class="col-lg-12" style="margin-bottom: 20px;">
 
                         <div class="col-lg-4">DEBIT Other Charge<br>(GunnyUseges Charges)</div>
-                        <div class="col-lg-4" style="text-align:center;">A/c  <?php foreach($charges as $c_list) 
+                          <?php   
 
+                                $tot_paddy = $tot_cmr = $tot_butta = 0;
+
+
+                            
+                                
+                                foreach($bill_dtls as $b_dtls){
+
+                                    $tot_paddy += $b_dtls->paddy_qty;
+                                    $tot_cmr   += $b_dtls->paddy_cmr;
+                                    $tot_butta += $b_dtls->paddy_butta;
+                                  
+                                      
+                                }
+
+                              
+                                
+                                
+                            ?>
+                        <div class="col-lg-4" style="text-align:center;">A/c  <?php foreach($charges as $c_list) 
+                                            $gunny = 0;
                                   { 
                                 if($c_list->sl_no== "16"){ ?>
 
-                            <?php echo $c_list->total_amt; ?>
+                            <?php $gunny = $c_list->total_amt; 
 
-                                 <?php }}?></div>
+                              
+
+                            ?>
+
+                                 <?php }
+                                     $tg = $gunny-$tot_butta ;
+
+                                   if ($tg > 0){
+                                        echo $tg;
+                                   }
+                                // echo $c_list->total_amt;
+                               
+                             } 
+                                $tds = $totpayble = $total = 0;
+
+                                foreach($charges as $c_list) {
+
+                                    $tds       += $c_list->tds_amt;
+                                    $totpayble += $c_list->payble_amt;
+
+                                }
+
+                                $total = $tds+$totpayble;
+
+                                 ?></div>
                         <div class="col-lg-4" style="text-align:center;"></div>
 
                     </div>
@@ -393,14 +445,15 @@ tr:hover {background-color: #f5f5f5;}
 
                         <div class="col-lg-4">CREDIT TDS<br></div>
                         <div class="col-lg-4" style="text-align:center;"></div>
-                        <div class="col-lg-4" style="text-align:center;">A/c ..........................................</div>
+                        <div class="col-lg-4" style="text-align:center;">A/c ...
+                            <?php echo $tds; ?></div>
 
                     </div>
                      <div class="col-lg-12" style="margin-bottom: 20px;">
 
                         <div class="col-lg-4">CREDIT Sundry Creditors</div>
                         <div class="col-lg-4" style="text-align:center;"></div>
-                        <div class="col-lg-4" style="text-align:center;">A/c ..........................................</div>
+                        <div class="col-lg-4" style="text-align:center;">A/c <?php echo $totpayble; ?></div>
 
                     </div>
                    
@@ -409,35 +462,25 @@ tr:hover {background-color: #f5f5f5;}
                   
                     <div class="col-lg-12">
 
-                     <?php   
-
-                                $tot_paddy = $tot_cmr = $tot_butta = 0;
-                            
-                                
-                                foreach($bill_dtls as $b_dtls){
-
-                              
-
-                                    $tot_paddy += $b_dtls->paddy_qty;
-                                    $tot_cmr   += $b_dtls->paddy_cmr;
-                                    $tot_butta += $b_dtls->paddy_butta;
-                                      
-                                }
-
-                            ?>
+                   
                         
                         <p><u><?php echo $tot_cmr; ?></u> Qntls.Common Boiled / Raw Rice supplied by <?php echo $payment_dtls->mill_name; ?> On behalf of <?php echo $payment_dtls->soc_name; ?>
                             </p>
                         <br>
                         <p>
-                             Vide Bill No................................Dated..................Confed Bill No 
+                             Vide Bill No. <?php  
+                                foreach($bill_dtls as $b_dtls){ 
+
+                                echo $b_dtls->mill_bill_no."," ;
+                                      
+                                };  ?>..Dated..................Confed Bill No 
                              <?php  
                                 foreach($bill_dtls as $b_dtls){ 
 
                                 echo $b_dtls->con_bill_no."," ;
                                       
                                 };  ?>
-                        Dated..........................against <?php echo $tot_paddy; ?> Qntls paddy for KMS ..........
+                        Dated..........................against <?php echo $tot_paddy; ?> Qntls paddy for KMS -<?php echo $payment_dtls->kms_year; ?>
 
 
                         </p>
@@ -455,8 +498,8 @@ tr:hover {background-color: #f5f5f5;}
                     
                     <div  class="col-lg-12">
                         
-                      <p>Rupees:...........................................................................................................</p>
-                      <p>Rs...............................................</p>
+                      <p>Rupees: <?php echo getIndianCurrency(round($total,0));?></p>
+                      <p>Rs.<?php echo $total;?>..</p>
                     </div>
                     
 

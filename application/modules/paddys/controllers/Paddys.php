@@ -6814,9 +6814,12 @@ public function f_payment_voucher(){
                 "t.pmt_bill_no"   => $this->input->post('pmt_bill_no')
 
             );
+            $ptm_no     = $this->input->post('pmt_bill_no');
+            $pool_type  = $this->input->post('pool_type');
 
 
-            $payment['charges']    =   $this->Paddy->f_get_particulars("td_payment_bill_dtls t, md_comm_params m", $select, $where, 0);
+            $payment['charges']         =   $this->Paddy->f_get_particulars("td_payment_bill_dtls t, md_comm_params m", $select, $where, 0);
+            //$payment['tottransport']    =   $this->Paddy->f_tottransport($ptm_no,$pool_type);
 
             $this->load->view('post_login/main');
 

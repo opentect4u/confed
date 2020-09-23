@@ -44,6 +44,12 @@ Confed->application->modules->paddys->Controllers->paddys.php
 
 Confed->application->view->post_login->main.php
 
+Worked on 23/09/2020
+
+add a page on Confed->application->modules->paddys->view->reports/payment_voucher.php
+
+Confed->application->modules->paddys->Controllers->paddys.php
+
 
 
 

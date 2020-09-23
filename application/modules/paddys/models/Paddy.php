@@ -529,7 +529,8 @@ group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name
         return $result->row();
         
     }
-     public function f_societypayment($pmt_bill_no,$pool_type){
+   
+    public function f_societypayment($pmt_bill_no,$pool_type){
         $kms_year=$this->session->userdata('kms_yr');
         $sql = "SELECT DISTINCT t.pmt_commission_no, t.kms_year, md.district_name, ms.soc_name,ms.block,t.paddy_qty,
                                 t.tot_paddy, t.trans_dt
