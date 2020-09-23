@@ -334,7 +334,7 @@ tr:hover {background-color: #f5f5f5;}
                                   { 
                                 if($c_list->sl_no== "3"){ ?>
 
-                            <?php echo $c_list->total_amt; ?>
+                            <?php echo $mandy_labour = $c_list->total_amt; ?>
 
                                  <?php }}?>
                         </div>
@@ -354,7 +354,7 @@ tr:hover {background-color: #f5f5f5;}
                                   { 
                                 if($c_list->sl_no== "4" or $c_list->sl_no== "5" or $c_list->sl_no== "6" or $c_list->sl_no== "15" ){ ?>
 
-                            <?php $transport_crg += $c_list->total_amt; ?>
+                            <?php $transport_crg += $c_list->payble_amt; ?>
 
                                  <?php }
 
@@ -375,7 +375,7 @@ tr:hover {background-color: #f5f5f5;}
                                   { 
                                 if($c_list->sl_no== "10"){ ?>
 
-                            <?php echo $c_list->total_amt; ?>
+                            <?php echo $milling_chrg = $c_list->payble_amt; ?>
 
                                  <?php }}?></div>
                         <div class="col-lg-4" style="text-align:center;"></div>
@@ -405,26 +405,24 @@ tr:hover {background-color: #f5f5f5;}
                                 
                                 
                             ?>
-                        <div class="col-lg-4" style="text-align:center;">A/c  <?php foreach($charges as $c_list) 
-                                            $gunny = 0;
+                        <div class="col-lg-4" style="text-align:center;">A/c  <?php 
+                                     $gunny = 0;
+                                     $tg    = 0;
+                        foreach($charges as $c_list) 
+                                           
                                   { 
-                                if($c_list->sl_no== "16"){ ?>
+                                if($c_list->sl_no== "16"){ 
 
-                            <?php $gunny = $c_list->total_amt; 
+                                 $gunny = $c_list->payble_amt;
+                                
 
-                              
-
-                            ?>
-
-                                 <?php }
-                                     echo $tg = $gunny-$tot_butta ;
-
+                                  }   
                                    // if ($tg > 0){
                                    //      echo $tg;
                                    // }
                                 // echo $c_list->total_amt;
-                               
-                             } 
+                               } 
+                               echo $tg = $gunny-$tot_butta ;
                                 $tds = $totpayble = $total = 0;
 
                                 foreach($charges as $c_list) {
@@ -438,13 +436,14 @@ tr:hover {background-color: #f5f5f5;}
                                          $sundry_crg = 0;
                                     foreach($charges as $c_list) 
 
-                                  { 
-                                if($c_list->sl_no== "4" or $c_list->sl_no== "5" or $c_list->sl_no== "6" or $c_list->sl_no== "15" or $c_list->sl_no== "16"
-                                    or $c_list->sl_no== "3" or $c_list->sl_no== "10"){
+                                { 
+                                //if($c_list->sl_no== "4" or $c_list->sl_no== "5" or $c_list->sl_no== "6" or $c_list->sl_no== "15" or $c_list->sl_no== "16"
+                                 //   or $c_list->sl_no== "3" or $c_list->sl_no== "10"){
 
-                                $sundry_crg += $c_list->total_amt;
+                                $sundry_crg = $mandy_labour + $transport_crg + $milling_chrg +$tg;
                               
-                                } }
+                                //}
+                                 }
                             
                                 ?></div>
                         <div class="col-lg-4" style="text-align:center;"></div>
@@ -463,7 +462,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <div class="col-lg-4">CREDIT Sundry Creditors</div>
                         <div class="col-lg-4" style="text-align:center;"></div>
-                        <div class="col-lg-4" style="text-align:center;">A/c <?php echo $sundry_crg-$tot_butta-$tds; ?></div>
+                        <div class="col-lg-4" style="text-align:center;">A/c <?php echo $sundry_crg-$tds; ?></div>
 
                     </div>
                    
@@ -512,7 +511,7 @@ tr:hover {background-color: #f5f5f5;}
                     <div  class="col-lg-12">
                         
                       <p>Rupees: <?php echo getIndianCurrency(round($sundry_crg,0));?></p>
-                      <p>Rs.<?php echo $sundry_crg;?></p>
+                      <p>Rs.<?php echo round($sundry_crg,0);?></p>
                     </div>
                     
 
