@@ -493,7 +493,7 @@ tr:hover {background-color: #f5f5f5;}
                                 echo $b_dtls->con_bill_no."," ;
                                       
                                 };  ?>
-                        Dated..........................against <?php echo $tot_paddy; ?> Qntls paddy for KMS -<?php echo $payment_dtls->kms_year; ?>
+                        Dated.......................  against <?php echo $tot_paddy; ?> Qntls paddy for KMS -<?php echo $payment_dtls->kms_year; ?>
 
 
                         </p>

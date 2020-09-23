@@ -276,9 +276,9 @@
                                 <a href="<?php echo site_url('paddy/mill/commision'); ?>">Milling Charge</a>
                                 <a href="<?php echo site_url('paddy/claim/gunny'); ?>">Claim For Gunny Bag</a>
                                 <a href="<?php echo site_url('paddy/billdetails/report'); ?>">Bill Details</a>
-                                <a href="<?php echo site_url('paddy/payment/report'); ?>">Miller's payment</a>
-                                <a href="<?php echo site_url('paddy/payment/voucher'); ?>">payment voucher</a>
-                                <a href="<?php echo site_url('paddy/payment/society'); ?>">Society's payment</a>
+                                <a href="<?php echo site_url('paddy/payment/report'); ?>">Miller's Payment</a>
+                                <a href="<?php echo site_url('paddy/payment/voucher'); ?>">Payment Voucher</a>
+                                <a href="<?php echo site_url('paddy/payment/society'); ?>">Society's Payment</a>
                                 <a href="<?php echo site_url('paddy/paddydeclr/report'); ?>">Declaration</a>
                                 </div>
                             </div>    
