@@ -417,11 +417,11 @@ tr:hover {background-color: #f5f5f5;}
                             ?>
 
                                  <?php }
-                                     $tg = $gunny-$tot_butta ;
+                                     echo $tg = $gunny-$tot_butta ;
 
-                                   if ($tg > 0){
-                                        echo $tg;
-                                   }
+                                   // if ($tg > 0){
+                                   //      echo $tg;
+                                   // }
                                 // echo $c_list->total_amt;
                                
                              } 
@@ -445,7 +445,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <div class="col-lg-4">CREDIT TDS<br></div>
                         <div class="col-lg-4" style="text-align:center;"></div>
-                        <div class="col-lg-4" style="text-align:center;">A/c ...
+                        <div class="col-lg-4" style="text-align:center;">A/c 
                             <?php echo $tds; ?></div>
 
                     </div>
@@ -453,7 +453,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <div class="col-lg-4">CREDIT Sundry Creditors</div>
                         <div class="col-lg-4" style="text-align:center;"></div>
-                        <div class="col-lg-4" style="text-align:center;">A/c <?php echo $totpayble; ?></div>
+                        <div class="col-lg-4" style="text-align:center;">A/c <?php echo $totpayble-$tot_butta; ?></div>
 
                     </div>
                    
@@ -464,7 +464,10 @@ tr:hover {background-color: #f5f5f5;}
 
                    
                         
-                        <p><u><?php echo $tot_cmr; ?></u> Qntls.Common Boiled / Raw Rice supplied by <?php echo $payment_dtls->mill_name; ?> On behalf of <?php echo $payment_dtls->soc_name; ?>
+                        <p><u><?php echo $tot_cmr; ?></u> Qntls.<?php if($payment_dtls->rice_type == "P"){
+                            echo "Common Boiled";}else{
+                                 echo "Raw Rice";
+                             }?> supplied by <?php echo $payment_dtls->mill_name; ?> On behalf of <?php echo $payment_dtls->soc_name; ?>
                             </p>
                         <br>
                         <p>
@@ -473,7 +476,7 @@ tr:hover {background-color: #f5f5f5;}
 
                                 echo $b_dtls->mill_bill_no."," ;
                                       
-                                };  ?>..Dated..................Confed Bill No 
+                                };  ?> Dated..................Confed Bill No 
                              <?php  
                                 foreach($bill_dtls as $b_dtls){ 
 
@@ -499,7 +502,7 @@ tr:hover {background-color: #f5f5f5;}
                     <div  class="col-lg-12">
                         
                       <p>Rupees: <?php echo getIndianCurrency(round($total,0));?></p>
-                      <p>Rs.<?php echo $total;?>..</p>
+                      <p>Rs.<?php echo $total;?></p>
                     </div>
                     
 
