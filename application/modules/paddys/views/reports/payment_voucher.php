@@ -352,7 +352,7 @@ tr:hover {background-color: #f5f5f5;}
                         foreach($charges as $c_list) 
 
                                   { 
-                                if($c_list->sl_no== "4" or $c_list->sl_no== "5" or $c_list->sl_no== "6" or $c_list->sl_no== "16"){ ?>
+                                if($c_list->sl_no== "4" or $c_list->sl_no== "5" or $c_list->sl_no== "6" or $c_list->sl_no== "15" ){ ?>
 
                             <?php $transport_crg += $c_list->total_amt; ?>
 
@@ -435,8 +435,18 @@ tr:hover {background-color: #f5f5f5;}
                                 }
 
                                 $total = $tds+$totpayble;
+                                         $sundry_crg = 0;
+                                    foreach($charges as $c_list) 
 
-                                 ?></div>
+                                  { 
+                                if($c_list->sl_no== "4" or $c_list->sl_no== "5" or $c_list->sl_no== "6" or $c_list->sl_no== "15" or $c_list->sl_no== "16"
+                                    or $c_list->sl_no== "3" or $c_list->sl_no== "10"){
+
+                                $sundry_crg += $c_list->total_amt;
+                              
+                                } }
+                            
+                                ?></div>
                         <div class="col-lg-4" style="text-align:center;"></div>
 
                     </div>
@@ -453,7 +463,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <div class="col-lg-4">CREDIT Sundry Creditors</div>
                         <div class="col-lg-4" style="text-align:center;"></div>
-                        <div class="col-lg-4" style="text-align:center;">A/c <?php echo $totpayble-$tot_butta; ?></div>
+                        <div class="col-lg-4" style="text-align:center;">A/c <?php echo $sundry_crg-$tot_butta-$tds; ?></div>
 
                     </div>
                    
@@ -501,8 +511,8 @@ tr:hover {background-color: #f5f5f5;}
                     
                     <div  class="col-lg-12">
                         
-                      <p>Rupees: <?php echo getIndianCurrency(round($total,0));?></p>
-                      <p>Rs.<?php echo $total;?></p>
+                      <p>Rupees: <?php echo getIndianCurrency(round($sundry_crg,0));?></p>
+                      <p>Rs.<?php echo $sundry_crg;?></p>
                     </div>
                     
 
