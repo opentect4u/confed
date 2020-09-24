@@ -375,6 +375,7 @@
                     
                     <?php
                         $flag = false;
+                        $tottotal = $tottds = $totcgst = $totsgst = 0;
                         foreach($charges as $c_list){
                     ?>
                         <tr>
@@ -407,19 +408,25 @@
                             </td>
                             <td><input type="text" 
                                        class="form-control amounts required"
-                                       value="<?php echo $c_list->total_amt; ?>" 
+                                       value="<?php echo $c_list->total_amt;
+                                                    $tottotal += $c_list->total_amt;
+                                        ?>" 
                                        name="amounts[]"
                                        >
                             </td>
                             <td><input type="text" 
                                        class="form-control tds_amount" 
-                                       value="<?php echo $c_list->tds_amt; ?>"
+                                       value="<?php echo $c_list->tds_amt; 
+                                                 $tottds += $c_list->tds_amt;
+                                       ?>"
                                        name="tds_amount[]"
                                        >
                             </td>
                             <td><input type="text" 
                                        class="form-control cgst"
-                                       value="<?php echo $c_list->cgst_amt; ?>" 
+                                       value="<?php echo $c_list->cgst_amt;
+                                                     $totcgst += $c_list->cgst_amt;
+                                        ?>" 
                                        name="cgst[]"
                                        >
                                        
@@ -427,7 +434,9 @@
                             <td><input type="text" 
                                        class="form-control sgst" 
                                        name="sgst[]"
-                                       value="<?php echo $c_list->sgst_amt; ?>"
+                                       value="<?php echo $c_list->sgst_amt;
+                                                        $totsgst += $c_list->sgst_amt;
+                                        ?>"
                                        >
                             </td>
                             <td><input type="text" 
@@ -457,7 +466,11 @@
                 <tfoot>
                     <tr>
                     
-                        <td colspan="6" style="text-align: right;">Total Amount:</td>
+                         <td colspan="2" style="text-align: right;">Total:</td>
+                        <td><input type="text" class="no-border tottotal" readonly value="<?=round($tottotal)?>"></td>
+                        <td><input type="text" class="no-border tottds" readonly value="<?=round($tottds)?>"></td>
+                        <td><input type="text" class="no-border totcgst" readonly value="<?=round($totcgst)?>"></td>
+                        <td><input type="text" class="no-border totsgst" readonly value="<?=round($totsgst)?>"></td>
                         <td colspan="2"><input type="text" class="no-border tot_payble" readonly></td>
 
                     </tr>
@@ -757,7 +770,9 @@
         //Millers Payment Details
         $('#intro1').on('change', '.particulars', function(){
 
+            let row          = $(this).closest('tr');
             let indexNo = $('.particulars').index(this);
+            var sl          = row.find('td:eq(0) .particulars').val();
 
             $.get('<?php echo site_url("paddy/billMasterDetails"); ?>',{
 
@@ -780,6 +795,69 @@
                     $('.amounts:eq('+indexNo+')').val(parseFloat(values.val) * parseFloat($('#totCmr').val()));
 
                 }
+
+                 ////for auto calculate of tds and gst % 
+                if(sl=='10'||sl=='16'){
+                  
+                    var gst         = parseFloat(row.find('td:eq(2) .amounts ').val()*(2.5/100));
+                    var tot         = parseFloat(row.find('td:eq(2) .amounts ').val());
+                    var gr_tot      = parseFloat(tot +  gst+gst).toFixed();
+                    
+                    row.find('td:eq(3)  input').val(0);
+                    row.find('td:eq(4)  input').val(gst.toFixed(0));
+                    row.find('td:eq(5)  input').val(gst.toFixed(0));
+                    //row.find('td:eq(6)  input').val(gr_tot.toFixed());
+                    row.find('td:eq(6)  input').val(gr_tot);
+                    $('.payble_amount').val(sumValuesOf('tot_payble').toFixed(0));
+                    $('.tottotal').val(sumValuesOf('amounts').toFixed(0));
+                    $('.tottds').val(sumValuesOf('tds_amount').toFixed(0));
+                    $('.totcgst').val(sumValuesOf('cgst').toFixed(0));
+                    $('.totsgst').val(sumValuesOf('sgst').toFixed(0));
+                    $('.less_butta').val(sumValuesOf('qty_butta').toFixed(0));
+                    var tot_butta  = $('.less_butta ').val();
+                     $('.payble_amount').val((sumValuesOf('paybel')- $('.less_butta ').val()).toFixed(0));
+                     $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
+                } else if (sl=='3'||sl=='4'||sl=='5'||sl=='6'||sl=='7'||sl=='15'){
+                  
+                    var tds         = parseFloat(row.find('td:eq(2) .amounts ').val()*(2/100));
+                    var tot         = parseFloat(row.find('td:eq(2) .amounts ').val());
+                    var gr_tot      = parseFloat(tot -tds ).toFixed();
+
+                    row.find('td:eq(3)  input').val(tds.toFixed(0));
+                    row.find('td:eq(4)  input').val(0);
+                    row.find('td:eq(5)  input').val(0);
+                    //row.find('td:eq(6)  input').val(gr_tot.toFixed());
+                    row.find('td:eq(6)  input').val(gr_tot);
+                    $('.payble_amount').val(sumValuesOf('tot_payble').toFixed(0));
+                    $('.tottotal').val(sumValuesOf('amounts').toFixed(0));
+                    $('.tottds').val(sumValuesOf('tds_amount').toFixed(0));
+                    $('.totcgst').val(sumValuesOf('cgst').toFixed(0));
+                    $('.totsgst').val(sumValuesOf('sgst').toFixed(0));
+                    $('.less_butta').val(sumValuesOf('qty_butta'));
+                    var tot_butta  = $('.less_butta ').val();
+                     $('.payble_amount').val((sumValuesOf('paybel')- $('.less_butta ').val()).toFixed(0));
+                     $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
+                 } else{
+                    var gst         = parseFloat(row.find('td:eq(2) .amounts ').val()*(2.5/100));
+                    var tot         = parseFloat(row.find('td:eq(2) .amounts ').val());
+                    var gr_tot      = parseFloat(tot ).toFixed();
+
+                    row.find('td:eq(3)  input').val(0);
+                    row.find('td:eq(4)  input').val(0);
+                    row.find('td:eq(5)  input').val(0);
+                    //row.find('td:eq(6)  input').val(gr_tot.toFixed());
+                    row.find('td:eq(6)  input').val(gr_tot);
+                    $('.payble_amount').val(sumValuesOf('tot_payble').toFixed(0));
+                   $('.tottotal').val(sumValuesOf('amounts').toFixed(0));
+                    $('.tottds').val(sumValuesOf('tds_amount').toFixed(0));
+                    $('.totcgst').val(sumValuesOf('cgst').toFixed(0));
+                    $('.totsgst').val(sumValuesOf('sgst').toFixed(0));
+                    $('.less_butta').val(sumValuesOf('qty_butta').toFixed(0));
+                    var tot_butta  = $('.less_butta ').val();
+                     $('.payble_amount').val((sumValuesOf('paybel')- $('.less_butta ').val()).toFixed(0));
+                     $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
+                }
+               
 
             });
 
@@ -813,6 +891,10 @@
         $("#intro").on('click', '.removeRow',function(){
             
             $(this).parent().parent().remove();
+             $('.tottotal').val(sumValuesOf('amounts').toFixed(0));
+             $('.tottds').val(sumValuesOf('tds_amount').toFixed(0));
+             $('.totcgst').val(sumValuesOf('cgst').toFixed(0));
+             $('.totsgst').val(sumValuesOf('sgst').toFixed(0));
 
             $('.tot_paddy').val(sumValuesOf('qty_paddy'));
             $('.tot_cmr').val(sumValuesOf('qty_cmr'));
@@ -823,6 +905,11 @@
         $("#intro1").on('click', '.removeRow',function(){
             
             $(this).parent().parent().remove();
+
+            $('.tottotal').val(sumValuesOf('amounts').toFixed(0));
+            $('.tottds').val(sumValuesOf('tds_amount').toFixed(0));
+            $('.totcgst').val(sumValuesOf('cgst').toFixed(0));
+            $('.totsgst').val(sumValuesOf('sgst').toFixed(0));
 
             $('.tot_payble').val(sumValuesOf('paybel'));
             $('.payble_amount').val(sumValuesOf('paybel'));

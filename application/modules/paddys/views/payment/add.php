@@ -782,6 +782,11 @@
             
             $(this).parents('tr').remove();
 
+             $('.tottotal').val(sumValuesOf('amounts').toFixed(0));
+             $('.tottds').val(sumValuesOf('tds_amount').toFixed(0));
+             $('.totcgst').val(sumValuesOf('cgst').toFixed(0));
+             $('.totsgst').val(sumValuesOf('sgst').toFixed(0));
+
             $('.tot_paddy').val(sumValuesOf('qty_paddy').toFixed(0));
             $('.tot_cmr').val(sumValuesOf('qty_cmr').toFixed(0));
             $('.tot_butta').val(sumValuesOf('qty_butta'));
@@ -797,6 +802,11 @@
         $("#intro1").on('click', '.removeRow',function(){
             
             $(this).parents('tr').remove();
+
+             $('.tottotal').val(sumValuesOf('amounts').toFixed(0));
+             $('.tottds').val(sumValuesOf('tds_amount').toFixed(0));
+             $('.totcgst').val(sumValuesOf('cgst').toFixed(0));
+             $('.totsgst').val(sumValuesOf('sgst').toFixed(0));
           
             $('.tot_payble').val(sumValuesOf('paybel').toFixed(0));
             $('.payble_amount').val(sumValuesOf('paybel').toFixed(0));
