@@ -4249,7 +4249,7 @@ class Paddys extends MX_Controller {
     
                     // "kms_year"              =>  $this->kms_year,
 
-                    "kms_year"      => $this->session->userdata('kms_yr'),
+                    "kms_year"              => $this->session->userdata('kms_yr'),
     
                     "soc_id"                =>  $this->input->post('soc_name'),
 

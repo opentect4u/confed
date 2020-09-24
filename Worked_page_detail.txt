@@ -50,6 +50,9 @@ add a page on Confed->application->modules->paddys->view->reports/payment_vouche
 
 Confed->application->modules->paddys->Controllers->paddys.php
 
+Worked on 24/09/2020
+
+add a page on Confed->application->modules->paddys->view->payment/add.php
 
 
 
