@@ -1362,35 +1362,48 @@
             
             if($_SERVER['REQUEST_METHOD']=="POST")
 
-            {   $file_name         = $_POST['file_name'];
-                $page_no           = $_POST['page_no'];
-                $bank              = $_POST['bank'];
-                $tot_s_bill        = $_POST['tot_s_bill'];
-                $tot_p_bill        = $_POST['tot_p_bill'];
-                $s_bill_less_amt   = $_POST['s_bill_less_amt'];
-                $p_bill_less_amt   = $_POST['p_bill_less_amt'];
+            {   $file_name             = $_POST['file_name'];
+                $page_no               = $_POST['page_no'];
+                $bank                  = $_POST['bank'];
+                $tot_s_bill            = $_POST['tot_s_bill'];
+                $tot_p_bill            = $_POST['tot_p_bill'];
+                $s_bill_less_amt       = $_POST['s_bill_less_amt'];
+                $p_bill_less_amt       = $_POST['p_bill_less_amt'];
+                $s_bill_add_amt        = $_POST['s_bill_add_amt'];
+                $p_bill_add_amt        = $_POST['p_bill_add_amt'];
+                $p_bill_round_off      = $_POST['p_bill_round_off'];
+                $s_bill_round_off      = $_POST['s_bill_round_off'];
+                $s_bill_add_rnd_off    = $_POST['s_bill_add_rnd_off'];
+                $p_bill_add_rnd_off    = $_POST['p_bill_add_rnd_off'];
+                $mr_add_gst            = $_POST['mr_add_gst'];
+                $mr_less_gst           = $_POST['mr_less_gst'];
+                $confed_margin         = $_POST['confed_margin'];
+                $margin_add_gst        = $_POST['margin_add_gst'];
+                $margin_less_gst       = $_POST['margin_less_gst'];
 
-                $order_no          =       $_POST['order_no'];
-                $project           =       $_POST['project'];
-                $Unit_count        =       count($order_no); 
+                $order_no              = $_POST['order_no'];
+                $project               = $_POST['project'];
+                $Unit_count            = count($order_no); 
                 
-                $mr_no             =       $_POST['mr_no'];
-                $mr_dt             =       $_POST['mr_dt'];
-                $chq_type          =       $_POST['chq_type'];
-                $chq_dt            =       $_POST['chq_dt'];
-                $amt               =       $_POST['amt'];
-                $Unit_count1       =       count($mr_no); 
+                $mr_no                 =       $_POST['mr_no'];
+                $mr_dt                 =       $_POST['mr_dt'];
+                $chq_type              =       $_POST['chq_type'];
+                $chq_dt                =       $_POST['chq_dt'];
+                $amt                   =       $_POST['amt'];
+                $Unit_count1           =       count($mr_no); 
 
-                $s_bill_no         =       $_POST['s_bill_no'];
-                $s_bill_dt         =       $_POST['s_bill_dt'];
-                $s_bill_amt        =       $_POST['s_bill_amt'];
-                $p_bill_no         =       $_POST['p_bill_no'];
-                $p_bill_dt         =       $_POST['p_bill_dt'];
-                $p_bill_amt        =       $_POST['p_bill_amt'];
-                $Unit_count2       =       count($s_bill_no); 
+                $s_bill_no             =       $_POST['s_bill_no'];
+                $s_bill_dt             =       $_POST['s_bill_dt'];
+                $s_bill_amt            =       $_POST['s_bill_amt'];
+                $p_bill_no             =       $_POST['p_bill_no'];
+                $p_bill_dt             =       $_POST['p_bill_dt'];
+                $p_bill_amt            =       $_POST['p_bill_amt'];
+                $Unit_count2           =       count($s_bill_no); 
                 // $ref_no            =       $ref_no;
                 // $remarks           =       $_POST['remarks'];
-                $this->StationaryM->addNewbankPayment( $file_name,$page_no,$bank, $ref_no,$tot_s_bill,$tot_p_bill,$s_bill_less_amt,$p_bill_less_amt);
+                // $p_bill_round_off  = $_POST['p_bill_round_off'];
+                // $p_bill_round_off  = $_POST['p_bill_round_off'];
+                $this->StationaryM->addNewbankPayment( $file_name,$page_no,$bank, $ref_no,$tot_s_bill,$tot_p_bill,$s_bill_less_amt,$p_bill_less_amt,$s_bill_add_amt,$p_bill_add_amt,$p_bill_round_off,$s_bill_round_off,$s_bill_add_rnd_off,$p_bill_add_rnd_off, $mr_add_gst,$mr_less_gst,$confed_margin,$margin_add_gst ,$margin_less_gst);
                 $this->StationaryM->addNewPayment( $order_no,$project, $ref_no,$Unit_count);
                 $this->StationaryM->addNewmrPayment( $mr_no,$mr_dt ,$chq_type,$chq_dt ,$amt, $ref_no,$Unit_count1);
                 $this->StationaryM->addNewbillPayment( $s_bill_no,$s_bill_dt ,$s_bill_amt,$p_bill_no ,$p_bill_dt,$p_bill_amt, $ref_no,$Unit_count2);
