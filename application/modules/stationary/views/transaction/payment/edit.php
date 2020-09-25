@@ -170,6 +170,36 @@
                     <td></td>
                     <td><input type="text"  style="width:100px"   value= "<?php echo $key->p_bill_less_amt; ?>"  class="form-control p_bill_less_amt" name="p_bill_less_amt"></td>
                 </tr>
+                <tr>
+                <td colspan="2" style="text-align: right;">Add Amount:</td>
+                    
+                    <td><input type="text"  style="width:100px" value= "<?php echo $key->s_bill_add_amt; ?>" id=s_bill_less_amt class="form-control s_bill_add_amt" name="s_bill_add_amt"></td>
+                   
+                    <td></td>
+                    <td></td>
+                    <td><input type="text"  style="width:100px"   value= "<?php echo $key->p_bill_add_amt; ?>"  class="form-control p_bill_add_amt" name="p_bill_add_amt"></td>
+                </tr>
+                
+
+                 <tr>
+                <td colspan="2" style="text-align: right;">Less Round Off:</td>
+                    
+                    <td><input type="text"  style="width:100px" value= "<?php echo $key->s_bill_less_rnd_off; ?>" id="s_bill_less_rnd_off" class="form-control s_bill_less_rnd_off" name="s_bill_less_rnd_off"></td>
+                   
+                    <td></td>
+                    <td></td>
+                    <td><input type="text"  style="width:100px"   value= "<?php echo $key->p_bill_less_rnd_off; ?>" id="p_bill_less_rnd_off" class="form-control p_bill_less_rnd_off" name="p_bill_less_rnd_off"></td>
+                </tr> 
+
+                 <tr>
+                <td colspan="2" style="text-align: right;">Add Round Off:</td>
+                    
+                    <td><input type="text"  style="width:100px" value= "<?php echo $key->s_bill_add_rnd_off; ?>" id="s_bill_add_rnd_off" class="form-control s_bill_add_rnd_off" name="s_bill_add_rnd_off"></td>
+                   
+                    <td></td>
+                    <td></td>
+                    <td><input type="text"  style="width:100px"   value= "<?php echo $key->p_bill_add_rnd_off; ?>" id="p_bill_add_rnd_off" class="form-control p_bill_add_rnd_off" name="p_bill_add_rnd_off"></td>
+                </tr> 
                     <td>Total:</td>
                     <td colspan="1">
                     <td ><input type="text" style="width:100px;text-align: left;" value= "<?php echo $key->tot_s_bill; ?>"  class="form-control tot_s_bill" id="tot_s_bill" name="tot_s_bill" readonly>
@@ -212,44 +242,73 @@
     </thead>
         
     <tbody id= "intro">
-    <?php foreach($mr as $key){ ?>
+    <?php foreach($mr as $key1){ ?>
         <tr>
   
             <td>
-                <input type="text" name="mr_no[]" class="form-control mr_no" value= "<?php echo $key->mr_no; ?>" id="mr_no"/>
+                <input type="text" name="mr_no[]" class="form-control mr_no" value= "<?php echo $key1->mr_no; ?>" id="mr_no"/>
             </td>
             <!-- <td>
           <select name="mr_dt[]" id="mr_dt" class="form-control mr_dt">
                                                 
-                  <option value="<?php echo $key->project; ?>"><?php echo $key->project; ?></option>
+                  <option value="<?php echo $key1->project; ?>"><?php echo $key1->project; ?></option>
                                                     
               </select>
 
            </td>  -->
            <td>
-                <input type="date" name="mr_dt[]" class="form-control mr_dt" value= "<?php echo $key->mr_dt; ?>" id="mr_dt"/>
+                <input type="date" name="mr_dt[]" class="form-control mr_dt" value= "<?php echo $key1->mr_dt; ?>" id="mr_dt"/>
             </td>
 
             <td>
-            <input type="text" name="chq_type[]" value= "<?php echo $key->chq_type; ?>" class="form-control chq_type" id="chq_type" />
+            <input type="text" name="chq_type[]" value= "<?php echo $key1->chq_type; ?>" class="form-control chq_type" id="chq_type" />
             </td>
 
             <td>
-                <input type="date" name="chq_dt[]" class="form-control chq_dt" value= "<?php echo $key->chq_dt; ?>" id="chq_dt"/>
+                <input type="date" name="chq_dt[]" class="form-control chq_dt" value= "<?php echo $key1->chq_dt; ?>" id="chq_dt"/>
             </td>
             
             <td>
-                <input type="text" name="amt[]" class="form-control amt" value= "<?php echo $key->amt; ?>" id="amt"/>
+                <input type="text" name="amt[]" class="form-control amt" value= "<?php echo $key1->amt; ?>" id="amt"/>
             </td>
             
             <!-- <td>
-                <input type="text" name="remarks[]" class="form-control required" value= "<?php echo $key->remarks; ?>" id="remarks"/>
+                <input type="text" name="remarks[]" class="form-control required" value= "<?php echo $key1->remarks; ?>" id="remarks"/>
             </td> -->
            
         </tr>
         <?php } ?>
     </tbody>   
+<tfoot>
+<tr>
+                    <td colspan="4" style="text-align: right;">Add GST:</td>
+                    <td><input type="text" style="width:100px"  id=mr_add_gst class="form-control mr_add_gst" name="mr_add_gst"  value="<?php echo $key->mr_add_gst; ?>"></td>
+                    </tr>
+                    <!-- value="<?php echo $key->mr_add_gst; ?>" -->
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Less GST:</td>
+                    <td><input type="text" style="width:100px"  id=mr_less_gst class="form-control mr_less_gst" name="mr_less_gst"  value="<?php echo $key->mr_less_gst; ?>"></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Less Cofed Margin:</td>
+                    <td><input type="text" style="width:100px"  id=confed_margin class="form-control confed_margin" name="confed_margin"  value="<?php echo $key->confed_margin; ?>"></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Add GST:</td>
+                    <td><input type="text"  style="width:100px" id=margin_add_gst class="form-control margin_add_gst" name="margin_add_gst"  value="<?php echo $key->margin_add_gst; ?>"></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Less GST:</td>
+                    <td><input type="text" style="width:100px" id=margin_less_gst class="form-control margin_less_gst" name="margin_less_gst" value="<?php echo $key->margin_less_gst; ?>"></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Total:</td>
+                    <td><input type="text" style="width:110px" class="form-control tot_mr_amt" id=tot_mr_amt value="<?php echo $key->tot_mr_amt; ?>" readonly></td>
+                    
 
+                </tr>
+
+</tfoot>
 </table>
 
 </div>

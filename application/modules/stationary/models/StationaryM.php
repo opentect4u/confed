@@ -1104,7 +1104,7 @@
             // die();
         }
        
-        public function addNewbankPayment($file_name,$page_no,$bank, $ref_no,$tot_s_bill,$tot_p_bill,$s_bill_less_amt,$p_bill_less_amt,$s_bill_add_amt,$p_bill_add_amt,$p_bill_round_off,$s_bill_round_off,$s_bill_add_rnd_off,$p_bill_add_rnd_off, $mr_add_gst,$mr_less_gst,$confed_margin,$margin_add_gst ,$margin_less_gst)
+        public function addNewbankPayment($file_name,$page_no,$bank, $ref_no,$tot_s_bill,$tot_p_bill,$s_bill_less_amt,$p_bill_less_amt,$s_bill_add_amt,$p_bill_add_amt,$p_bill_round_off,$s_bill_round_off,$s_bill_add_rnd_off,$p_bill_add_rnd_off, $mr_add_gst,$mr_less_gst,$confed_margin,$margin_add_gst ,$margin_less_gst,$tot_mr_amt)
         {
 
             $value = array( 'file_name'           => $file_name,
@@ -1117,15 +1117,16 @@
                             'p_bill_less_amt'     => $p_bill_less_amt,
                             's_bill_add_amt'      => $s_bill_add_amt,
                             'p_bill_add_amt'      => $s_bill_add_amt,
-                            'p_bill_less_rnd_off'    => $p_bill_round_off,
-                            's_bill_less_rnd_off'    => $s_bill_round_off,
+                            'p_bill_less_rnd_off' => $p_bill_round_off,
+                            's_bill_less_rnd_off' => $s_bill_round_off,
                             's_bill_add_rnd_off'  => $s_bill_add_rnd_off,
                             'p_bill_add_rnd_off'  => $s_bill_add_rnd_off,
                             'mr_add_gst'          => $mr_add_gst,
                             'mr_less_gst'         => $mr_less_gst,
                             'confed_margin'       => $confed_margin,
                             'margin_add_gst'      => $margin_add_gst,
-                            'margin_less_gst'     => $margin_less_gst);
+                            'margin_less_gst'     => $margin_less_gst,
+                             'tot_mr_amt'         => $tot_mr_amt);
             
             $this->db->insert('td_stn_bank_file_dtls',$value);
 
@@ -1277,20 +1278,28 @@
 
         // }
 
-        public function updateNewbankPayment( $file_name,$page_no,$bank, $ref_no,$tot_s_bill,$tot_p_bill,$s_bill_less_amt,$p_bill_less_amt)
+        public function updateNewbankPayment($file_name,$page_no,$bank, $ref_no,$tot_s_bill,$tot_p_bill,$s_bill_less_amt,$p_bill_less_amt,$s_bill_add_amt,$p_bill_add_amt, $s_bill_less_rnd_off, $p_bill_less_rnd_off,$s_bill_add_rnd_off,$p_bill_add_rnd_off,$mr_add_gst,$tot_mr_amt)
         {
 
             // for($i=0; $i<$item_no; $i++)
             // {
-                $value = array( 'file_name'=> $file_name,
-                                'page_no'=> $page_no,
-                                'bank' =>$bank,
-                                'ref_no'=>$ref_no,
-                                'tot_s_bill' => $tot_s_bill,
-                                'tot_p_bill' => $tot_p_bill,
-                                's_bill_less_amt'=> $s_bill_less_amt,
-                                'p_bill_less_amt'=> $s_bill_less_amt );
-                            
+                $value = array( 'file_name'       => $file_name,
+                                'page_no'         => $page_no,
+                                'bank'            =>$bank,
+                                'ref_no'          =>$ref_no,
+                                'tot_s_bill'      => $tot_s_bill,
+                                'tot_p_bill'      => $tot_p_bill,
+                                's_bill_less_amt' => $s_bill_less_amt,
+                                'p_bill_less_amt' => $s_bill_less_amt ,
+                                's_bill_add_amt'  => $s_bill_add_amt,
+                                'p_bill_add_amt'  => $p_bill_add_amt,
+                                's_bill_less_rnd_off'=>$s_bill_round_off, 
+                                'p_bill_less_rnd_off'=>$p_bill_round_off,
+                                's_bill_add_rnd_off' =>$s_bill_add_rnd_off,
+                                'p_bill_add_rnd_off' =>$p_bill_add_rnd_off,
+                                'mr_add_gst'      =>$mr_add_gst,
+                                'mr_less_gst'     =>$mr_less_gst,
+                                'tot_mr_amt'      =>$tot_mr_amt);
                 $this->db->where('ref_no',$ref_no);
                 $this->db->update('td_stn_bank_file_dtls',$value);
             // }

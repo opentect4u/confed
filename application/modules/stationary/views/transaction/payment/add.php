@@ -240,15 +240,15 @@
 <!-- <td colspan="4" style="text-align: right;">Less Amount:</td>
                     <td><input type="text" style="width:100px"id= mr_bill_less_amt class="form-control mr_bill_less_amt" name="mr_bill_less_amt"></td> -->
 <!-- </tr> -->
-<tr>
-                <td colspan="4" style="text-align: right;">Add GST:</td>
+                   <tr>
+                    <td colspan="4" style="text-align: right;">Add GST:</td>
                     <td><input type="text" style="width:100px" id=mr_add_gst class="form-control mr_add_gst" name="mr_add_gst"  value="0"></td>
                     </tr>
                     <tr>
                     <td colspan="4" style="text-align: right;">Less GST:</td>
                     <td><input type="text" style="width:100px" id=mr_less_gst class="form-control mr_less_gst" name="mr_less_gst"  value="0"></td>
                     </tr>
-                    </tr>
+                    <tr>
                     <td colspan="4" style="text-align: right;">Less Cofed Margin:</td>
                     <td><input type="text" style="width:100px"  id=confed_margin class="form-control confed_margin" name="confed_margin"  value="0"></td>
                     </tr>
@@ -260,8 +260,7 @@
                     <td colspan="4" style="text-align: right;">Less GST:</td>
                     <td><input type="text" style="width:100px" id=margin_less_gst class="form-control margin_less_gst" name="margin_less_gst" value="0"></td>
                     </tr>
-                <tr>
-                
+                    <tr>
                     <td colspan="4" style="text-align: right;">Total:</td>
                     <td><input type="text" style="width:110px" class="form-control tot_mr_amt" id=tot_mr_amt readonly></td>
 
@@ -488,17 +487,46 @@ $tot_mr_amt=$("#tot_mr_amt").val();
 $con_margin = $tot_mr_amt*.06;
 console.log($con_margin);
 $('.confed_margin').val($con_margin);
+$('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin));
 });
 
 $('.mr_less_gst').change(function(){
 
 $('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) );
 // console.log('hi');
+$tot_mr_amt=$("#tot_mr_amt").val();
+$con_margin = $tot_mr_amt*.06;
+console.log($con_margin);
+$('.confed_margin').val($con_margin);
+$('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin ));
 });
 
-$("#tot_mr_amt").val(sum_mr);  
+ $('.confed_margin').change(function(){
+    $con_margin= $('.confed_margin').val();
+ $('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin ));
+// // console.log('hi');
+});
+
+
+$('.margin_add_gst').change(function(){
+    $con_margin= $('.confed_margin').val();
+$margin_add_gst =$('.margin_add_gst').val();
+ $('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin ) + parseFloat($margin_add_gst));
+
+});
+
+$('.margin_less_gst').change(function(){
+$con_margin= $('.confed_margin').val();
+$margin_add_gst =$('.margin_add_gst').val();
+$margin_less_gst=$('.margin_less_gst').val();
+ $('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin ) + parseFloat($margin_add_gst) - parseFloat($margin_less_gst));
+
+});
+
+$("#tot_mr_amt").val(sum_mr) ;  
 
     });
+ 
  
   
  })
