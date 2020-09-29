@@ -4670,6 +4670,62 @@ class Paddys extends MX_Controller {
         echo json_encode((object) array_merge($data, $res));
 
     }
+      //Bill Details
+    public function f_billDetailscom(){
+
+       // $rice = $this->Paddy->f_get_particulars('td_bill', array('rice_type'), array('kms_yr' => $this->kms_year, 'pool_type' => $this->input->get('pool_type'), 'bill_no' => $this->input->get('billNo')), 1);
+
+         $rice = $this->Paddy->f_get_particulars('td_bill', array('rice_type'), array('kms_yr' => $this->session->userdata('kms_yr'), 'pool_type' => $this->input->get('pool_type'), 'bill_no' => $this->input->get('billNo')), 1);
+        
+        if($rice->rice_type == 'P'){
+            //Retrive Bill Details
+            $select =   array(
+                
+                'bill_dt', 'paddy_qty', 'sub_tot_cmr_qty',
+                
+                'butta_cut', 'bill_no', 'comm_soc'
+            
+            );
+        }
+        else{
+            $select =   array(
+            
+                'bill_dt', 'paddy_qty', 'sub_tot_cmr_qty',
+                
+                'butta_cut', 'bill_no', 'comm_soc'
+            
+            );
+        }        
+
+        $where  =   array(
+
+            'rice_type' => $rice->rice_type,
+
+            'pool_type' => $this->input->get('pool_type'),
+
+            // 'kms_yr'    => $this->kms_year,
+            'kms_yr'     => $this->session->userdata('kms_yr'),
+
+            'bill_no'   => $this->input->get('billNo')
+
+        );
+
+        $data = (array) $this->Paddy->f_get_particulars("td_bill", $select, $where, 1);
+
+        if($rice->rice_type == 'P'){
+            unset($select);
+            $select = array('boiled_val rate');
+        }
+        else{
+            unset($select);
+            $select = array('raw_val rate');
+        }
+        
+        $res = (array) $this->Paddy->f_get_particulars("md_comm_params", $select, array('sl_no' => 9), 1);
+
+        echo json_encode((object) array_merge($data, $res));
+
+    }
 
     //Bill Master Details
     public function f_billMasterDetails(){
@@ -4722,6 +4778,39 @@ class Paddys extends MX_Controller {
         
     }
 
+      // Confed Bill List
+    public function f_confedbilllists(){
+
+        $select =   array(
+            
+            'bill_no'
+
+        );
+                  
+        $where  =   array(
+
+            "kms_yr"     => $this->session->userdata('kms_yr'),
+
+            'pool_type'  => $this->input->get('pool_type'),
+
+            // 'rice_type'  => $this->input->get('rice_type'),
+
+            "dist"      => $this->input->get('dist'),
+
+            'block'     => $this->input->get('block'),
+
+            'soc_id'    => $this->input->get('soc_id'),
+
+            // 'mill_id'   => $this->input->get('mill_id')
+
+        );
+
+        $data = $this->Paddy->f_get_particulars("td_bill", $select, $where, 0);
+
+        echo json_encode($data);
+
+    }
+
     //New Commission Add in the table td_commission_bill
     public function f_commission_add() {
 
@@ -4746,12 +4835,12 @@ class Paddys extends MX_Controller {
 
                 $data_array[] = array(
 
-                    "pmt_commission_no"           =>  $pmt_commission_no,
+                    "pmt_commission_no"     =>  $pmt_commission_no,
     
                     "trans_dt"              =>  $this->input->post('trans_dt'),
     
                     // "kms_year"              =>  $this->kms_year,
-                    "kms_year"      => $this->session->userdata('kms_yr'),
+                    "kms_year"              => $this->session->userdata('kms_yr'),
 
                     "soc_id"                =>  $this->input->post('soc_name'),
     

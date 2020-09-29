@@ -155,7 +155,12 @@
                     <tr>
                         <td><input type="text" class="form-control soc_bill_no" name="soc_bill_no[]" required></td>
                         <td><input type="date" class="form-control soc_bill_date" name="soc_bill_date[]" required></td>
-                        <td><input type="text" class="form-control confed_bill_no" name="confed_bill_no[]" required></td>
+                        <td>
+                            <select type="text" class="form-control confed_bill_no required" name="confed_bill_no[]" id="confed_bill_no">
+                           <option value="">Select</option>    
+                           </select>
+
+                            <!-- <input type="text" class="form-control confed_bill_no" name="confed_bill_no[]" required> --></td>
                         <td><input type="date" class="form-control confed_bill_date" name="confed_bill_date[]" required></td>
                         <td><input type="text" class="form-control qty_paddy" name="qty_paddy[]" required></td>
                         <td><input type="text" class="form-control rate" id="rate" name="rate[]" required></td>
@@ -315,6 +320,41 @@
 </script>
 
 <script>
+    $('#pool_type').change(function(){
+
+            //For District wise Block
+            $.get( 
+
+                '<?php echo site_url("paddy/confedbilllists");?>',
+
+                { 
+                    dist: $('#dist').val(),
+                    block: $('#block').val(),
+                    soc_id: $('#soc_name').val(),
+                    pool_type: $(this).val()
+                   
+                }
+
+            ).done(function(data){
+
+                var string = '<option value="">Select</option>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.bill_no + '">' + value.bill_no + '</option>'
+
+                });
+
+                $('#confed_bill_no').html(string);
+               
+                
+
+            })
+
+        });
+</script>
+
+<script>
 
     $(document).ready(function(){
 
@@ -417,12 +457,45 @@
 <script>
     $(document).ready(function(){
 
+          var inc = 0;
+
         $('.addAnother').click(function(){
+
+
+              inc++;
+
+            $.get( 
+
+                '<?php echo site_url("paddy/confedbilllists");?>',
+
+                { 
+                    dist: $('#dist').val(),
+                    block: $('#block').val(),
+                    soc_id: $('#soc_name').val(),
+                    pool_type:$('#pool_type').val()
+                }
+
+            ).done(function(data){
+
+                var string = '<option value="">Select</option>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.bill_no + '">' + value.bill_no + '</option>'
+
+                });
+                console.log('confed_bill_nos'+inc);
+
+               
+               $('#confed_bill_nos'+inc).html(string);
+                
+
+            })
 
             let row = '<tr>' +
                         '<td><input type="text" class="form-control soc_bill_no" name="soc_bill_no[]"></td>' +
                         '<td><input type="date" class="form-control soc_bill_date" name="soc_bill_date[]"></td>' +
-                        '<td><input type="text" class="form-control confed_bill_no" name="confed_bill_no[]"></td>' +
+                        '<td><select type="text" class="form-control confed_bill_no required" name="confed_bill_no[]" id="confed_bill_nos'+inc+'"><option value="">Select</option></select></td>' +
                         '<td><input type="date" class="form-control confed_bill_date" name="confed_bill_date[]"></td>' +
                         '<td><input type="text" class="form-control qty_paddy" name="qty_paddy[]"></td>' +
                         '<td><input type="text" class="form-control rate" id="rate" name="rate[]"></td>' +
@@ -490,7 +563,7 @@
 
             let indexNo = $('.confed_bill_no').index(this);
 
-            $.get('<?php echo site_url("paddy/billDetails"); ?>',{
+            $.get('<?php echo site_url("paddy/billDetailscom"); ?>',{
 
                 billNo: $(this).val(),
                 pool_type: $('#pool_type').val()
@@ -502,10 +575,11 @@
                 $('.confed_bill_date:eq('+indexNo+')').val(data.bill_dt);
                 $('.qty_paddy:eq('+indexNo+')').val(data.paddy_qty * 10);
                 $('.rate:eq('+indexNo+')').val(data.rate);
-                $('.value:eq('+indexNo+')').val(data.comm_soc);
+                //$('.value:eq('+indexNo+')').val(data.comm_soc);
+                $('.value:eq('+indexNo+')').val(data.paddy_qty * 10 * data.rate);
 
                 $('.tot_paddy').val(sumValuesOf('qty_paddy'));
-                $('.tot_rate').val(sumValuesOf('rate'));
+               // $('.tot_rate').val(sumValuesOf('rate'));
                 $('.tot_comm').val(sumValuesOf('value'));
                 $('.less_butta').val(sumValuesOf('value'));
                 
