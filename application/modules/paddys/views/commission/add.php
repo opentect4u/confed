@@ -81,7 +81,7 @@
                 <div class="col-sm-5">
 
                     <input type="text"
-                            class="form-control required"
+                            class="form-control" readonly="" 
                             name="totPaddy"
                             id="totPaddy"
                         />
@@ -185,7 +185,7 @@
                         <td colspan="4" style="text-align: right;">Less: TDS Deduct</td>
                         <td><div class="input-group"><input type="text" class="form-control tds_percentage" name="tds_percentage"><span class="input-group-addon">%</span></div></td>
                         <td style="text-align: right;">Rs:</td>
-                        <td><input type="text" class="form-control deducted_amt no-border" name="deducted_amt" readonly/></td>
+                        <td><input type="text" class="form-control deducted_amt " name="deducted_amt" readonly/></td>
                         <td></td>
 
                     </tr>
@@ -469,9 +469,9 @@
                 '<?php echo site_url("paddy/confedbilllists");?>',
 
                 { 
-                    dist: $('#dist').val(),
-                    block: $('#block').val(),
-                    soc_id: $('#soc_name').val(),
+                    dist:     $('#dist').val(),
+                    block:    $('#block').val(),
+                    soc_id:   $('#soc_name').val(),
                     pool_type:$('#pool_type').val()
                 }
 
@@ -579,6 +579,8 @@
                 $('.value:eq('+indexNo+')').val(data.paddy_qty * 10 * data.rate);
 
                 $('.tot_paddy').val(sumValuesOf('qty_paddy'));
+                $('#totPaddy').val(sumValuesOf('qty_paddy'));
+                
                // $('.tot_rate').val(sumValuesOf('rate'));
                 $('.tot_comm').val(sumValuesOf('value'));
                 $('.less_butta').val(sumValuesOf('value'));
