@@ -17,16 +17,17 @@
 
 <div class="col-sm-3">
 
-    <input  type="text" name="file_name" class="form-control file_name" id="file_file_nameno" required>
+    <input  type="text" name="file_name" class="form-control file_name" id="file_file_nameno" >
         
 </div>
 <label for="page_no" class="col-sm-1 col-form-label">Page No.<font color="red">*</font></label>
 
 <div class="col-sm-2">
 
-    <input type="text" name="page_no" class="form-control page_no" id="page_no" required>
+    <input type="text" name="page_no" class="form-control page_no" id="page_no" >
         
 </div>
+
 <label for="bank" class="col-sm-1 col-form-label">Bank<font color="red">*</font></label>
 
 <div class="col-sm-3">
@@ -125,11 +126,34 @@
                 <tr>
                     
                     <td colspan="2" style="text-align: right;">Less Amount:</td>
-                    <td><input type="text" id=s_bill_less_amt class="form-control s_bill_less_amt" name="s_bill_less_amt"></td>
-                   
+                    <td><input type="text" id=s_bill_less_amt class="form-control s_bill_less_amt" name="s_bill_less_amt" value="0"></td>
+                                       <td></td>
+                    <td></td>
+                    <td><input  colspan="5" type="text" class="form-control p_bill_less_amt" name="p_bill_less_amt" value="0"></td>
+                </tr>
+                <tr>
+                <td colspan="2" style="text-align: right;">Add Amount:</td>
+                    <td><input type="text" id=s_bill_add_amt class="form-control s_bill_add_amt" name="s_bill_add_amt" value="0"></td>
                     <td></td>
                     <td></td>
-                    <td><input  colspan="5" type="text" class="form-control p_bill_less_amt" name="p_bill_less_amt"></td>
+                    <td><input  colspan="5" type="text" class="form-control p_bill_add_amt" name="p_bill_add_amt" value="0"></td>
+
+                </tr>
+                <tr>
+                <td colspan="2" style="text-align: right;">Less Round Off:</td>
+                    <td><input type="text" id=s_bill_round_off class="form-control s_bill_round_off" name="s_bill_round_off" value="0"></td>
+                    <td></td>
+                    <td></td>
+                    <td><input  colspan="5" type="text" class="form-control p_bill_round_off" name="p_bill_round_off" value="0"></td>
+
+                </tr>
+                <tr>
+                <td colspan="2" style="text-align: right;">Add Round Off:</td>
+                    <td><input type="text" id=s_bill_add_rnd_off class="form-control s_bill_add_rnd_off" name="s_bill_add_rnd_off" value="0"></td>
+                    <td></td>
+                    <td></td>
+                    <td><input  colspan="5" type="text" class="form-control p_bill_add_rnd_off" name="p_bill_add_rnd_off" value="0"></td>
+
                 </tr>
                     <td>Total:</td>
                     <td colspan="1">
@@ -212,10 +236,33 @@
 
 </tbody>
 <tfoot>
-                <tr>
-                
+<!-- <tr> -->
+<!-- <td colspan="4" style="text-align: right;">Less Amount:</td>
+                    <td><input type="text" style="width:100px"id= mr_bill_less_amt class="form-control mr_bill_less_amt" name="mr_bill_less_amt"></td> -->
+<!-- </tr> -->
+                   <tr>
+                    <td colspan="4" style="text-align: right;">Add GST:</td>
+                    <td><input type="text" style="width:100px" id=mr_add_gst class="form-control mr_add_gst" name="mr_add_gst"  value="0"></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Less GST:</td>
+                    <td><input type="text" style="width:100px" id=mr_less_gst class="form-control mr_less_gst" name="mr_less_gst"  value="0"></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Less Cofed Margin:</td>
+                    <td><input type="text" style="width:100px"  id=confed_margin class="form-control confed_margin" name="confed_margin"  value="0"></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Add GST:</td>
+                    <td><input type="text"  style="width:100px" id=margin_add_gst class="form-control margin_add_gst" name="margin_add_gst"  value="0"></td>
+                    </tr>
+                    <tr>
+                    <td colspan="4" style="text-align: right;">Less GST:</td>
+                    <td><input type="text" style="width:100px" id=margin_less_gst class="form-control margin_less_gst" name="margin_less_gst" value="0"></td>
+                    </tr>
+                    <tr>
                     <td colspan="4" style="text-align: right;">Total:</td>
-                    <td><input type="text" style="width:100px" class="form-control tot_mr_amt" id=tot_mr_amt readonly></td>
+                    <td><input type="text" style="width:110px" class="form-control tot_mr_amt" id=tot_mr_amt readonly></td>
 
                 </tr>
 
@@ -225,7 +272,11 @@
 
             </tfoot>
 </table>
-
+<!-- <div class="form-header">
+            
+            <h4>Payment Details</h4>
+        
+        </div> -->
 </div> 
         
         <div class="form-group row">
@@ -421,15 +472,61 @@ $('#intro').on('change', '#mr_no', function(){
         row.find('td:eq(2) :input').val(chq_type);
         row.find('td:eq(3) :input').val(chq_dt);
         row.find('td:eq(4) :input').val(amt);
-        var sum = 0;
+        var sum_mr = 0;
 $('.mramt').each(function(){
    
-    sum += parseFloat($(this).val());  // Or this.innerHTML, this.innerText
+    sum_mr += parseFloat($(this).val());  // Or this.innerHTML, this.innerText
     // sum += $('#amt').val();
 });
-$("#tot_mr_amt").val(sum);  
+
+$('.mr_add_gst').change(function(){
+
+$('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) );
+console.log('hi');
+$tot_mr_amt=$("#tot_mr_amt").val();
+$con_margin = $tot_mr_amt*.06;
+console.log($con_margin);
+$('.confed_margin').val($con_margin);
+$('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin));
+});
+
+$('.mr_less_gst').change(function(){
+
+$('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) );
+// console.log('hi');
+$tot_mr_amt=$("#tot_mr_amt").val();
+$con_margin = $tot_mr_amt*.06;
+console.log($con_margin);
+$('.confed_margin').val($con_margin);
+$('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin ));
+});
+
+ $('.confed_margin').change(function(){
+    $con_margin= $('.confed_margin').val();
+ $('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin ));
+// // console.log('hi');
+});
+
+
+$('.margin_add_gst').change(function(){
+    $con_margin= $('.confed_margin').val();
+$margin_add_gst =$('.margin_add_gst').val();
+ $('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin ) + parseFloat($margin_add_gst));
+
+});
+
+$('.margin_less_gst').change(function(){
+$con_margin= $('.confed_margin').val();
+$margin_add_gst =$('.margin_add_gst').val();
+$margin_less_gst=$('.margin_less_gst').val();
+ $('#tot_mr_amt').val(sum_mr + parseFloat($('.mr_add_gst').val()) -  parseFloat($('.mr_less_gst').val()) - parseFloat($con_margin ) + parseFloat($margin_add_gst) - parseFloat($margin_less_gst));
+
+});
+
+$("#tot_mr_amt").val(sum_mr) ;  
 
     });
+ 
  
   
  })
@@ -485,13 +582,42 @@ $('#intro2').on('change', '#s_bill_no', function(){
 });
 
 // $("#tot_s_bill").val(sum_sale);  
-
+// $s_bill_add_amt=parseFloat($('.s_bill_add_amt').val());
+// console.log($s_bill_add_amt);
 $('.s_bill_less_amt').change(function(){
-
-$('.tot_s_bill').val(sum_sale - $(this).val());
+    $s_add_amt =parseFloat($('.s_bill_add_amt').val());
+    $s_add_rnd_amt =parseFloat($('.s_bill_add_rnd_off').val());
+// $('.tot_s_bill').val(sum_sale - $(this).val() - $('.s_bill_round_off').val() + $('.s_bill_add_amt').val() + $('.s_bill_add_rnd_off').val());
+$('.tot_s_bill').val(sum_sale - $(this).val() - parseFloat($('.s_bill_round_off').val()) + parseFloat($('.s_bill_add_amt').val()) + $s_add_amt + $s_add_rnd_amt);
 
 });
-$("#tot_s_bill").val(sum_sale); 
+
+$('.s_bill_round_off').change(function(){
+    $s_add_amt =parseFloat($('.s_bill_add_amt').val());
+    $s_add_rnd_amt =parseFloat($('.s_bill_add_rnd_off').val());
+$('.tot_s_bill').val(sum_sale - parseFloat($('.s_bill_less_amt').val()) - parseFloat($('.s_bill_round_off').val()) + $s_add_amt + $s_add_rnd_amt);
+
+});
+
+$('.s_bill_add_amt').change(function(){
+
+$s_add_amt =parseFloat($(this).val());
+$s_add_rnd_amt =parseFloat($('.s_bill_add_rnd_off').val());
+
+$('.tot_s_bill').val(sum_sale + $s_add_amt - parseFloat($('.s_bill_less_amt').val()) - parseFloat($('.s_bill_round_off').val()) + $s_add_rnd_amt );
+
+});
+
+$('.s_bill_add_rnd_off').change(function(){
+
+$s_add_amt =parseFloat($('.s_bill_add_amt').val());
+$s_add_rnd_amt =parseFloat($(this).val());
+
+$('.tot_s_bill').val(sum_sale + $s_add_amt - parseFloat($('.s_bill_less_amt').val()) - parseFloat($('.s_bill_round_off').val()) + $s_add_rnd_amt);
+
+});
+
+parseFloat($("#tot_s_bill").val(sum_sale)); 
 
 $('.p_bill_amt').each(function(){
     // console.log(s_bill_less_amt);         
@@ -501,10 +627,36 @@ $('.p_bill_amt').each(function(){
 $("#tot_p_bill").val(sum_pur);  
 
 $('.p_bill_less_amt').change(function(){
+    $p_add_amt =parseFloat($('.p_bill_add_amt').val());
+    $p_add_rnd_amt =parseFloat($('.p_bill_add_rnd_off').val());
+$('.tot_p_bill').val(sum_pur - $(this).val() - parseFloat($('.p_bill_round_off').val())+ $p_add_amt + $p_add_rnd_amt);
 
-$('.tot_p_bill').val(sum_pur - $(this).val());
+// $('.tot_p_bill').val(sum_sale - $(this).val() - parseFloat($('.p_bill_round_off').val()) + parseFloat($('.p_bill_add_amt').val()) + $p_add_amt + $p_add_rnd_amt);
 
 });
+
+$('.p_bill_round_off').change(function(){
+    $p_add_amt =parseFloat($('.p_bill_add_amt').val());
+    $p_add_rnd_amt =parseFloat($('.p_bill_add_rnd_off').val());
+$('.tot_p_bill').val(sum_pur - parseFloat($('.p_bill_less_amt').val()) - parseFloat($('.p_bill_round_off').val()) + $p_add_amt + $p_add_rnd_amt);
+
+});
+
+$('.p_bill_add_amt').change(function(){
+    $p_add_amt =parseFloat($('.p_bill_add_amt').val());
+    $p_add_rnd_amt =parseFloat($('.p_bill_add_rnd_off').val());
+$('.tot_p_bill').val(sum_pur - parseFloat($('.p_bill_less_amt').val()) - parseFloat($('.p_bill_round_off').val()) + $p_add_amt + $p_add_rnd_amt);
+
+});
+
+$('.p_bill_add_rnd_off').change(function(){
+    $p_add_amt =parseFloat($('.p_bill_add_amt').val());
+    $p_add_rnd_amt =parseFloat($('.p_bill_add_rnd_off').val());
+$('.tot_p_bill').val(sum_pur - parseFloat($('.p_bill_less_amt').val()) - parseFloat($('.p_bill_round_off').val()) + $p_add_amt + $p_add_rnd_amt);
+
+});
+
+
     });
 })
  </script>
