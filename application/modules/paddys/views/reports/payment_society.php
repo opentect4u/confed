@@ -74,7 +74,7 @@ tr:hover {background-color: #f5f5f5;}
 
                 <div class="form-header">
                 
-                    <h4>Payment Society</h4>
+                    <h4>Payment Society </h4>
                 
                 </div>
 
@@ -163,30 +163,7 @@ tr:hover {background-color: #f5f5f5;}
 
               </div>  
 
-                <div class="form-group row">
-
-                    <label for="pmt_bill_no" class="control-lebel col-sm-2 col-form-label">Payment No:</label>
-
-                    <div class="col-sm-10">
-
-
-                           <select type="text"
-                        class="form-control required sch_cd"
-                        name="pmt_bill_no"
-                        id="pmt_bill_no"
-                    >
-
-                        <option value="">Select</option>    
-
-                      
-
-
-                    </select>
-
-                  
-                    </div>
-                </div>
-                    <!-- <div class="form-group row"> -->
+                 <!-- <div class="form-group row"> -->
                    <div class="form-group row">
                     <label for="pool_type" class="control-lebel col-sm-2 col-form-label">Pool Type:</label>
             
@@ -212,6 +189,31 @@ tr:hover {background-color: #f5f5f5;}
                 <!-- </div> -->
 
                 </div>
+
+                <div class="form-group row">
+
+                    <label for="pmt_bill_no" class="control-lebel col-sm-2 col-form-label">Payment No:</label>
+
+                    <div class="col-sm-10">
+
+
+                           <select type="text"
+                        class="form-control required sch_cd"
+                        name="pmt_bill_no"
+                        id="pmt_bill_no"
+                    >
+
+                        <option value="">Select</option>    
+
+                      
+
+
+                    </select>
+
+                  
+                    </div>
+                </div>
+                 
 
                 <div class="form-group row">
 
@@ -539,7 +541,9 @@ tr:hover {background-color: #f5f5f5;}
 
 </script>
 <script>
-    $('#soc_name').change(function(){
+   // $('#soc_name').change(function(){
+
+        $('#pool_type').change(function(){
 
             //For District wise Block
             $.get( 
@@ -549,7 +553,9 @@ tr:hover {background-color: #f5f5f5;}
                 { 
                     dist: $('#dist').val(),
                     
-                    soc_id: $('#soc_name').val()
+                    soc_id: $('#soc_name').val(),
+
+                    pool_type: $(this).val()
                    
                 }
 

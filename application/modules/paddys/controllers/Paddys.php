@@ -6844,13 +6844,15 @@ public function f_wqscdetails_report(){
 public function f_paymentbilllist(){
                 
 
-            $dist     = $this->input->get('dist');
+            $dist      = $this->input->get('dist');
         
             $soc_id    = $this->input->get('soc_id');
 
             $mill_id   = $this->input->get('mill_id');
 
-        $data = $this->Paddy->f_get_paymentslist($dist,$soc_id,$mill_id);
+            $pool_type = $this->input->get('pool_type');
+
+        $data = $this->Paddy->f_get_paymentslist($dist,$soc_id,$mill_id,$pool_type);
         
         echo json_encode($data);
 
@@ -7011,12 +7013,14 @@ public function f_paymentsocietylist(){
 
                 "dist"        => $this->input->get('dist'),
                 "soc_id"      => $this->input->get('soc_id'),
-                "kms_year"    => $this->kms_year
+                "pool_type"   => $this->input->get('pool_type'),
+                "kms_year"    => $this->session->userdata('kms_yr')
         );
                 
 
-        $data     = $this->Paddy->f_get_particulars("td_commission_bill", NULL, NULL, 0);
-        
+        $data     = $this->Paddy->f_get_particulars("td_commission_bill", NULL,$where, 0);
+
+       
         echo json_encode($data);
 
 }
