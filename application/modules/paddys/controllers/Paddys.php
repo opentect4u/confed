@@ -6852,7 +6852,7 @@ public function f_paymentbilllist(){
 
             $pool_type = $this->input->get('pool_type');
 
-        $data = $this->Paddy->f_get_paymentslist($dist,$soc_id,$mill_id,$pool_type);
+            $data = $this->Paddy->f_get_paymentslist($dist,$soc_id,$mill_id,$pool_type);
         
         echo json_encode($data);
 
