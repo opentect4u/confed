@@ -318,7 +318,7 @@ $sql="SELECT t.dist, m.district_name, SUM(t.count) count
         
     }
 
-    public function f_get_paddy_dtls($soc_id, $mill_id){
+    /*public function f_get_paddy_dtls($soc_id, $mill_id){
         $kms_year=$this->session->userdata('kms_yr');
         $data_array['resultant'] =
         $data_array['offered'] =
@@ -395,6 +395,116 @@ $sql="SELECT t.dist, m.district_name, SUM(t.count) count
 
         
         return $data_array;
+    }*/
+
+    ///Soceity To Rice Mill Paddy Received Report
+
+    public function f_get_paddy_dtls($from_dt, $to_dt){
+
+        $query = $this->db->query( "SELECT a.dist,
+                                           b.district_name,
+                                           a.soc_id,
+                                           c.soc_name,
+                                           a.mill_id,
+                                           d.mill_name,
+                                           sum(a.paddy_qty)paddy_qty
+                                    FROM   td_received a,
+                                           md_district b,
+                                           md_society c,
+                                           md_mill d 
+                                    where a.dist = b.district_code
+                                    and   a.soc_id = c.sl_no
+                                    and   a.mill_id = d.sl_no
+                                    and   a.trans_dt between '$from_dt' and '$to_dt' 
+                                    group by a.dist,b.district_name,a.soc_id,c.soc_name,a.mill_id,d.mill_name
+                                    ORDER BY a.dist");
+
+        return $query->result();
+    }
+
+    public function f_get_registered_farmer($from_dt, $to_dt){
+
+        $query = $this->db->query( "SELECT soc_id,
+                                           ifnull(sum(farmer_no),0)farmer_no
+                                    FROM   td_reg_farmer 
+                                    where  trans_dt <= '$to_dt'
+                                    group by soc_id");
+
+        return $query->result();
+    }
+
+    public function f_get_proc_paddy($from_dt,$to_dt){
+
+        $query = $this->db->query( "SELECT soc_id,
+                                           ifnull(sum(no_of_camp),0)camp_no,
+                                           ifnull(sum(no_of_farmer),0)paddy_farmer_no,
+                                           ifnull(sum(paddy_qty),0)paddy_qty
+                                    FROM   td_collections 
+                                    where  trans_dt between '$from_dt' and '$to_dt' 
+                                    group by soc_id");
+
+        return $query->result();
+    }
+
+    public function f_get_cmr_offered($from_dt,$to_dt){
+
+        $query = $this->db->query( "SELECT soc_id,
+                                           mill_id,
+                                           ifnull(sum(resultant_cmr),0)resultant_cmr,
+                                           ifnull(sum(tot_offered),0)tot_offered,
+                                           ifnull(sum(sp),0)sp,
+                                           ifnull(sum(cp),0)cp,
+                                           ifnull(sum(fci),0)fci
+                                    FROM   td_cmr_offered 
+                                    where  trans_dt between '$from_dt' and '$to_dt' 
+                                    group by soc_id,mill_id");
+
+        return $query->result();
+    }
+
+    public function f_get_do_issued($from_dt,$to_dt){
+
+        $query = $this->db->query( "SELECT soc_id,
+                                           mill_id,
+                                           ifnull(sum(tot_doisseued),0)tot_doisseued,
+                                           ifnull(sum(sp),0)sp,
+                                           ifnull(sum(cp),0)cp,
+                                           ifnull(sum(fci),0)fci
+                                    FROM   td_do_isseued 
+                                    where  trans_dt between '$from_dt' and '$to_dt' 
+                                    group by soc_id,mill_id");
+
+        return $query->result();
+    }
+
+    public function f_get_cmr_deliver($from_dt,$to_dt){
+
+        $query = $this->db->query( "SELECT soc_id,
+                                           mill_id,
+                                           ifnull(sum(tot_delivery),0)tot_delivery,
+                                           ifnull(sum(sp),0)sp,
+                                           ifnull(sum(cp),0)cp,
+                                           ifnull(sum(fci),0)fci
+                                    FROM   td_cmr_delivery 
+                                    where  trans_dt between '$from_dt' and '$to_dt' 
+                                    group by soc_id,mill_id");
+
+        return $query->result();
+    }
+
+    public function f_get_to_deliver($from_dt,$to_dt){
+
+        $query = $this->db->query( "SELECT a.soc_id,
+                                           a.mill_id,
+                                           ifnull(sum(a.resultant_cmr),0)resultant_cmr,
+                                           ifnull(sum(b.tot_delivery),0)tot_delivery
+                                    FROM   td_cmr_offered a, td_cmr_delivery b
+                                    where  a.soc_id = b.soc_id
+                                    and    a.mill_id = b.mill_id
+                                    and    a.trans_dt between '$from_dt' and '$to_dt' 
+                                    group by a.soc_id,a.mill_id");
+
+        return $query->result();
     }
 
     //Payment Details
@@ -725,7 +835,7 @@ group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name
     }
     
     //All Procurement between two dates
-    public function f_get_procurements(){
+    /*public function f_get_procurements(){
 
         $sql = "SELECT t1.*, t2.farmer_no FROM 
                 (SELECT `d`.`district_name`,
@@ -747,7 +857,29 @@ group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name
                 WHERE t1.soc_id = t2.soc_id ORDER BY t1.district_name";
     
         return $this->db->query($sql)->result();
+    }*/
+
+
+    public function f_get_procurements($from_dt,$to_dt){
+
+        $query = $this->db->query( "SELECT a.dist,
+                                           a.soc_id,
+                                           b.district_name,
+                                           c.soc_name,
+                                           ifnull(sum(a.no_of_camp),0)camp_no,
+                                           ifnull(sum(a.no_of_farmer),0)paddy_farmer_no,
+                                           ifnull(sum(a.paddy_qty),0)paddy_qty
+                                    FROM   td_collections a,md_district b,md_society c
+                                    where  a.dist = b.district_code 
+                                    and    a.soc_id = c.sl_no
+                                    and    a.trans_dt between '$from_dt' and '$to_dt' 
+                                    group by a.dist,a.soc_id,b.district_name,c.soc_name
+                                    order by a.dist,a.soc_id");
+
+        return $query->result();
     }
+
+
     public function insert_wqsc($dis_cd,$bill_no,$pool_type,$wqsc_no,$analysis_no,$trn_dt,$no_bags,$qty,$remarks,$kms_year,$Unit_count)
 	{
     //    echo $kms_year;

@@ -264,8 +264,8 @@
                                 <a class="sub-dropbtn">Reports <i class="fa fa-angle-right" style="float: right;"></i></a>    
                                 <div class="sub-dropdown-content">
                                 <a href="<?php echo site_url('paddy/procurement/report'); ?>">Society Wise Total Procurement</a>
-                                    <!--<a href="<?php echo site_url('paddy/distwise/report'); ?>">District Wise</a>-->
-                                <a href="<?php echo site_url('paddy/datewiseprocurement/report'); ?>">Date Wise Procurement</a>
+                                    <!--<a href="<?php //echo site_url('paddy/distwise/report'); ?>">District Wise</a>-->
+                                <!--<a href="<?php //echo site_url('paddy/datewiseprocurement/report'); ?>">Date Wise Procurement</a>-->
                                 <a href="<?php echo site_url('paddy/proctodelivery/report'); ?>">Procurement to Delivery</a>
                                 <a href="<?php echo site_url('paddy/wqscdetails/report'); ?>">WQSC Details</a>
                                     <!--<a href="<?php echo site_url('paddy/blockwise/report'); ?>">Block Wise</a>-->

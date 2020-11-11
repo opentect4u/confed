@@ -71,41 +71,11 @@ tr:hover {background-color: #f5f5f5;}
 
                 <div class="form-header">
                 
-                    <h4>Districtwise & Societywise Paddy Report</h4>
+                    <h4>District Wise Paddy Report</h4>
                 
                 </div>
 
                 <div class="form-group row">
-
-                    <label for="from_date" class="col-sm-2 col-form-label">KMS Year:</label>
-
-                    <div class="col-sm-10">
-
-                        <select type="text"
-                                class="form-control required sch_cd"
-                                name="kms_year"
-                                id="kms_year"
-                        >
-
-                            <option value="0">Select KMS Year</option> 
-
-                                <?php 
-                                    foreach($kms as $value){
-
-                                ?>
-                                    <option value="<?php echo $value->sl_no;?>"><?php echo $value->kms_yr;?></option>  
-                                <?php
-                                    }
-                                ?>  
-                        </select>  
-
-                    </div>
-
-                    </div>
-
-                    <div class="form-group row">
-
-
 
                     <label for="from_date" class="col-sm-2 col-form-label">From Date:</label>
 
@@ -113,10 +83,8 @@ tr:hover {background-color: #f5f5f5;}
 
                         <input type="date"
                                name="from_date"
-                               id  ="from_date"
                                class="form-control required"
                                value="<?php echo $sys_date;?>"
-                               readonly
                         />
 
                     </div>
@@ -131,10 +99,8 @@ tr:hover {background-color: #f5f5f5;}
 
                         <input type="date"
                                name="to_date"
-                               id  ="to_date"
                                class="form-control required"
                                value="<?php echo $sys_date;?>"
-                               readonly
                             />
 
                     </div>
@@ -177,7 +143,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <h3>P-1, Hide Lane, Akbar Mansion, 3rd Floor, Kolkata-700073</h3>
 
-                        <h3>Districtwise & Societywise Paddy Procurement Report Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+                        <h3>District Wise Paddy Procurement Report From <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' - '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
 
                     </div>
                     
@@ -212,31 +178,24 @@ tr:hover {background-color: #f5f5f5;}
 
                             <?php
 
-                                if($proc_dtls){
+                                if($soc_dtls){
 
                                     //For Sl No.
                                     $i = 1;
                                     
-                                    foreach($proc_dtls as $proc_val){
+                                    foreach($soc_dtls as $d_list){
 
                             ?>
 
                                         <tr>
 
                                             <td><?php echo $i++; ?></td>
-                                            <td><?php echo $proc_val->district_name; ?></td>
-                                            <td><?php echo $proc_val->soc_name; ?></td>
-                                            <td><?php 
-                                                    foreach($farm_dtls as $farm_val){
-                                                        if($proc_val->soc_id == $farm_val->soc_id){
-                                                            echo $farm_val->farmer_no;
-                                                        }
-                                                    } 
-                                                ?>
-                                            </td>
-                                            <td><?php echo $proc_val->camp_no; ?></td>
-                                            <td><?php echo $proc_val->paddy_farmer_no; ?></td>
-                                            <td><?php echo $proc_val->paddy_qty; ?></td>
+                                            <td><?php echo $d_list->district_name; ?></td>
+                                            <td><?php echo $d_list->soc_name; ?></td>
+                                            <td><?php echo $d_list->farmer_no; ?></td>
+                                            <td><?php echo $d_list->no_of_camp; ?></td>
+                                            <td><?php echo $d_list->no_of_farmer; ?></td>
+                                            <td><?php echo $d_list->paddy_qty; ?></td>
                             
                             <?php                            
                                         }
@@ -283,39 +242,3 @@ tr:hover {background-color: #f5f5f5;}
     }
 
     ?> 
-<script>
-    $(document).ready(function(){
-
-        $("#kms_year").change(function(){
-
-            $.get('<?php echo site_url("paddy/kms"); ?>',
-
-                {
-                    kms_yr:  $("#kms_year").val()
-                }
-            )
-
-            .done(function(data){
-
-                var data     = JSON.parse(data);
-
-                var from_kms =  data[0].from_date;
-
-                var to_kms   =  data[0].to_date;
-
-                //var date = from_kms; //"2013-05-03";
-                // var newdate = from_kms.split("-").reverse().join("/");
-                //alert(newdate);
-
-                $("#from_date").val(from_kms);
-
-                $("#to_date").val(to_kms);
-
-
-            });
-				 
-
-        });
-    });
-     
-</script>

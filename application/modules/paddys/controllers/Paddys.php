@@ -5798,13 +5798,18 @@ class Paddys extends MX_Controller {
 
     }
 
-    //Date Wise Paddy Report With Rice Mill
+    //Districtwise & Societywise Total Procurement Report
     public function f_procurement_report(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            //Society Name wise collection
-            $data['soc_dtls'] =   $this->Paddy->f_get_procurements();
+            $from_date  =   $this->input->post('from_date');
+
+            $to_date    =   $this->input->post('to_date');
+
+            $data['proc_dtls'] =   $this->Paddy->f_get_procurements($from_date,$to_date);
+
+            $data['farm_dtls'] =   $this->Paddy->f_get_registered_farmer($from_date,$to_date);
             
             $this->load->view('post_login/main');
 
@@ -5818,6 +5823,8 @@ class Paddys extends MX_Controller {
 
             //For Current Date
             $blockwise['sys_date']   =   $_SESSION['sys_date'];
+
+            $blockwise['kms']        =   $this->Paddy->f_get_particulars("mm_kms_yr",Null, Null, 0);
 
             $this->load->view('post_login/main');
 
@@ -5884,7 +5891,7 @@ public function f_wqscdetails_report(){
 }
 
     //Procurement to Delivery Report
-    public function f_proctodelivery_report(){
+    /*public function f_proctodelivery_report(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -5902,6 +5909,7 @@ public function f_wqscdetails_report(){
                 "m.district_code = t.dist GROUP BY t.dist" => NULL,
 
             );
+
 
             $data['dist_dtls'] =   $this->Paddy->f_mill_count($this->input->post('from_date'), $this->input->post('to_date'));
             
@@ -5944,6 +5952,7 @@ public function f_wqscdetails_report(){
 
             $data['soc_dtls'] =   $this->Paddy->f_get_particulars("md_society m, ($sql) r, ($sql1) t, ($sql2) d", $select, $where, 0);
 
+            
             //Society wise Paddy Distribution
             unset($select);
             unset($where);
@@ -5966,9 +5975,11 @@ public function f_wqscdetails_report(){
             );
 
             //Paddy distribution
-            $sql = "SELECT soc_id, mill_id, ifnull(SUM(paddy_qty), 0) distribute FROM td_received GROUP BY soc_id, mill_id ORDER BY soc_id";
+            $sql = "SELECT soc_id, mill_id, ifnull(SUM(paddy_qty), 0) distribute FROM td_received WHERE trans_dt BETWEEN '".$this->input->post('from_date')."' AND '".$this->input->post('to_date')."'
+                    GROUP BY soc_id, mill_id ORDER BY soc_id";
 
             $data['mill_dtls']   =   $this->Paddy->f_get_particulars("md_mill m, ($sql) dist", $select, $where, 0);
+
 
             foreach($data['mill_dtls'] as $key => $list){
 
@@ -5999,7 +6010,69 @@ public function f_wqscdetails_report(){
 
         }
 
+    }*/
+
+    //Procurement to Delivery Report
+    public function f_proctodelivery_report(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $from_date  =   $this->input->post('from_date');
+
+            $to_date    =   $this->input->post('to_date');
+
+            $data['mill_dtls']      =  $this->Paddy->f_get_paddy_dtls($from_date,$to_date);
+
+            $data['reg_farm']       =  $this->Paddy->f_get_registered_farmer($from_date,$to_date);
+
+            $data['paddy_proc']     =  $this->Paddy->f_get_proc_paddy($from_date,$to_date);
+
+            $data['cmr_offer']      =  $this->Paddy->f_get_cmr_offered($from_date,$to_date);
+
+            $data['do_issue']       =  $this->Paddy->f_get_do_issued($from_date,$to_date);
+
+            $data['cmr_deliver']    =  $this->Paddy->f_get_cmr_deliver($from_date,$to_date);
+
+            $data['to_deliver']     =  $this->Paddy->f_get_to_deliver($from_date,$to_date);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/proctodelivery", $data);
+
+            $this->load->view('post_login/footer');
+
+        }
+
+        else {
+
+            //For Current Date
+            $blockwise['sys_date']   =   $_SESSION['sys_date'];
+
+            $blockwise['kms']        =   $this->Paddy->f_get_particulars("mm_kms_yr",Null, Null, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/proctodelivery", $blockwise);
+
+            $this->load->view('post_login/footer');
+
+        }
+
     }
+
+    public function f_kms(){
+
+        $where      =   array(
+
+            "sl_no"  => $this->input->get('kms_yr')
+        );
+
+        $kms       =   $this->Paddy->f_get_particulars("mm_kms_yr",Null, $where, 0);
+
+        echo json_encode($kms);
+        
+    }
+
 
     /**Mandi Labour charge -- Anex - IV */
     public function f_labour_charge(){

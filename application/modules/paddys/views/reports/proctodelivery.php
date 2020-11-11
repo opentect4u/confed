@@ -71,8 +71,37 @@ tr:hover {background-color: #f5f5f5;}
 
                 <div class="form-header">
                 
-                    <h4>District Wise Paddy Report</h4>
+                    <h4>Procurement To Delivery Report</h4>
                 
+                </div>
+
+                <div class="form-group row">
+
+                    <label for="from_date" class="col-sm-2 col-form-label">KMS Year:</label>
+
+                    <div class="col-sm-10">
+
+                        <select type="text"
+                                class="form-control required sch_cd"
+                                name="kms_year"
+                                id="kms_year"
+                        >
+
+                            <option value="0">Select KMS Year</option>    
+
+                            <?php 
+                                 foreach($kms as $value){
+
+                            ?>
+                                <option value="<?php echo $value->sl_no;?>"><?php echo $value->kms_yr;?></option>  
+                            <?php
+                                 }
+                            ?>  
+
+                        </select>    
+
+                    </div>
+
                 </div>
 
                 <div class="form-group row">
@@ -83,8 +112,10 @@ tr:hover {background-color: #f5f5f5;}
 
                         <input type="date"
                                name="from_date"
+                               id  ="from_date"
                                class="form-control required"
                                value="<?php echo $sys_date;?>"
+                               readonly
                         />
 
                     </div>
@@ -99,8 +130,10 @@ tr:hover {background-color: #f5f5f5;}
 
                         <input type="date"
                                name="to_date"
+                               id  ="to_date"
                                class="form-control required"
                                value="<?php echo $sys_date;?>"
+                               readonly
                             />
 
                     </div>
@@ -143,7 +176,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <h3>P-1, Hide Lane, Akbar Mansion, 3rd Floor, Kolkata-700073</h3>
 
-                        <h3>District Wise Paddy Procurement Report From <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' - '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+                        <h3>Procurement To Delivery Report Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
 
                     </div>
                     
@@ -178,7 +211,7 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <th colspan="4">CMR Offered (QT)</th>
 
-                                <th colspan="4">D.O. Isseued From D.C. F&S (QT)</th>
+                                <th colspan="4">D.O. Issued From D.C. F&S (QT)</th>
 
                                 <th colspan="4">Quantity of CMR delivered (QT)</th>
                                
@@ -211,197 +244,185 @@ tr:hover {background-color: #f5f5f5;}
 
                             <?php
 
-                                if($dist_dtls){
+                                if($mill_dtls){
 
                                     //For Sl No.
-                                    $i = $k = 1;
+                                    $i = 1;
                                     
-                                    foreach($dist_dtls as $d_list){
+                                    foreach($mill_dtls as $mill_received){
 
-                                        $j = 1;
                             ?>
 
                                         <tr>
 
-                                            <td rowspan="<?php echo $d_list->count; ?>"><?php echo $i++; ?></td>
-                                            <td rowspan="<?php echo $d_list->count; ?>"><?php echo $d_list->district_name; ?></td>
-
-                                        
-                                            <?php
-
-                                                foreach($soc_dtls as $s_list => $s_val){
-                                                    
-                                                    if(($s_val->dist == $d_list->dist) && ($j == 1)){
-                                                                                                     
-                                                        
-                                                ?>
-
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->soc_name; ?></td>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->farmer_no; ?></td>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->no_of_camp; ?></td>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->no_of_farmer; ?></td>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->paddy_qty; ?></td>
-                                                        <?php
-                                                            $k = 1;  
-                                                            foreach($mill_dtls as $m_dtls => $m_val){
-                                                                                                           
-                                                                if(($m_val->soc_id == $s_val->soc_id) && ($k == 1)){
-                                                                      
-                                                            ?>
-
-                                                                    <td><?php echo $m_val->mill_name; ?></td>
-                                                                    <td><?php echo $m_val->distribute; ?></td>
-                                                                    <td><?php echo $m_val->resultant; ?></td>
-                                                                    
-                                                                    <td><?php echo $m_val->offered; ?></td>
-                                                                    <td><?php echo $m_val->offered_sp; ?></td>
-                                                                    <td><?php echo $m_val->offered_cp; ?></td>
-                                                                    <td><?php echo $m_val->offered_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->isseued; ?></td>
-                                                                    <td><?php echo $m_val->isseued_sp; ?></td>
-                                                                    <td><?php echo $m_val->isseued_cp; ?></td>
-                                                                    <td><?php echo $m_val->isseued_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->delivery; ?></td>
-                                                                    <td><?php echo $m_val->delivery_sp; ?></td>
-                                                                    <td><?php echo $m_val->delivery_cp; ?></td>
-                                                                    <td><?php echo $m_val->delivery_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->resultant - $m_val->delivery; ?></td>
-                                                                    
-                                                                </tr>
-                                                                
-                                                            <?php  
-                                                                    
-                                                                    $k++;
-
-                                                                }
-                                                                
-                                                                else if($m_val->soc_id == $s_val->soc_id){
-                                                                                                                   
-                                                            ?>
-
-                                                                <tr>
-
-                                                                    <td><?php echo $m_val->mill_name; ?></td>
-                                                                    <td><?php echo $m_val->distribute; ?></td>
-                                                                    <td><?php echo $m_val->resultant; ?></td>
-                                                                    
-                                                                    <td><?php echo $m_val->offered; ?></td>
-                                                                    <td><?php echo $m_val->offered_sp; ?></td>
-                                                                    <td><?php echo $m_val->offered_cp; ?></td>
-                                                                    <td><?php echo $m_val->offered_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->isseued; ?></td>
-                                                                    <td><?php echo $m_val->isseued_sp; ?></td>
-                                                                    <td><?php echo $m_val->isseued_cp; ?></td>
-                                                                    <td><?php echo $m_val->isseued_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->delivery; ?></td>
-                                                                    <td><?php echo $m_val->delivery_sp; ?></td>
-                                                                    <td><?php echo $m_val->delivery_cp; ?></td>
-                                                                    <td><?php echo $m_val->delivery_fci; ?></td>
-                                                                    <td><?php echo $m_val->resultant - $m_val->delivery; ?></td>
-
-                                                                </tr>
-                                                                
-                                                            <?php  
-
-                                                                    
-                                                                }
-
-                                                            }
-
-                                                        $j++;
-                                                        
-                                                    }
-                                                    else if($s_val->dist == $d_list->dist){
-                                                                                                      
-                                                        
-                                                    ?>
-                                                    <tr>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->soc_name; ?></td>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->farmer_no; ?></td>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->no_of_camp; ?></td>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->no_of_farmer; ?></td>
-                                                        <td rowspan="<?php echo $s_val->count; ?>"><?php echo $s_val->paddy_qty; ?></td>
-                                                    
-                                                    <?php
-
-                                                        $k = 1; 
-                                                        foreach($mill_dtls as $m_dtls => $m_val){
-                                                                                              
-                                                            if(($m_val->soc_id == $s_val->soc_id) && ($k == 1)){
-                                                                
-                                                            ?>
-
-<td><?php echo $m_val->mill_name; ?></td>
-                                                                    <td><?php echo $m_val->distribute; ?></td>
-                                                                    <td><?php echo $m_val->resultant; ?></td>
-                                                                    
-                                                                    <td><?php echo $m_val->offered; ?></td>
-                                                                    <td><?php echo $m_val->offered_sp; ?></td>
-                                                                    <td><?php echo $m_val->offered_cp; ?></td>
-                                                                    <td><?php echo $m_val->offered_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->isseued; ?></td>
-                                                                    <td><?php echo $m_val->isseued_sp; ?></td>
-                                                                    <td><?php echo $m_val->isseued_cp; ?></td>
-                                                                    <td><?php echo $m_val->isseued_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->delivery; ?></td>
-                                                                    <td><?php echo $m_val->delivery_sp; ?></td>
-                                                                    <td><?php echo $m_val->delivery_cp; ?></td>
-                                                                    <td><?php echo $m_val->delivery_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->resultant - $m_val->delivery; ?></td>
-
-                                                                </tr>
-                                                                
-                                                            <?php  
-                                              
-                                                                    $k++;
-
-                                                            }
-                                                            else if($m_val->soc_id == $s_val->soc_id){
-                                                                                                                        
-                                                            ?>
-
-                                                                <tr>
-
-                                                                    <td><?php echo $m_val->mill_name; ?></td>
-                                                                    <td><?php echo $m_val->distribute; ?></td>
-                                                                    <td><?php echo $m_val->resultant; ?></td>
-                                                                    
-                                                                    <td><?php echo $m_val->offered; ?></td>
-                                                                    <td><?php echo $m_val->offered_sp; ?></td>
-                                                                    <td><?php echo $m_val->offered_cp; ?></td>
-                                                                    <td><?php echo $m_val->offered_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->isseued; ?></td>
-                                                                    <td><?php echo $m_val->isseued_sp; ?></td>
-                                                                    <td><?php echo $m_val->isseued_cp; ?></td>
-                                                                    <td><?php echo $m_val->isseued_fci; ?></td>
-
-                                                                    <td><?php echo $m_val->delivery; ?></td>
-                                                                    <td><?php echo $m_val->delivery_sp; ?></td>
-                                                                    <td><?php echo $m_val->delivery_cp; ?></td>
-                                                                    <td><?php echo $m_val->delivery_fci; ?></td>
-                                                                    
-                                                                    <td><?php echo $m_val->resultant - $m_val->delivery; ?></td>
-                                                                    
-                                                                </tr>
-                                                                
-                                                            <?php  
-                                                        
-                                                            }
-
+                                            <td><?php echo $i++; ?></td>
+                                            <td><?php echo $mill_received->district_name; ?></td>
+                                            <td><?php echo $mill_received->soc_name; ?></td>
+                                            <td><?php 
+                                                    foreach($reg_farm as $farm_no){
+                                                        if($mill_received->soc_id == $farm_no->soc_id){
+                                                            echo $farm_no->farmer_no;
                                                         }
-
                                                     }
+                                                ?>
+                                            </td>
+                                            <td><?php
+                                                    foreach($paddy_proc as $paddy_collc){
+                                                        if($mill_received->soc_id == $paddy_collc->soc_id){
+                                                            echo $paddy_collc->camp_no;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td><?php
+                                                    foreach($paddy_proc as $paddy_collc){
+                                                        if($mill_received->soc_id == $paddy_collc->soc_id){
+                                                            echo $paddy_collc->paddy_farmer_no;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td><?php
+                                                    foreach($paddy_proc as $paddy_collc){
+                                                        if($mill_received->soc_id == $paddy_collc->soc_id){
+                                                            echo $paddy_collc->paddy_qty;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $mill_received->mill_name; ?></td>
+                                            <td><?php echo $mill_received->paddy_qty; ?></td>
+                                            <td><?php
+                                                    foreach($cmr_offer as $offer){
+                                                        if($mill_received->soc_id == $offer->soc_id && $mill_received->mill_id == $offer->mill_id){
+                                                            echo $offer->resultant_cmr;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
 
-                                                }
+                                            <td><?php
+                                                    foreach($cmr_offer as $offer){
+                                                        if($mill_received->soc_id == $offer->soc_id && $mill_received->mill_id == $offer->mill_id){
+                                                            echo $offer->tot_offered;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($cmr_offer as $offer){
+                                                        if($mill_received->soc_id == $offer->soc_id && $mill_received->mill_id == $offer->mill_id){
+                                                            echo $offer->sp;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($cmr_offer as $offer){
+                                                        if($mill_received->soc_id == $offer->soc_id && $mill_received->mill_id == $offer->mill_id){
+                                                            echo $offer->cp;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($cmr_offer as $offer){
+                                                        if($mill_received->soc_id == $offer->soc_id && $mill_received->mill_id == $offer->mill_id){
+                                                            echo $offer->fci;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($do_issue as $issue){
+                                                        if($mill_received->soc_id == $issue->soc_id && $mill_received->mill_id == $issue->mill_id){
+                                                            echo $issue->tot_doisseued;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($do_issue as $issue){
+                                                        if($mill_received->soc_id == $issue->soc_id && $mill_received->mill_id == $issue->mill_id){
+                                                            echo $issue->sp;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($do_issue as $issue){
+                                                        if($mill_received->soc_id == $issue->soc_id && $mill_received->mill_id == $issue->mill_id){
+                                                            echo $issue->cp;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($do_issue as $issue){
+                                                        if($mill_received->soc_id == $issue->soc_id && $mill_received->mill_id == $issue->mill_id){
+                                                            echo $issue->fci;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($cmr_deliver as $deliver){
+                                                        if($mill_received->soc_id == $deliver->soc_id && $mill_received->mill_id == $deliver->mill_id){
+                                                            echo $deliver->tot_delivery;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($cmr_deliver as $deliver){
+                                                        if($mill_received->soc_id == $deliver->soc_id && $mill_received->mill_id == $deliver->mill_id){
+                                                            echo $deliver->sp;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($cmr_deliver as $deliver){
+                                                        if($mill_received->soc_id == $deliver->soc_id && $mill_received->mill_id == $deliver->mill_id){
+                                                            echo $deliver->cp;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($cmr_deliver as $deliver){
+                                                        if($mill_received->soc_id == $deliver->soc_id && $mill_received->mill_id == $deliver->mill_id){
+                                                            echo $deliver->fci;
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+
+                                            <td><?php
+                                                    foreach($to_deliver as $remain){
+                                                        if($mill_received->soc_id == $remain->soc_id && $mill_received->mill_id == $remain->mill_id){
+                                                            echo round(($remain->resultant_cmr - $remain->tot_delivery),2);
+                                                        }
+                                                    }
+                                                ?>
+                                            </td>
+                                                    
+
+                                        </tr>
+
+                                    <?php    
+                                            
                                         }
                                         
                                     }
@@ -446,3 +467,40 @@ tr:hover {background-color: #f5f5f5;}
     }
 
     ?> 
+
+<script>
+    $(document).ready(function(){
+
+        $("#kms_year").change(function(){
+
+            $.get('<?php echo site_url("paddy/kms"); ?>',
+
+                {
+                    kms_yr:  $("#kms_year").val()
+                }
+            )
+
+            .done(function(data){
+
+                var data     = JSON.parse(data);
+
+                var from_kms =  data[0].from_date;
+
+                var to_kms   =  data[0].to_date;
+
+                //var date = from_kms; //"2013-05-03";
+                // var newdate = from_kms.split("-").reverse().join("/");
+                //alert(newdate);
+
+                $("#from_date").val(from_kms);
+
+                $("#to_date").val(to_kms);
+
+
+            });
+				 
+
+        });
+    });
+     
+</script>
