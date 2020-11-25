@@ -1384,18 +1384,41 @@
 
         }
 
-        public function f_get_payment_reportData($startDt, $endDt)
+        public function f_get_delRep_supplierName($vendor_cd)
+        {
+
+            $sql = $this->db->query("SELECT sl_no,name FROM md_stn_supplier WHERE sl_no = $vendor_cd ");
+            return $sql->row();
+
+        }
+        // public function f_get_supplierData()
+        // {
+
+        //     $sql = $this->db->query(" SELECT sl_no, vendor_name FROM md_sw_vendor ");
+        //     return $sql->result();
+
+        // }
+
+
+        public function f_get_payment_reportData($startDt, $endDt,$vendor_cd)
         {
 
             $sql = $this->db->query(" SELECT a.trans_dt, a.order_no, a.bill_no, a.part, a.amount, a.mode, c.name FROM
                                     td_stn_payment a, td_stn_order b, md_stn_supplier c WHERE
                                     a.order_no = b.c_order_no AND
                                     b.supplier_cd = c.sl_no AND
-                                    a.trans_dt >= '$startDt' AND a.trans_dt <= '$endDt' ");
+                                    a.trans_dt >= '$startDt' AND a.trans_dt <= '$endDt' AND
+                                    b.supplier_cd='$vendor_cd' ");
             return $sql->result();
 
         }
 
+        public function f_get_payment_projectData()
+        {
+            $sql=$this->db->query("select project_cd,name from  md_stn_project");
+            return $sql->result();
+
+        }
         public function f_get_totPayment_Data($startDt, $endDt)
         {
 

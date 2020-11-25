@@ -180,7 +180,7 @@
 
                 <div class="form-group row">
 
-                    <label for="band_pay" class="col-sm-2 col-form-label band_pay">Band Pay:</label>
+                    <label for="band_pay" class="col-sm-2 col-form-label band_pay">Basic Pay:</label>
 
                     <div class="col-sm-10">
 

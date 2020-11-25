@@ -129,6 +129,7 @@
                                 <th width="20%">Amount</th>
                                 <th width="30%">Deductions</th>
                                 <th width="20%">Amount</th>
+                               
                             </tr>
 
                         </thead>
@@ -136,15 +137,29 @@
                         <tbody> 
 
                             <tr class="t2">
-                                <td class="left_algn">Basic Salary<br>(Band Pay + Grade pay)</td>
+                                <!-- <td class="left_algn">Basic Salary<br>(Band Pay + Grade pay)</td> -->
+                                <td class="left_algn">Basic Salary</td>
                                 <td class="right_algn"><?php echo $payslip_dtls->basic_pay; ?></td>
+                                
                                 <td class="left_algn">Professional Tax</td>
                                 <td class="right_algn"><?php echo $payslip_dtls->ptax; ?></td>
+                                
+                            </tr>
+                            
+                            <tr class="t2">
+                                <!-- <td class="left_algn">Basic Salary<br>(Band Pay + Grade pay)</td> -->
+                                <td class="left_algn">Grade Pay</td>
+                                <td class="right_algn"><?php echo $payslip_dtls->grade_pay; ?></td>
+                                
+                                <td class="left_algn"></td>
+                                <td class="right_algn"></td>
+                                
                             </tr>
 
                             <tr class="t2">
                                 <td class="left_algn">Dearness Allowance</td>
                                 <td class="right_algn"><?php echo $payslip_dtls->da; ?></td>
+
                                 <td class="left_algn">Provident Fund</td>
                                 <td class="right_algn"><?php echo $payslip_dtls->pf; ?></td>
                             </tr>
@@ -191,6 +206,7 @@
 
                                 <td class="left_algn">Total Earnings</td>
                                 <td class="right_algn"><?php  $tot_er = $payslip_dtls->basic_pay + 
+                                                                 $payslip_dtls->grade_pay +
                                                                 $payslip_dtls->da + 
                                                                 $payslip_dtls->ir +
                                                                 $payslip_dtls->hra +

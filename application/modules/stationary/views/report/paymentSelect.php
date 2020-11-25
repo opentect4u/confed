@@ -14,8 +14,55 @@
             <div class="form-header">
                 
                 <h4>Date Wise Payment Report</h4>
-            
+                    
             </div>
+            <div class="form-group row">
+
+<label for="vendor_cd" class="col-sm-2 col-form-label">Supplier:<font color="red">*</font></label>
+<div class="col-sm-8">
+
+    <select name="vendor_cd" id="vendor_cd" class= "form-control required" required>
+        <option value="0">Select Supplier</option>
+        <?php
+            foreach($data as $key)
+            { 
+            ?>
+                <option value="<?php echo ($key->sl_no); ?>"><?php echo ($key->name); ?></option>
+        <?php
+            }
+            ?>
+    </select>
+      
+</div>
+</div>
+<div class="form-group row">
+
+<label for="soc_name" class="col-sm-2 col-form-label">Society Name:</label>
+
+<div class="col-sm-4">
+
+    <select type="text"
+        class="form-control required sch_cd"
+        name="soc_name"
+        id="soc_name"
+    >
+
+        <option value="">Select</option>    
+
+        <?php
+            foreach($project as $key1)
+            { 
+            ?>
+                <option value="<?php echo ($key1->project_cd); ?>"><?php echo ($key1->name); ?></option>
+        <?php
+            }
+            ?>    </select>    
+
+</div>
+
+
+</div>  
+
             <div class="form-group row">
                 <label for="order_dt" class="col-sm-2 col-form-label">Select Date Range:<font color="red">*</font></label>
                 
@@ -72,3 +119,4 @@
     //console.log(startDate); 
 
 </script>
+

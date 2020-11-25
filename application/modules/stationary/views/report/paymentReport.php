@@ -66,7 +66,7 @@
                     <caption><?PHP //echo 'Item: '.strtoupper($item); ?><hr></caption> -->
                     <thead style = "text-align: center">
                         <tr>
-                            
+                            <td>SL No.</td>
                             <td>Date</td>  
                             <td>Order No</td>  
                             <td>Supplier</td>
@@ -81,11 +81,12 @@
                     <tbody style = "text-align: center">
 
                     <?php 
+                    $i=1;
                         foreach($data as $key)
                         {
                         ?>
                             <tr>
-                        
+                                <td><?php echo $i++; ?></td>
                                 <td><?php echo date("d-m-y",strtotime($key->trans_dt)); ?></td> 
                                 <td><?php echo($key->order_no); ?></td> 
                                 <td><?php echo($key->name); ?></td>

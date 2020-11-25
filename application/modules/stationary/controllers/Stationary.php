@@ -1521,6 +1521,14 @@
 
         }
 
+        public function f_projects() {
+
+            $data   =   $this->Paddy->f_get_particulars("md_stn_project", array("project_cd", "name"),NULL, 0);
+    
+            echo json_encode($data);
+    
+        }
+
     // ****************** For Report/ Collection Report ****************** //
     
         public function collectionReport()
@@ -1564,10 +1572,12 @@
 
         public function paymentReport()
         {
-
+           
             $this->load->view('post_login/main');
-
-            $this->load->view('report/paymentSelect');
+            $entryData['data'] = $this->StationaryM->f_get_supplierData();
+            // echo $this->db->last_query();
+            // die();
+            $this->load->view('report/paymentSelect', $entryData);
 
             $this->load->view('post_login/footer');
 
@@ -1580,14 +1590,16 @@
             if($_SERVER['REQUEST_METHOD']=="POST")
             {
                 $datefilter     =       $_POST['datefilter'];
-
+                $vendor_cd      =       $_POST['vendor_cd'];
                 $splittedstring = explode("  ",$datefilter);
                 
                 $startDt = $splittedstring[0];
                 $endDt = $splittedstring[1];
 
-                $reportData['data'] = $this->StationaryM->f_get_payment_reportData($startDt, $endDt);
+                $reportData['data'] = $this->StationaryM->f_get_payment_reportData($startDt, $endDt, $vendor_cd);
+                $reportData['project'] = $this->StationaryM->f_get_payment_projectData();
                 $reportData['total'] = $this->StationaryM->f_get_totPayment_Data($startDt, $endDt);
+                $reportData['vendor'] = $this->StationaryM->f_get_delRep_supplierName($vendor_cd);
                 $reportData['startDt'] = $startDt;
                 $reportData['endDt'] = $endDt;
 

@@ -1202,7 +1202,9 @@ class Payrolls extends MX_Controller {
         
                             "grade_pay"         =>  $e_list->grade_pay,
         
-                            "basic_pay"         =>  $basic = round($e_list->band_pay + $e_list->grade_pay),
+                            // "basic_pay"         =>  $basic = round($e_list->band_pay + $e_list->grade_pay),
+                            "basic_pay"         =>  $basic = round($e_list->band_pay ),
+                            
         
                             "da"                =>  $basic,
         
