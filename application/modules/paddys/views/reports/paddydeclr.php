@@ -211,7 +211,7 @@ tr:hover {background-color: #f5f5f5;}
 
 <div class="col-sm-10">
 
-    <input type="text"  class="form-control"   name="bill_no"        />
+    <input type="text"  class="form-control"   name="bill_no"  id="bill_no"      />
 
 </div>
 
@@ -224,7 +224,7 @@ tr:hover {background-color: #f5f5f5;}
 
     <div class="col-sm-10">
 
-        <input type="text"  class="form-control"   name="milled_paddy"/>
+        <input type="text"  class="form-control"   name="milled_paddy" id="milled_paddy" />
 
     </div>
 
@@ -310,10 +310,12 @@ tr:hover {background-color: #f5f5f5;}
                             <h5>P-1, Hide Lane, Akbar Mansion,(3rd Floor), Kolkata-73,Gram: STAFECON<br>Ph No:(0)33-22377012/7013,033-22368942<br>e-mailId: confedwb.org@gmail.com,Wesite :www.confedwb.org.in</h5>
                             <!-- <h5>Ph NO:(0)33-22377012/7013,033-22368942</h5> -->
                             <!-- <h5>e-mailId: confedw.org@gmail.com,Wesite :www.confedwb.org.in</h5> -->
+
+                        <?php if($bill_dtls){ ?>
                             
                             <span >----------------------------------------------------------------------------------------------------------------------------</span>
-                            <h4>Declaration of Procurement of paddy & Delivery of CMR For the KMS <?php echo $kms->kms_year; ?></h4>
-                            <!-- <h4>Paddy & Delivery of CMR For the KMS <?php echo $kms->kms_year; ?></h4> -->
+                            <h4>Declaration of Procurement of paddy & Delivery of CMR For the KMS <?php echo $bill_dtls->kms_yr; ?></h4>
+                            <!-- <h4>Paddy & Delivery of CMR For the KMS <?php //echo $kms->kms_year; ?></h4> -->
                             <span >-----------------------------------------------------------------------------------------------------------------------------</span>
                             <!-- <h3><?php if($this->input->post('pool_type') == 'S'){
                                         echo 'State Pool';
@@ -357,7 +359,7 @@ tr:hover {background-color: #f5f5f5;}
                                     <br> 
                                     <br> 
                                     
-                                    <span style="font-weight:bold;padding-RIGHT:68px;">5. Name of the farmars from whom paddy</span><?php echo ': '.'MSP Certificate Enclosed With This bill'?><br>
+                                    <span style="font-weight:bold;padding-RIGHT:68px;">5. Name of the farmers from whom paddy</span><?php echo ': '.'MSP Certificate Enclosed With This bill'?><br>
                                     <span style="font-weight:bold">&nbsp;&nbsp;&nbsp;was procured by the soceity by issuing </span><br>
                                     <span style="font-weight:bold">&nbsp;&nbsp;&nbsp;A/C payee cheque No., Date & Amount </span>
                                     <br>
@@ -378,6 +380,8 @@ tr:hover {background-color: #f5f5f5;}
                                     
                                     <br>
                                     <br>
+
+                    <?php } ?> 
                                    
 <!--     
                                 </tr>
@@ -429,66 +433,28 @@ $(document).ready(function(){
 
     var i = 0;
 
-    $('#dist').change(function(){
+    $('#bill_no').change(function(){
 
         //For District wise Block
         $.get( 
 
-            '<?php echo site_url("paddy/blocks");?>',
+            '<?php echo site_url("paddy/verifyBill");?>',
 
             { 
 
-                dist: $(this).val()
+                pool_type:$("#pool_type").val(),
+                
+                bill_no: $(this).val()
 
             }
 
         ).done(function(data){
 
-            var string = '<option value="">Select</option>';
-
             $.each(JSON.parse(data), function( index, value ) {
 
-                string += '<option value="' + value.sl_no + '">' + value.block_name + '</option>'
+                $('#milled_paddy').val(value.paddy_qty);
 
             });
-
-            $('#block').html(string);
-
-        });
-
-    });
-
-});
-</script>
-<script>
-
-$(document).ready(function(){
-
-    var i = 0;
-
-    $('#block').change(function(){
-
-        $.get( 
-
-            '<?php echo site_url("paddy/societies");?>',
-
-            { 
-
-                block: $(this).val()
-
-            }
-
-        ).done(function(data){
-
-            var string = '<option value="">Select</option>';
-
-            $.each(JSON.parse(data), function( index, value ) {
-
-                string += '<option value="' + value.sl_no + '">' + value.soc_name + '</option>'
-
-            });
-
-            $('#soc_id').html(string);
 
         });
 

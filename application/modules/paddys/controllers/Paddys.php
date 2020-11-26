@@ -6747,72 +6747,61 @@ public function f_wqscdetails_report(){
     }
 
 
-    //paddydeclr report
+    //************************************************Declaration Report
     public function f_paddydeclr_report(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            // $workorder['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
-
             //Retriving Bill Details
-            $select = array ("GROUP_CONCAT(CONCAT(bill_no)) AS `bill_no`","b.soc_name AS 'skus_nm'","substr(c.mill_name,1,length(c.mill_name)) AS 'mill_nm'","soc_name AS centr_nm","sum(paddy_qty) AS 'tot_qty'","sum(sub_tot_cmr_qty) AS 'cmr_qty'");
+            /*$select = array ("GROUP_CONCAT(CONCAT(bill_no)) AS `bill_no`","b.soc_name AS 'skus_nm'","substr(c.mill_name,1,length(c.mill_name)) AS 'mill_nm'","soc_name AS centr_nm","sum(paddy_qty) AS 'tot_qty'","sum(sub_tot_cmr_qty) AS 'cmr_qty'");
 
             $where          =   array(
-                
-                // "a.bill_dt >=" => $this->input->post('from_dt'),
-                // "a.bill_dt <=" => $this->input->post('to_dt'),
-                // "a.soc_id =" =>   $this->input->post('soc_name'),
                 "a.soc_id = b.sl_no" => NULL,
                 "a.mill_id = c.sl_no" => NULL,
                 "a.bill_no=" => $this->input->post('bill_no'),
                 "pool_type = '".$this->input->post('pool_type')."'GROUP BY  c.mill_name ,b.soc_name ORDER BY bill_no" => NULL
             
+            );*/
+
+            $select = array(
+                "a.bill_no As 'bill_no'",
+
+                "b.soc_name AS 'skus_nm'",
+
+                "c.mill_name  AS 'mill_nm'",
+
+                "b.soc_name AS 'centr_nm'", 
+
+                "a.kms_yr AS 'kms_yr'", 
+
+                "sum(paddy_qty) AS 'tot_qty'",
+
+                "sum(sub_tot_cmr_qty) AS 'cmr_qty'"
             );
-           
+
+            $where = array(
+
+                "a.soc_id = b.sl_no" => NULL,
+
+                "a.mill_id = c.sl_no" => NULL,
+
+                "a.bill_no=" => $this->input->post('bill_no'),
+
+                "a.kms_yr" => $this->session->userdata('kms_yr'),
+
+                "pool_type = '".$this->input->post('pool_type')."'GROUP BY  c.mill_name ,b.soc_name ORDER BY bill_no" => NULL
+            );
+
             //Bill Master Details
             $bill['bill_dtls']     =   $this->Paddy->f_get_particulars("td_bill a, md_society b ,md_mill c" , $select, $where,1);
-           
-            // echo $this->db->last_query();
-            // die();
-            // $this->session->set_userdata('excelBillDtls', $bill['bill_dtls']);
-            //Retriving Total Bill Details
+
             unset($select);
            
-          
-            // $select = array (
-
-            //     "SUM(paddy_qty) paddy_qty","SUM(tot_msp) tot_msp",
-            //     "SUM(market_fee) market_fee","SUM(mandi_chrg) mandi_chrg","SUM(transportation1) transportation1",
-            //     "SUM(transportation2) transportation2","SUM(transportation3) transportation3","SUM(driage) driage","SUM(comm_soc) comm_soc",
-            //     "SUM(comm_mill) comm_mill","SUM(cgst_milling) cgst_milling","SUM(sgst_milling) sgst_milling","SUM(admin_chrg) admin_chrg",
-            //     "SUM(tot_milled_paddy) tot_milled_paddy","SUM(out_ratio) out_ratio","SUM(sub_tot_cmr_qty) sub_tot_cmr_qty", "SUM(inter_dist_transprt) inter_dist_transprt",
-            //     "SUM(sub_tot_cmr_rate) sub_tot_cmr_rate","SUM(transportation_cmr1) transportation_cmr1",
-            //     "SUM(gunny_usege) gunny_usege","SUM(cgst_gunny) cgst_gunny","SUM(sgst_gunny) sgst_gunny","SUM(butta_cut) butta_cut","SUM(gunny_cut) gunny_cut"
-
-            // );
-
-
-            
-          //  $bill['tot_bill_dtls']     =   $this->Paddy->f_get_particulars("td_bill", $select, $where, 1);
-
-            //Society List
-          
-                
-            //Mill List
-          //  $bill['mill']    =   $this->Paddy->f_get_particulars("md_mill", array("sl_no", "mill_name"), NULL, 0);
             
             //District List
             $bill['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
-            $bill['kms'] = (object) array('kms_year' => $this->kms_year);
-            $bill['soc_name']     =   $this->Paddy->f_get_particulars("md_society", array("sl_no", "soc_name"), NULL, 0);
-          //  $bill['kms'] = (object) array('kms_year' => $this->kms_year);
             
-            // $this->session->set_userdata('excelBillDtls_tot', $bill['tot_bill_dtls']);
-            // $this->session->set_userdata('excelBillDtls_soc', $bill['soc']);
-            // $this->session->set_userdata('excelBillDtls_mill', $bill['mill']);
-            // $this->session->set_userdata('excelBillDtls_dist', $bill['dist']);
-            // $this->session->set_userdata('excelBillDtls_kms', $bill['kms']);
-
+            $bill['soc_name']      =   $this->Paddy->f_get_particulars("md_society", array("sl_no", "soc_name"), NULL, 0);
 
             $this->load->view('post_login/main');
 
@@ -6835,7 +6824,34 @@ public function f_wqscdetails_report(){
 
     }
 
+    public function f_verifyBill(){
 
+        $poolType   =   $_GET['pool_type'];
+
+        $billNo     =   $_GET['bill_no'];
+
+        $where      =   array(
+
+            'pool_type' =>  $poolType,
+
+            'bill_no'   =>  $billNo,
+
+            'kms_yr'    =>  $this->session->userdata('kms_yr')
+
+        );
+
+        $data =   $this->Paddy->f_get_particulars("td_bill", NULL, $where, 0);
+
+        //echo "<pre>";
+
+        //echo sizeof($data);
+
+        //var_dump($data);die;
+
+        echo json_encode($data);
+
+
+    }
 
     //Payment Report
     public function f_payment_report(){
