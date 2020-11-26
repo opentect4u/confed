@@ -326,12 +326,12 @@
                             <th width="15px">Sl<br>No.</th>
                             <th width="200px">Emplyee Name</th>
                             <th width="15px">Desig</th>
-                            <th width="15px">Band Pay</th>
-                            <th width="15px">Grade Pay</th>
                             <th width="15px">Basic Pay</th>
-                            <th width="15px">125 %<br>D.A.</th>
+                            <th width="15px">Grade Pay</th>
+                            <!-- <th width="15px">Basic Pay</th> -->
+                            <th width="15px"><br>D.A.</th>
                             <th width="15px">I.R.</th>
-                            <th width="15px">15 %<br>H.R.A.</th>
+                            <th width="15px">12 %<br>H.R.A.</th>
                             <th width="15px">M.A.</th>
                             <th width="15px">Cash Allow</th>
                             <th width="15px">Gross</th>
@@ -367,7 +367,7 @@
                                 
                                 $gp += $s_list->grade_pay;
 
-                                $basic += $s_list->basic_pay;
+                                // $basic += $s_list->basic_pay;
 
                                 $da +=  $s_list->da;
 
@@ -422,7 +422,7 @@
                             <td><?php echo $s_list->band_pay; ?></td>
                             <td><?php echo $s_list->grade_pay; ?></td>
 
-                            <td><?php echo $s_list->basic_pay; ?></td>
+                            <!-- <td><?php echo $s_list->basic_pay; ?></td> -->
                             <td><?php echo $s_list->da; ?></td>
                             <td><?php echo $s_list->ir; ?></td>
                             <td><?php echo $s_list->hra; ?></td>
@@ -460,7 +460,7 @@
 
                                     <td><?php echo $gp; ?></td>
 
-                                    <td><?php echo $basic; ?></td>
+                                    <!-- <td><?php echo $basic; ?></td> -->
 
                                     <td><?php echo $da; ?></td>
 
