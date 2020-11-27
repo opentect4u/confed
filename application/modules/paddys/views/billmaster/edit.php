@@ -18,6 +18,11 @@
                    value="<?php echo $mm_dtls->sl_no; ?>"
                 />   
 
+                <input type="hidden"
+                   name="kms_yr"
+                   value="<?php echo $mm_dtls->kms_yr; ?>"
+                />   
+
             <div class="form-group row">
 
                 <label for="param_name" class="col-sm-3 col-form-label">Particulas:</label>

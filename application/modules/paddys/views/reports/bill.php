@@ -105,7 +105,7 @@ tr:hover {background-color: #f5f5f5;}
     
             <form method="POST" 
                 id="form"
-                action="<?php echo site_url("paddy/bill/report");?>" >
+                action="<?php echo site_url("report/billreport");?>" >
 
                 <div class="form-header">
                 
@@ -502,12 +502,12 @@ tr:hover {background-color: #f5f5f5;}
                                         <tr>
 
                                             <td></td>
-
-                                            <td>Cost of 1 qtl of Milled Paddy</td>
+                                            <td></td>
+                                            <!--<td>Cost of 1 qtl of Milled Paddy</td>-->
 
                                             <td style="text-align: right;"></td>
-
-                                            <td style="text-align: right;"><?php echo $bill_dtls->tot_milled_paddy; ?></td>
+                                            <td></td>
+                                            <!--<td style="text-align: right;"><?php //echo $bill_dtls->tot_milled_paddy; ?></td>-->
 
                                             <td style="text-align: right;"><?php $accuisition_amt += $total->tot; echo $total->tot; ?></td>
 
@@ -558,11 +558,11 @@ tr:hover {background-color: #f5f5f5;}
 
                                     <td>18</td>
 
-                                    <td>Accuisition Cost</td>
-
+                                    <!--<td>Accuisition Cost</td>-->
                                     <td></td>
-
-                                    <td style="text-align: right;"><?php echo $accuisition_rate; ?></td>
+                                    <td></td>
+                                    <td></td>
+                                    <!--<td style="text-align: right;"><?php //echo $accuisition_rate; ?></td>-->
 
                                     <td style="text-align: right;"><?php echo $accuisition_amt; ?></td>
 
@@ -661,4 +661,40 @@ tr:hover {background-color: #f5f5f5;}
 
         $("#form").validate();
 
+    </script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            var i = 0;
+
+            $('#bill_no').change(function(){
+
+                
+                $.get( 
+
+                    '<?php echo site_url("report/billSearch");?>',
+
+                    { 
+
+                        pool_type:$("#pool_type").val(),
+                        
+                        bill_no: $(this).val()
+
+                    }
+
+                ).done(function(data){
+
+                    var value = JSON.parse(data);
+
+                    if(value.no_bill == 0){
+                        alert('Invalid Bill No.!');
+                    }
+
+                });
+
+            });
+
+        });
     </script>

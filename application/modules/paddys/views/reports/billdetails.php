@@ -105,7 +105,7 @@ tr:hover {background-color: #f5f5f5;}
     
             <form method="POST" 
                 id="form"
-                action="<?php echo site_url("paddy/billdetails/report");?>" >
+                action="<?php echo site_url("report/billdetailsReport");?>" >
 
                 <div class="form-header">
                 
@@ -124,7 +124,7 @@ tr:hover {background-color: #f5f5f5;}
                                 id="pool_type"
                             >
 
-                            <option value="">Select</option>
+                            <option value="N">Select</option>
 
                             <option value="S">State Pool</option>
 
@@ -147,7 +147,9 @@ tr:hover {background-color: #f5f5f5;}
                         <input type="date"
                             class="form-control required"
                             name="from_dt"
-                            value="<?php echo $_SESSION['sys_date'];?>"
+                            id="from_dt"
+                            value="<?php echo date('Y-m-d'); ?>"
+                            readonly
                             />
 
                     </div>
@@ -163,7 +165,9 @@ tr:hover {background-color: #f5f5f5;}
                         <input type="date"
                             class="form-control required"
                             name="to_dt"
-                            value="<?php echo $_SESSION['sys_date'];?>"
+                            id="to_dt"
+                            value="<?php echo date('Y-m-d'); ?>"
+                            readonly
                             />
 
                     </div>
@@ -424,12 +428,12 @@ tr:hover {background-color: #f5f5f5;}
                                     }
     
     
-                                }
+                                /*}
     
                                 else {
     
                                     echo "<tr><td colspan='28' style='text-align:center;'>No Data Found</td></tr>";
-                                }
+                                }*/
     
                                 ?>
 
@@ -482,6 +486,17 @@ tr:hover {background-color: #f5f5f5;}
                                     <td style="text-align: right;"><?php echo $grand_tot - $tot_bill_dtls->butta_cut; ?></td>
 
                                 </tr>
+
+                            <?php
+
+                                }
+    
+                                else {
+    
+                                    echo "<tr><td colspan='28' style='text-align:center;'>No Data Found</td></tr>";
+                                }
+
+                            ?>
                             
                             </tbody>
     
@@ -508,7 +523,7 @@ tr:hover {background-color: #f5f5f5;}
                     </div>
 
                     <div style="text-align: center;">
-                        <a class="btn btn-success" href="<?php echo site_url('paddy/downloadExcel'); ?>" id="downloadExcel"><i class="fa fa-download"></i>Download Excle</a>                                  
+                        <a class="btn btn-success" href="<?php echo site_url('report/downloadExcel'); ?>" id="downloadExcel"><i class="fa fa-download"></i>Download Excle</a>                                  
                     </div>
 
                 </div>
@@ -522,3 +537,40 @@ tr:hover {background-color: #f5f5f5;}
         }
     
         ?> 
+
+<script>
+    $(document).ready(function(){
+
+        $("#pool_type").change(function(){
+
+            $.get('<?php echo site_url("report/kmsDates"); ?>',
+
+                {
+                    pool_type:  $(this).val()
+                }
+            )
+
+            .done(function(data){
+
+                var data     = JSON.parse(data);
+
+                var from_kms =  data[0].from_date;
+
+                var to_kms   =  data[0].to_date;
+
+                //var date = from_kms; //"2013-05-03";
+                // var newdate = from_kms.split("-").reverse().join("/");
+                //alert(newdate);
+
+                $("#from_dt").val(from_kms);
+
+                $("#to_dt").val(to_kms);
+
+
+            });
+				 
+
+        });
+    });
+     
+</script>

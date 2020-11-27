@@ -269,17 +269,17 @@
                                 <a href="<?php echo site_url('paddy/proctodelivery/report'); ?>">Procurement to Delivery</a>
                                 <a href="<?php echo site_url('paddy/wqscdetails/report'); ?>">WQSC Details</a>
                                     <!--<a href="<?php echo site_url('paddy/blockwise/report'); ?>">Block Wise</a>-->
-                                <a href="<?php echo site_url('paddy/bill/report'); ?>">Bill</a>
+                                <a href="<?php echo site_url('report/billreport'); ?>">Bill</a>
                                 <a href="<?php echo site_url('paddy/labour/charge'); ?>">Mandi Labour Charge</a>
                                 <a href="<?php echo site_url('paddy/society/commision'); ?>">Society Comission</a>
                                 <a href="<?php echo site_url('paddy/claim/transportch'); ?>">Transport Charge</a>
                                 <a href="<?php echo site_url('paddy/mill/commision'); ?>">Milling Charge</a>
                                 <a href="<?php echo site_url('paddy/claim/gunny'); ?>">Claim For Gunny Bag</a>
-                                <a href="<?php echo site_url('paddy/billdetails/report'); ?>">Bill Details</a>
+                                <a href="<?php echo site_url('report/billdetailsReport'); ?>">Bill Details</a>
                                 <a href="<?php echo site_url('paddy/payment/report'); ?>">Miller's Payment</a>
                                 <a href="<?php echo site_url('paddy/payment/voucher'); ?>">Payment Voucher</a>
-                                <a href="<?php echo site_url('paddy/payment/society'); ?>">Society's Payment</a>
-                                <a href="<?php echo site_url('paddy/paddydeclr/report'); ?>">Declaration</a>
+                                <a href="<?php echo site_url('report/paymentsociety'); ?>">Society's Payment</a>
+                                <a href="<?php echo site_url('report/paddydeclr'); ?>">Declaration</a>
                                 </div>
                             </div>    
                         </div>

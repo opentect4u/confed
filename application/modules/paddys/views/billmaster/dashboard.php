@@ -56,10 +56,11 @@
                             <td><?php echo $list->param_name; ?></td>
                             <td><?php echo $list->boiled_val; ?></td>
                             <td><?php echo $list->raw_val; ?></td>
+                            <td style="display:none"><?php echo $list->kms_yr; ?></td>
                             <td><span class="badge badge-<?php echo ($list->action == 'P')? 'success':'warning'; ?>"><?php echo ($list->action == 'P')? 'Paddy':'CMR'; ?></span></td>
                             <td>
                             
-                                <a href="<?php echo site_url('paddy/billmaster/edit')?>?sl_no=<?php echo $list->sl_no; ?>" 
+                                <a href="<?php echo site_url('paddy/billmaster/edit')?>?sl_no=<?php echo $list->sl_no; ?>&kms_yr=<?php echo $list->kms_yr; ?>" 
                                     data-toggle="tooltip"
                                     data-placement="bottom" 
                                     title="Edit"

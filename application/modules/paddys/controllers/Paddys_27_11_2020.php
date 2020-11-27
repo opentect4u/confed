@@ -2747,14 +2747,8 @@ class Paddys extends MX_Controller {
     #List of Bill Master Details from table md_comm_params
     public function f_bill_master() {
 
-        $where          = array(
-
-            "kms_yr"    => $this->session->userdata('kms_yr')
-
-        );
-
         //Retriving Bill Master
-        $billmaster['mm_dtls'] =   $this->Paddy->f_get_particulars("md_comm_params", NULL, $where, 0);
+        $billmaster['mm_dtls'] =   $this->Paddy->f_get_particulars("md_comm_params", NULL, NULL, 0);
 
         $this->load->view('post_login/main');
 
@@ -2770,7 +2764,7 @@ class Paddys extends MX_Controller {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
             //Max sl_no is having insert
-            $max_slno     =    $this->Paddy->f_get_particulars("md_comm_params", array("IFNULL(MAX(sl_no) + 1, 1) sl_no"), array("kms_yr" => $this->session->userdata('kms_yr')), 1);
+            $max_slno     =    $this->Paddy->f_get_particulars("md_comm_params", array("IFNULL(MAX(sl_no) + 1, 1) sl_no"), NULL, 1);
 
             $data_array     =   array(
 
@@ -2783,8 +2777,6 @@ class Paddys extends MX_Controller {
                 "raw_val"       =>  $this->input->post('raw'),
 
                 "action"        =>  $this->input->post('action'),
-
-                "kms_yr"        =>  $this->session->userdata('kms_yr'),
 
                 "created_by"    =>  $this->session->userdata('loggedin')->user_name,
 
@@ -2829,7 +2821,7 @@ class Paddys extends MX_Controller {
 
             );
 
-            $this->Paddy->f_edit("md_comm_params", $data_array, array("sl_no" => $this->input->post('sl_no'),"kms_yr" => $this->input->post('kms_yr')));
+            $this->Paddy->f_edit("md_comm_params", $data_array, array("sl_no" => $this->input->post('sl_no')));
 
             $this->session->set_flashdata('msg', 'Successfully Updated!');
     
@@ -2839,7 +2831,7 @@ class Paddys extends MX_Controller {
         else {
 
             //Retriving Bill Master
-            $billmaster['mm_dtls'] =   $this->Paddy->f_get_particulars("md_comm_params", NULL, array("sl_no" => $this->input->get('sl_no'),"kms_yr" => $this->input->get('kms_yr')), 1);
+            $billmaster['mm_dtls'] =   $this->Paddy->f_get_particulars("md_comm_params", NULL, array("sl_no" => $this->input->get('sl_no')), 1);
 
             $this->load->view('post_login/main');
 
@@ -6396,9 +6388,516 @@ public function f_wqscdetails_report(){
         }
 
     }
+    /****************************************Bill Report************************************* */
+    public function f_bill_report(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //Retriving Bill Details
+            $select = array (
+                "s.soc_name", "m.mill_name",
+                "t.bill_no","t.bill_dt","t.kms_yr","t.pool_type","t.rice_type",
+                "t.paddy_qty","t.tot_msp","t.market_fee","t.mandi_chrg",
+                "t.transportation1","t.transportation2","t.transportation3","t.driage",
+                "t.comm_soc","t.comm_mill","t.cgst_milling","t.sgst_milling",
+                "t.admin_chrg","t.tot_milled_paddy","t.out_ratio","t.sub_tot_cmr_qty",
+                "t.sub_tot_cmr_rate","t.transport_dist1","t.transportation_cmr1", "inter_dist_transprt",
+                "t.gunny_usege","t.cgst_gunny","t.sgst_gunny","t.butta_cut","t.gunny_cut"
+
+            );
+            
+            $where  =   array(
+
+                "t.soc_id = s.sl_no AND t.mill_id = m.sl_no" => NULL,
+
+                "t.bill_no"               =>  $this->input->post('bill_no'),
+
+                "pool_type"               =>  $this->input->post('pool_type'),
+
+                "kms_yr"                 => $this->session->userdata('kms_yr')
+            );
+
+            $bill['bill_dtls']       =   $this->Paddy->f_get_particulars("td_bill t, md_society s, md_mill m", $select, $where, 1);
+
+            //Cost of 1 qtl Milled Paddy
+
+            unset($select);
+            unset($where);
+
+            $select = array(
+
+                "(tot_msp + market_fee + mandi_chrg + transportation1 + 
+                transportation2 + transportation3 + driage + comm_soc + inter_dist_transprt +
+                comm_mill + cgst_milling + sgst_milling + admin_chrg) tot"
+
+            );
+
+            $where  =   array(
+
+                "bill_no"               =>  $this->input->post('bill_no'),
+
+                "pool_type"             =>  $this->input->post('pool_type'),
+
+                "kms_yr"                => $this->session->userdata('kms_yr')
+
+            );
+
+            $bill['total']       =   $this->Paddy->f_get_particulars("td_bill", $select, $where, 1);
+
+            if( (isset($bill['bill_dtls'])) && ($bill['bill_dtls']->rice_type == 'P')){
+
+                $where  =   array(
+
+                    "kms_yr"                => $this->session->userdata('kms_yr')
+    
+                );
+
+                //Bill Master Details
+                //$bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", NULL, $where, 0);
+                $bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", NULL, NULL, 0);
+
+
+            }
+            else if( (isset($bill['bill_dtls'])) && ($bill['bill_dtls']->rice_type == 'R')){
+
+                $select = array(
+
+                    "sl_no", "param_name",
+
+                    "raw_val as boiled_val"
+
+                );
+
+                $where  =   array(
+
+                    "kms_yr"                => $this->session->userdata('kms_yr')
+    
+                );
+
+                //Bill Master Details
+                //$bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", $select, $where, 0);
+                $bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", $select, Null, 0);
+
+            }
+            else{
+                $bill['bill_dtls'] = NULL;
+            }
+            
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/bill", $bill);
+
+            $this->load->view('post_login/footer');
+
+        }
+        else{
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/bill");
+
+            $this->load->view('post_login/footer');
+
+        }
+
+    }
+    //Check for valid bill no
+    public function f_billSearch(){
+
+        $poolType   =   $_GET['pool_type'];
+
+        $billNo     =   $_GET['bill_no'];
+
+        $select     =   array(
+            "count(*) As 'no_bill'"
+        );
+
+        $where      =   array(
+
+            'pool_type' =>  $poolType,
+
+            'bill_no'   =>  $billNo,
+
+            'kms_yr'    =>  $this->session->userdata('kms_yr')
+
+        );
+
+        $data =   $this->Paddy->f_get_particulars("td_bill", $select, $where, 1);
+
+        echo json_encode($data);
+
+    }
+
+    //Bill Details
+    public function f_billdetails_report(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+          
+
+            $where          =   array(
+                
+                "bill_dt >=" => $this->input->post('from_dt'),
+                
+                "bill_dt <=" => $this->input->post('to_dt'),
+
+                "pool_type = '".$this->input->post('pool_type')."' ORDER BY bill_no" => NULL
+            
+            );
+            $sql = " CAST(bill_no AS UNSIGNED) bill_no,bill_dt,kms_yr,pool_type,rice_type,
+            dist,block,soc_id,mill_id,paddy_qty,tot_msp,
+            market_fee,mandi_chrg,transport_dist,transportation1,
+            transportation2,transportation3,driage,comm_soc,
+            comm_mill,cgst_milling,sgst_milling,admin_chrg,
+            tot_milled_paddy,out_ratio,sub_tot_cmr_qty, inter_dist_transprt,
+            sub_tot_cmr_rate,transport_dist1,transportation_cmr1,
+            transportation_cmr2,transportation_cmr3,gunny_usege,
+            cgst_gunny,sgst_gunny,butta_cut,gunny_cut, (select  GROUP_CONCAT(CONCAT(wqsc_no))  from td_wqsc_sheet b where td_bill.bill_no=b.bill_no) AS `wqsc`
+            from td_bill     WHERE bill_dt BETWEEN '".$this->input->post('from_dt')."' AND '".$this->input->post('to_dt')."'And ". "pool_type = '".$this->input->post('pool_type')."'";
+            // print_r($sql1);
+            // die();
+
+            //Bill Master Details
+            $bill['bill_dtls']     =   $this->Paddy->f_get_particulars(null, $sql,null,0);
+            $this->session->set_userdata('excelBillDtls', $bill['bill_dtls']);
+            //Retriving Total Bill Details
+            unset($select);
+            $select = array (
+
+                "SUM(paddy_qty) paddy_qty","SUM(tot_msp) tot_msp",
+                "SUM(market_fee) market_fee","SUM(mandi_chrg) mandi_chrg","SUM(transportation1) transportation1",
+                "SUM(transportation2) transportation2","SUM(transportation3) transportation3","SUM(driage) driage","SUM(comm_soc) comm_soc",
+                "SUM(comm_mill) comm_mill","SUM(cgst_milling) cgst_milling","SUM(sgst_milling) sgst_milling","SUM(admin_chrg) admin_chrg",
+                "SUM(tot_milled_paddy) tot_milled_paddy","SUM(out_ratio) out_ratio","SUM(sub_tot_cmr_qty) sub_tot_cmr_qty", "SUM(inter_dist_transprt) inter_dist_transprt",
+                "SUM(sub_tot_cmr_rate) sub_tot_cmr_rate","SUM(transportation_cmr1) transportation_cmr1",
+                "SUM(gunny_usege) gunny_usege","SUM(cgst_gunny) cgst_gunny","SUM(sgst_gunny) sgst_gunny","SUM(butta_cut) butta_cut","SUM(gunny_cut) gunny_cut"
+
+            );
+         
+            $bill['tot_bill_dtls']     =   $this->Paddy->f_get_particulars("td_bill", $select, $where, 1);
+
+            //Society List
+            $bill['soc']     =   $this->Paddy->f_get_particulars("md_society", array("sl_no", "soc_name"), NULL, 0);
+                
+            //Mill List
+            $bill['mill']    =   $this->Paddy->f_get_particulars("md_mill", array("sl_no", "mill_name"), NULL, 0);
+            
+            //District List
+            $bill['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+
+            $bill['kms'] = (object) array('kms_year' => $this->kms_year);
+            
+            $this->session->set_userdata('excelBillDtls_tot', $bill['tot_bill_dtls']);
+            $this->session->set_userdata('excelBillDtls_soc', $bill['soc']);
+            $this->session->set_userdata('excelBillDtls_mill', $bill['mill']);
+            $this->session->set_userdata('excelBillDtls_dist', $bill['dist']);
+            $this->session->set_userdata('excelBillDtls_kms', $bill['kms']);
+
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/billdetails", $bill);
+
+            $this->load->view('post_login/footer');
+
+            // Writing excel file for billDetails Report--
+        }
+        else{
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/billdetails");
+
+            $this->load->view('post_login/footer');
+
+        }
+
+    }
+
+    public function f_downloadExcel(){
+
+        $this->load->library('excel');
+
+			$object = new PHPExcel();
+			$object->setActiveSheetIndex(0);
+
+            $table_column = array("Bill No","Date","District","Mill Name","Society Name", "Quantity of Paddy",
+                                "Quantity of Rice", "MSP Value", "Market Fee", "Mandy Labour Charges", 
+                                "Transportation chg. 1st 25KM", "Transportation chg. Next 25KM", "Transportation chg. Above 50KM",
+                                "Inter District Transport", "Transportation chg. Of CMR", "Driage", "Commision to Society", "Milling charges", 
+                                "CGST", "SGST", "Administrative charges", "GUNNY Useage Charge", "CGST", "SGST", "Total value", "Butta Cut", "Final Value" );
+                                
+                                
+			$column = 0;
+
+			foreach($table_column as $values){
+				$object->getActiveSheet()->SetCellValueByColumnAndRow($column,1,$values);
+				$column++;	
+			}
+ 
+            //$xldata = $this->AdminProcess->prwExpence($_SESSION['frm_dt'],$_SESSION['to_dt']);
+            
+            $xldata_dtls = $this->session->userdata('excelBillDtls');
+            $xldata_dtls_tot = $this->session->userdata('excelBillDtls_tot');
+            $xldata_dtls_soc = $this->session->userdata('excelBillDtls_soc');
+            $xldata_dtls_dist = $this->session->userdata('excelBillDtls_dist');
+            $xldata_dtls_mill = $this->session->userdata('excelBillDtls_mill');
+
+
+            $rowCount = 2;
+
+			foreach($xldata_dtls as $row){
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(0,$rowCount,$row->bill_no);
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(1,$rowCount,$row->bill_dt);
+                
+                foreach($xldata_dtls_dist as $district )
+                {
+                    if($district->district_code == $row->dist)
+                    {
+                        $object->getActiveSheet()->SetCellValueByColumnAndRow(2,$rowCount,$district->district_name);
+                    }
+                }
+
+                foreach($xldata_dtls_mill as $mills)
+                {
+                    if($mills->sl_no == $row->mill_id )
+                    {
+                        $object->getActiveSheet()->SetCellValueByColumnAndRow(3,$rowCount,$mills->mill_name);
+                    }
+                }
+
+                foreach($xldata_dtls_soc as $society)
+                {
+                    if($society->sl_no == $row->soc_id )
+                    {
+                        $object->getActiveSheet()->SetCellValueByColumnAndRow(4,$rowCount,$society->soc_name);
+                    }
+                }
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(5,$rowCount,$row->paddy_qty);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(6,$rowCount,$row->sub_tot_cmr_qty);
+                
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(7,$rowCount,$row->tot_msp);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(8,$rowCount,$row->market_fee);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(9,$rowCount,$row->mandi_chrg);
+                
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(10,$rowCount,$row->transportation1);
+                
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(11,$rowCount,$row->transportation2);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(12,$rowCount,$row->transportation3);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(13,$rowCount,$row->inter_dist_transprt);
+                
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(14,$rowCount,$row->transportation_cmr1);
+                
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(15,$rowCount,$row->driage);
+                
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(16,$rowCount,$row->comm_soc);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(17,$rowCount,$row->comm_mill);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(18,$rowCount,$row->cgst_milling);
+                
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(19,$rowCount,$row->sgst_milling);
+                
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(20,$rowCount,$row->admin_chrg);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(21,$rowCount,$row->gunny_usege);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(22,$rowCount,$row->cgst_gunny);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(23,$rowCount,$row->sgst_gunny);
+
+                $tot = $row->tot_msp + $row->market_fee + $row->mandi_chrg + $row->transportation1 + $row->transportation2 + 
+                        $row->transportation3 +  $row->inter_dist_transprt + $row->transportation_cmr1 + $row->driage +                                                   
+                        $row->comm_soc + $row->comm_mill + $row->cgst_milling +  $row->sgst_milling + $row->admin_chrg +                                                        
+                        $row->gunny_usege + $row->cgst_gunny +  $row->sgst_gunny;                                                       
+          
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(24,$rowCount,$tot);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(25,$rowCount,$row->butta_cut);
+
+                $object->getActiveSheet()->SetCellValueByColumnAndRow(26,$rowCount,$row->butta_cut);
+
+				$rowCount++;
+			}
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(4,$rowCount,'Total:');
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(5,$rowCount,$this->session->userdata('excelBillDtls_tot')->paddy_qty);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(6,$rowCount,$this->session->userdata('excelBillDtls_tot')->sub_tot_cmr_qty);
+            
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(7,$rowCount,$this->session->userdata('excelBillDtls_tot')->tot_msp);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(8,$rowCount,$this->session->userdata('excelBillDtls_tot')->market_fee);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(9,$rowCount,$this->session->userdata('excelBillDtls_tot')->mandi_chrg);
+            
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(10,$rowCount,$this->session->userdata('excelBillDtls_tot')->transportation1);
+            
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(11,$rowCount,$this->session->userdata('excelBillDtls_tot')->transportation2);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(12,$rowCount,$this->session->userdata('excelBillDtls_tot')->transportation3);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(13,$rowCount,$this->session->userdata('excelBillDtls_tot')->inter_dist_transprt);
+            
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(14,$rowCount,$this->session->userdata('excelBillDtls_tot')->transportation_cmr1);
+            
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(15,$rowCount,$this->session->userdata('excelBillDtls_tot')->driage);
+            
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(16,$rowCount,$this->session->userdata('excelBillDtls_tot')->comm_soc);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(17,$rowCount,$this->session->userdata('excelBillDtls_tot')->comm_mill);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(18,$rowCount,$this->session->userdata('excelBillDtls_tot')->cgst_milling);
+            
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(19,$rowCount,$this->session->userdata('excelBillDtls_tot')->sgst_milling);
+            
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(20,$rowCount,$this->session->userdata('excelBillDtls_tot')->admin_chrg);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(21,$rowCount,$this->session->userdata('excelBillDtls_tot')->gunny_usege);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(22,$rowCount,$this->session->userdata('excelBillDtls_tot')->cgst_gunny);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(23,$rowCount,$this->session->userdata('excelBillDtls_tot')->sgst_gunny);
+
+            $tot = $row->tot_msp + $row->market_fee + $row->mandi_chrg + $row->transportation1 + $row->transportation2 + 
+                    $row->transportation3 +  $row->inter_dist_transprt + $row->transportation_cmr1 + $row->driage +                                                   
+                    $row->comm_soc + $row->comm_mill + $row->cgst_milling +  $row->sgst_milling + $row->admin_chrg +                                                        
+                    $row->gunny_usege + $row->cgst_gunny +  $row->sgst_gunny;                                                       
+        
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(24,$rowCount,$tot);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(25,$rowCount,$row->butta_cut);
+
+            $object->getActiveSheet()->SetCellValueByColumnAndRow(26,$rowCount,$row->butta_cut);
+            
+			$filename = "Bill Details".date("d-m-Y H-i-s").'.xlsx';
+			$object->getActiveSheet()->setTitle("Bill Details");
+
+			header('Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment;filename="'.$filename.'"');
+			header('Cache-Control: max-age=0');
+
+			$writer = PHPExcel_IOFactory::createWriter($object,'Excel2007');
+			$writer->save('php://output');
+		   
+			exit;
+    }
+
+
+    //************************************************Declaration Report
+    public function f_paddydeclr_report(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            //Retriving Bill Details
+            /*$select = array ("GROUP_CONCAT(CONCAT(bill_no)) AS `bill_no`","b.soc_name AS 'skus_nm'","substr(c.mill_name,1,length(c.mill_name)) AS 'mill_nm'","soc_name AS centr_nm","sum(paddy_qty) AS 'tot_qty'","sum(sub_tot_cmr_qty) AS 'cmr_qty'");
+
+            $where          =   array(
+                "a.soc_id = b.sl_no" => NULL,
+                "a.mill_id = c.sl_no" => NULL,
+                "a.bill_no=" => $this->input->post('bill_no'),
+                "pool_type = '".$this->input->post('pool_type')."'GROUP BY  c.mill_name ,b.soc_name ORDER BY bill_no" => NULL
+            
+            );*/
+
+            $select = array(
+                "a.bill_no As 'bill_no'",
+
+                "b.soc_name AS 'skus_nm'",
+
+                "c.mill_name  AS 'mill_nm'",
+
+                "b.soc_name AS 'centr_nm'", 
+
+                "a.kms_yr AS 'kms_yr'", 
+
+                "sum(paddy_qty) AS 'tot_qty'",
+
+                "sum(sub_tot_cmr_qty) AS 'cmr_qty'"
+            );
+
+            $where = array(
+
+                "a.soc_id = b.sl_no" => NULL,
+
+                "a.mill_id = c.sl_no" => NULL,
+
+                "a.bill_no=" => $this->input->post('bill_no'),
+
+                "a.kms_yr" => $this->session->userdata('kms_yr'),
+
+                "pool_type = '".$this->input->post('pool_type')."'GROUP BY  c.mill_name ,b.soc_name ORDER BY bill_no" => NULL
+            );
+
+            //Bill Master Details
+            $bill['bill_dtls']     =   $this->Paddy->f_get_particulars("td_bill a, md_society b ,md_mill c" , $select, $where,1);
+
+            unset($select);
+           
+            
+            //District List
+            $bill['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+            
+            $bill['soc_name']      =   $this->Paddy->f_get_particulars("md_society", array("sl_no", "soc_name"), NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/paddydeclr", $bill);
+
+            $this->load->view('post_login/footer');
+
+            // Writing excel file for billDetails Report--
+        }
+        else{
+            $bill['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/paddydeclr",$bill);
+
+            $this->load->view('post_login/footer');
+
+        }
+
+    }
+
+    public function f_verifyBill(){
+
+        $poolType   =   $_GET['pool_type'];
+
+        $billNo     =   $_GET['bill_no'];
+
+        $where      =   array(
+
+            'pool_type' =>  $poolType,
+
+            'bill_no'   =>  $billNo,
+
+            'kms_yr'    =>  $this->session->userdata('kms_yr')
+
+        );
+
+        $data =   $this->Paddy->f_get_particulars("td_bill", NULL, $where, 0);
+
+        //echo "<pre>";
+
+        //echo sizeof($data);
+
+        //var_dump($data);die;
+
+        echo json_encode($data);
+
+
+    }
 
     //Payment Report
-    /*public function f_payment_report(){
+    public function f_payment_report(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -6471,7 +6970,7 @@ public function f_wqscdetails_report(){
 
         }
 
-    }*/
+    }
 
      // Payment Bill List
 public function f_paymentbilllist(){
@@ -6569,6 +7068,95 @@ public function f_payment_voucher(){
         }
 
     }
+     //Society Payment Report
+public function f_payment_society(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            //Retriving Payment No
+            //$billNo = $this->Paddy->f_get_particulars("td_payment_bill", array('pmt_bill_no'),  array('pool_type' => $this->input->post('pool_type')), array('con_bill_no' => $this->input->post('pmt_bill_no')), 1);
+           
+            //Retriving Bill Payment Details
+            $payment['payment_dtls']    =   $this->Paddy->f_societypayment( $this->input->post('pmt_bill_no'), $this->input->post('pool_type'));
+           
+
+            $where  =   array(
+
+                "pmt_commission_no"   => $this->input->post('pmt_bill_no'),
+                "pool_type"           => $this->input->post('pool_type')
+
+            );
+       
+            $payment['bill_dtls']    =   $this->Paddy->f_get_particulars("td_commission_bill",NULL, $where, 0);
+            
+            //Charges for Bill Payment
+            unset($select);
+            unset($where);
+            $select =  array(
+
+                "tds_percentage", "deducted_amt",
+                "payble_amt"
+
+            );
+            
+            $where  =   array(
+
+             
+                "pmt_commission_no"   => $this->input->post('pmt_bill_no')
+
+            );
+
+
+            $payment['charges']    =   $this->Paddy->f_get_particulars("td_commission_bill_dtls", $select, $where, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/payment_society", $payment);
+
+            $this->load->view('post_login/footer');
+
+        }
+        else{
+
+            //For Current Date
+            $payment['sys_date']   =   $_SESSION['sys_date'];
+
+            //District List
+            $payment['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/payment_society", $payment);
+
+            $this->load->view('post_login/footer');
+
+        }
+
+    }
+        // Payment Society Bill List
+public function f_paymentsocietylist(){
+
+        $select =  array(
+
+                "con_bill_no", "pmt_commission_no"
+        );
+            
+        $where  =   array(
+
+                "dist"        => $this->input->get('dist'),
+                "soc_id"      => $this->input->get('soc_id'),
+                "pool_type"   => $this->input->get('pool_type'),
+                "kms_year"    => $this->session->userdata('kms_yr')
+        );
+                
+
+        $data     = $this->Paddy->f_get_particulars("td_commission_bill", NULL,$where, 0);
+
+       
+        echo json_encode($data);
+
+}
+
 
 /////////////////////////////////
 public function js_get_bill()

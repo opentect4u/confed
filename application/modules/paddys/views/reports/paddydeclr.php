@@ -105,7 +105,7 @@ tr:hover {background-color: #f5f5f5;}
     
             <form method="POST" 
                 id="form"
-                action="<?php echo site_url("paddy/paddydeclr/report");?>" >
+                action="<?php echo site_url("report/paddydeclr");?>" >
 
                 <div class="form-header">
                 
@@ -438,7 +438,7 @@ $(document).ready(function(){
         //For District wise Block
         $.get( 
 
-            '<?php echo site_url("paddy/verifyBill");?>',
+            '<?php echo site_url("report/verifyBill");?>',
 
             { 
 

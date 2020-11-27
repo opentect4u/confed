@@ -66,7 +66,8 @@ $route['payroll/(:any)'] = 'payrolls/f_$1';
 $route['paddy'] = 'paddys';
 $route['paddy/approve/(:any)'] = 'paddys/approves/f_approve_$1';
 $route['paddy/(:any)/(:any)'] = 'paddys/f_$1_$2';
-$route['paddy/(:any)'] = 'paddys/f_$1';
+$route['paddy/(:any)']  = 'paddys/f_$1';
+$route['report/(:any)'] = 'paddys/reports/f_$1';
 
 //For Admin
 $route['admin'] = 'admins';
