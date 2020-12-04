@@ -206,7 +206,7 @@
 
                                 <td class="left_algn">Total Earnings</td>
                                 <td class="right_algn"><?php  $tot_er = $payslip_dtls->basic_pay + 
-                                                                 $payslip_dtls->grade_pay +
+                                                                //  $payslip_dtls->grade_pay +
                                                                 $payslip_dtls->da + 
                                                                 $payslip_dtls->ir +
                                                                 $payslip_dtls->hra +
