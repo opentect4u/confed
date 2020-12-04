@@ -1202,7 +1202,7 @@ class Payrolls extends MX_Controller {
         
                             "grade_pay"         =>  $e_list->grade_pay,
         
-                            // "basic_pay"         =>  $basic = round($e_list->band_pay + $e_list->grade_pay),
+                            // "basic_pay"       =>  $basic = round($e_list->band_pay + $e_list->grade_pay),
                             "basic_pay"         =>  $basic = round($e_list->band_pay ),
                             
         
@@ -2108,6 +2108,60 @@ class Payrolls extends MX_Controller {
 
     }
 
+//////////////////////////////////////////////////////////////////
+
+public function f_payslipold_report() {
+
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+
+        //Payslip
+        $where  =   array(
+
+            "emp_no"            =>  $this->input->post('emp_cd'),
+
+            "sal_month"         =>  $this->input->post('sal_month'),
+
+            "sal_year"          =>  $this->input->post('year'),
+
+            "approval_status"   =>  'A'
+
+        );
+
+        $payslip['emp_dtls']    =   $this->Payroll->f_get_particulars("md_employee", NULL, array("emp_code" =>  $this->input->post('emp_cd')), 1);
+
+        $payslip['payslip_dtls']=   $this->Payroll->f_get_particulars("td_pay_slip", NULL, $where, 1);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("reports/payslipold", $payslip);
+
+        $this->load->view('post_login/footer');
+
+    }
+    
+    else {
+
+        //Month List
+        $payslip['month_list'] =   $this->Payroll->f_get_particulars("md_month",NULL, NULL, 0);
+
+        //For Current Date
+        $payslip['sys_date']   =   $_SESSION['sys_date'];
+
+        //Employee List
+        unset($select);
+        $select = array ("emp_code", "emp_name");
+
+        $payslip['emp_list']   =   $this->Payroll->f_get_particulars("md_employee", $select, array("emp_catg IN (1,2,3)" => NULL), 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("reports/payslipold", $payslip);
+
+        $this->load->view('post_login/footer');
+        
+    }
+
+}
 
     //For Salary Statement
     public function f_statement_report(){

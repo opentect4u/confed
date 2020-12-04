@@ -127,6 +127,7 @@
                                 <a class="sub-dropbtn">Reports <i class="fa fa-angle-right" style="float: right;"></i></a>    
                                 <div class="sub-dropdown-content">
                                     <a href="<?php echo site_url('payroll/salary/report'); ?>">Category wise Salary List</a>
+                                    <a href="<?php echo site_url('payroll/payslipold/report'); ?>">Old Payslip</a>
                                     <a href="<?php echo site_url('payroll/payslip/report'); ?>">Payslip</a>
                                     <a href="<?php echo site_url('payroll/statement/report'); ?>">Salary Statement Month Wise</a>
                                     <a href="<?php echo site_url('payroll/bonus/report'); ?>">Bonus</a>
