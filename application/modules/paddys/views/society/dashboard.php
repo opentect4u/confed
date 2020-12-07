@@ -72,7 +72,7 @@
                                         
                                     </a>
 
-                                    <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                
 
                                     <button 
                                         type="button"
@@ -86,7 +86,7 @@
 
                                         <i class="fa fa-trash-o fa-2x" style="color: #bd2130"></i>
 
-                                    </button>-->
+                                    </button>
                                     
                                 </td>
 
