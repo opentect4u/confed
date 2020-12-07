@@ -2052,8 +2052,96 @@ class Payrolls extends MX_Controller {
         }
 
     }
+//////////////////////////////////////////////////////////////////////////
+public function f_salaryold_report() {
+
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
+        //Employee Ids for Salary List
+        $select     =   array("emp_code");
+
+        $where      =   array(
+
+            "emp_catg"  =>  $this->input->post('category')
+
+        );
+
+        $emp_id     =   $this->Payroll->f_get_particulars("md_employee", $select, $where, 0);
+
+        //Temp variable for emp_list
+        $eid_list   =   [];
+
+        for($i = 0; $i < count($emp_id); $i++) {
+
+            array_push($eid_list, $emp_id[$i]->emp_code);
+
+        }
+
+
+        //List of Salary Category wise
+        unset($where);
+        $where = array (
+
+            "sal_month"     =>  $this->input->post('sal_month'),
+
+            "sal_year"      =>  $this->input->post('year')
+
+        );
+
+        $salary['list']               =   $this->Payroll->f_get_particulars_in("td_pay_slip_old ", $eid_list, $where);
+
+        $salary['attendance_dtls']    =   $this->Payroll->f_get_attendance();
+
+        //Employee Group Count
+        unset($select);
+        unset($where);
+
+        $select =   array(
+
+            "emp_no", "emp_name", "COUNT(emp_name) count"
+
+        );
+
+        $where  =   array(
+
+            "sal_month"     =>  $this->input->post('sal_month'),
+
+            "sal_year = '".$this->input->post('year')."' GROUP BY emp_no, emp_name"      =>  NULL
+
+        );
+
+        $salary['count']              =   $this->Payroll->f_get_particulars("td_pay_slip_old ", $select, $where, 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("reports/salaryold", $salary);
+
+        $this->load->view('post_login/footer');
+
+    }
+
+    else {
+
+        //Month List
+        $salary['month_list'] =   $this->Payroll->f_get_particulars("md_month",NULL, NULL, 0);
+
+        //For Current Date
+        $salary['sys_date']   =   $_SESSION['sys_date'];
+
+        //Category List
+        $salary['category']   =   $this->Payroll->f_get_particulars("md_category", NULL, array('category_code IN (1,2,3)' => NULL), 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("reports/salaryold", $salary);
+
+        $this->load->view('post_login/footer');
+
+    }
+
+}
+//////////////////////////////////////////////////////////////////////////
     //For Payslip Report
     public function f_payslip_report() {
 
@@ -2129,7 +2217,7 @@ public function f_payslipold_report() {
 
         $payslip['emp_dtls']    =   $this->Payroll->f_get_particulars("md_employee", NULL, array("emp_code" =>  $this->input->post('emp_cd')), 1);
 
-        $payslip['payslip_dtls']=   $this->Payroll->f_get_particulars("td_pay_slip", NULL, $where, 1);
+        $payslip['payslip_dtls']=   $this->Payroll->f_get_particulars("td_pay_slip_old ", NULL, $where, 1);
 
         $this->load->view('post_login/main');
 
@@ -2220,7 +2308,67 @@ public function f_payslipold_report() {
         }
 
     }
+//////////////////////////////////////
+public function f_statementold_report(){
 
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        //Employees salary statement
+        $select = array(
+
+            "m.emp_name", "m.bank_ac_no",
+            
+            "t.net_amount"
+
+        );
+
+        $where  = array(
+
+            "m.emp_code = t.emp_no" =>  NULL,
+
+            "t.sal_month"           =>  $this->input->post('sal_month'),
+
+            "t.sal_year"            =>  $this->input->post('year'),
+
+            "m.emp_catg"            =>  $this->input->post('category'),
+
+            "m.emp_status"          =>  'A',
+
+            "m.deduction_flag"      =>  'Y'
+
+        );
+
+        $statement['statement'] =   $this->Payroll->f_get_particulars("md_employee m, td_pay_slip t", $select, $where, 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("reports/statementold", $statement);
+
+        $this->load->view('post_login/footer');
+
+    }
+
+    else {
+
+        //Month List
+        $statement['month_list'] =   $this->Payroll->f_get_particulars("md_month",NULL, NULL, 0);
+
+        //Category List
+        $statement['category']   =   $this->Payroll->f_get_particulars("md_category", NULL, array('category_code IN (1,2,3)' => NULL), 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("reports/statementold", $statement);
+
+        $this->load->view('post_login/footer');
+
+    }
+
+}
+
+
+
+////////////////////////////////////////
 
     //For Bonus Report
     public function f_bonus_report() {

@@ -74,7 +74,7 @@
 
                         <h4>P-1, Hide Lane, Akbar Mansion 3rd Floor Kolkata-700073</h4>
 
-                        <h4>Test Pay Slip for <?php echo $this->input->post('sal_month').'-'.$this->input->post('year');?></h4>
+                        <h4> Pay Slip for <?php echo $this->input->post('sal_month').'-'.$this->input->post('year');?></h4>
 
                         <h4><?php echo $payslip_dtls->emp_name; ?></h4>
 
@@ -257,7 +257,7 @@
                 
                 <div class="form-header">
                 
-                    <h4>Test Payslip Report</h4>
+                    <h4>Payslip Report</h4>
                 
                 </div>
 
