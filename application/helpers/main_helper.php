@@ -139,7 +139,7 @@
 
     $ci =& get_instance();
     $ci->load->database();
-    $sql="SELECT soc_name FROM md_society WHERE society_code ='".$id."' ";
+    $sql="SELECT soc_name FROM md_society WHERE sl_no ='".$id."' ";
       
     $paddy  =   $ci->db->query($sql)->row();
 

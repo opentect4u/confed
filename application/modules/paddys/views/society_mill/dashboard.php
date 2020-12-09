@@ -32,7 +32,7 @@
                         <th>Registration<br>No.</th>
                         <th>Mill.</th>
                         <th>Distrist</th>
-                       <!--  <th>Option</th> -->
+                        <th>Option</th>
 
                     </tr>
 
@@ -44,6 +44,8 @@
                     
                     if($society_dtls) {
 
+                        $i = 0;
+
                         foreach($society_dtls as $list) {
 
                             foreach($dist as $d_list) {
@@ -54,7 +56,7 @@
 
                             <tr>
 
-                                <td><?php echo $list->sl_no; ?></td>
+                                <td><?php echo ++$i; ?></td>
                                 <td><?php echo $list->soc_name; ?></td>
                                 <td><?php echo $list->reg_no; ?></td>
                                 <td><?php $sql = "select mill_id from md_soc_mill where soc_id = '$list->sl_no'";
@@ -71,24 +73,24 @@
                                 //echo $list->ph_no; ?></td>
                                 <td><?php echo $d_list->district_name; ?></td>
 
-                             <!--    <td>
-                                    <a href="society/edit?sl_no=<?php //echo $list->sl_no; ?>" 
+                               <td>
+                                    <a href="society_mill/edit?sl_no=<?php echo $list->sl_no; ?>" 
                                         data-toggle="tooltip"
                                         data-placement="bottom" 
-                                        title="Edit"
-                                    >
+                                        title="Edit">
+
                                         <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
                                     </a>
-                                    <button 
+                                     <!-- <button 
                                         type="button"
                                         class="delete"
-                                        id="<?php //echo $list->sl_no; ?>"
+                                        id="<?php //echo $list->sl_no.'/'.; ?>"
                                         data-toggle="tooltip"
                                         data-placement="bottom" 
                                         title="Delete">
                                         <i class="fa fa-trash-o fa-2x" style="color: #bd2130"></i>
-                                    </button>
-                                </td> -->
+                                    </button> -->
+                                </td> 
 
                             </tr>
 
@@ -116,11 +118,11 @@
                     <tr>
                     
                         <th>Sl No.</th>
-                        <th>Name</th>
+                        <th>Society Name</th>
                         <th>Registration<br>No.</th>
-                        <th>Phone No.</th>
+                        <th>Mill.</th>
                         <th>Distrist</th>
-                     <!--    <th>Option</th> -->
+                        <th>Option</th>
 
                     </tr>
                 
@@ -144,7 +146,7 @@
 
             if(result) {
 
-                window.location = "<?php echo site_url('paddy/society/delete?sl_no="+id+"');?>";
+                window.location = "<?php echo site_url('paddy/society_mill/delete?sl_no="+id+"');?>";
 
             }
             
