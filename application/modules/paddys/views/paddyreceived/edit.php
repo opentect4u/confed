@@ -418,9 +418,20 @@ $(document).ready(function(){
         alreadyDelivered('<?php echo $paddyreceived_dtls->soc_id; ?>');
         progressive('<?php echo $paddyreceived_dtls->soc_id; ?>');
 
+
+
         $('#paddy_qty').change(function(){
             
-            if($('#already_delivered').val((parseFloat($(this).val()) + parseFloat($('#already_delivered').val()))) > parseFloat($('#progressive').val())){
+            // if($('#already_delivered').val((parseFloat($(this).val()) + parseFloat($('#already_delivered').val()))) < parseFloat($('#progressive').val())){
+            //     $('#submit').attr('type', 'button');
+            // }
+
+            var paddy_qty = parseFloat($(this).val());
+            var already_delivered = $('#already_delivered').val();
+
+            var tot = paddy_qty + already_delivered;
+
+             if( tot < parseFloat($('#progressive').val() ) ){
                 $('#submit').attr('type', 'button');
             }
 

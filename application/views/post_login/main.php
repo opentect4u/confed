@@ -222,6 +222,7 @@
                                     <a href="<?php echo site_url('paddy/block');?>">Block</a>
                                     <a href="<?php echo site_url('paddy/mill');?>">Mill</a>
                                     <a href="<?php echo site_url('paddy/society');?>">Society</a>
+                                    <a href="<?php echo site_url('paddy/societymill');?>">Society Mill Connection</a>
                                 </div>
                             </div>
                             <div class="sub-dropdown">
