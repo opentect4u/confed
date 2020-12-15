@@ -110,7 +110,7 @@
                             <td><?php if(($emp_dtls->join_dt != "0000-00-00") && ($emp_dtls->join_dt != NULL)){ echo date('d-m-Y', strtotime($emp_dtls->join_dt)); } ?></td>
                           <!-- <td></td> -->
                           <!-- <td>Grade pay :</td> -->
-                            
+                            <!-- <td> -->
                             <!-- <td  width="1%"class="left_algn"><?php echo $payslip_dtls->grade_pay; ?></td> -->
                         </tr>
 
