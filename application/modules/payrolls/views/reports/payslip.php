@@ -99,11 +99,19 @@
                             <td>Employee Number</td>
                             <td class="left_algn">:</td>
                             <td class="left_algn"><?php echo $payslip_dtls->emp_no; ?></td>
+<!--                            <td></td> 
+                            <td>Grade</td>
+                            <td class="left_algn">:</td>
+                            <td class="left_algn"><?php echo $payslip_dtls->grade_pay; ?></td> -->
+
                             <td></td>
                             <td >Date of Joining</td>
                             <td class="left_algn">:</td>
                             <td><?php if(($emp_dtls->join_dt != "0000-00-00") && ($emp_dtls->join_dt != NULL)){ echo date('d-m-Y', strtotime($emp_dtls->join_dt)); } ?></td>
-
+                          <!-- <td></td> -->
+                          <!-- <td>Grade pay :</td> -->
+                            
+                            <!-- <td  width="1%"class="left_algn"><?php echo $payslip_dtls->grade_pay; ?></td> -->
                         </tr>
 
                         <tr>
@@ -116,6 +124,11 @@
                             <td class="left_algn">:</td>
                             <td><?php if(($emp_dtls->ret_dt != "0000-00-00") && ($emp_dtls->ret_dt != NULL)){ echo date('d-m-Y', strtotime($emp_dtls->ret_dt)); } ?></td>
 
+                        </tr>
+                        <tr>
+                        <td>Grade pay :</td>
+                        <td class="left_algn">:</td>
+                            <td  class="left_algn"><?php echo $payslip_dtls->grade_pay; ?></td>
                         </tr>
 
                     </table>   
@@ -146,15 +159,15 @@
                                 
                             </tr>
                             
-                            <tr class="t2">
-                                <!-- <td class="left_algn">Basic Salary<br>(Band Pay + Grade pay)</td> -->
+                            <!-- <tr class="t2">
+                               
                                 <td class="left_algn">Grade Pay</td>
                                 <td class="right_algn"><?php echo $payslip_dtls->grade_pay; ?></td>
                                 
                                 <td class="left_algn"></td>
                                 <td class="right_algn"></td>
                                 
-                            </tr>
+                            </tr> -->
 
                             <tr class="t2">
                                 <td class="left_algn">Dearness Allowance</td>
