@@ -120,7 +120,7 @@
                                     <button 
                                         type="button"
                                         class="delete"
-                                        id="<?php echo $b_list->bill_no; ?>"
+                                        id="<?php echo $b_list->bill_no."&pool_type=".$b_list->pool_type.""; ?>"
                                         data-toggle="tooltip"
                                         data-placement="bottom" 
                                         title="Delete"
