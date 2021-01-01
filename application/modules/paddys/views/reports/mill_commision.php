@@ -105,7 +105,7 @@ tr:hover {background-color: #f5f5f5;}
     
             <form method="POST" 
                 id="form"
-                action="<?php echo site_url("paddy/mill/commision");?>" >
+                action="<?php echo site_url("report/millComm");?>" >
 
                 <div class="form-header">
                 
@@ -229,9 +229,11 @@ tr:hover {background-color: #f5f5f5;}
                     <br>
 
                     <div>
-                        <h5>Name Of Rice Mill: <?php echo $bill_dtls->mill_name; ?></h5>
+                        <?php if($bill_dtls) { ?>
+                            <h5>Name Of Rice Mill: <?php echo $bill_dtls->mill_name; ?></h5>
 
-                        <h5>Address: <?php echo $bill_dtls->mill_addr; ?></h5>
+                            <h5>Address: <?php echo $bill_dtls->mill_addr; ?></h5>
+                        <?php } ?>
                     </div>
                    
                     <div>
@@ -337,8 +339,11 @@ tr:hover {background-color: #f5f5f5;}
                     
                     <div style="font-size: 12px;">
                         <br>
-                        <p style="display:inline;">Rupees in Words: <?php echo getIndianCurrency($totMillCrg); ?>
-                        <p style="display:inline; float:right;">GSTIN : 19AAAAW1196J1Z3</p>
+                        <?php 
+                            if($bill_dtls) { ?>
+                                <p style="display:inline;">Rupees in Words: <?php echo getIndianCurrency($totMillCrg); ?>
+                                <p style="display:inline; float:right;">GSTIN : 19AAAAW1196J1Z3</p>
+                        <?php } ?>
                     </div>
 
                     <div  class="bottom">

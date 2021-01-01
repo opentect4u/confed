@@ -540,6 +540,8 @@ tr:hover {background-color: #f5f5f5;}
     });
 
 </script>
+
+
 <script>
    // $('#soc_name').change(function(){
 
@@ -576,3 +578,5 @@ tr:hover {background-color: #f5f5f5;}
 
         });
 </script>
+
+

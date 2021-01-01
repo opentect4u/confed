@@ -5799,7 +5799,7 @@ class Reports extends MX_Controller {
     }
 
     //Districtwise & Societywise Total Procurement Report
-    public function f_procurement_report(){
+    public function f_procurementRep(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -5837,7 +5837,7 @@ class Reports extends MX_Controller {
     }
 //Wqsc details report (billno wise)
 //Procurement to Delivery Report
-public function f_wqscdetails_report(){
+public function f_wqscdetailsReport(){
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -5854,7 +5854,9 @@ public function f_wqscdetails_report(){
         $where          =   array(
             "pool_type"     =>  $poolType,
 
-            "bill_no"       =>  $billNo
+            "bill_no"       =>  $billNo,
+
+            "kms_yr"        =>  $this->session->userdata('kms_yr')
 
         );
 
@@ -6013,7 +6015,7 @@ public function f_wqscdetails_report(){
     }*/
 
     //Procurement to Delivery Report
-    public function f_proctodelivery_report(){
+    public function f_proctodelivery(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -6081,7 +6083,7 @@ public function f_wqscdetails_report(){
 
 
     /**Mandi Labour charge -- Anex - IV */
-    public function f_labour_charge(){
+    public function f_labourCharge(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             
@@ -6096,7 +6098,9 @@ public function f_wqscdetails_report(){
 
              $wheres  =   array(
 
-              "sl_no"    =>  "3"
+              "sl_no"    =>  "3",
+
+              "kms_yr"     => $this->session->userdata('kms_yr')
 
              );
 
@@ -6126,7 +6130,7 @@ public function f_wqscdetails_report(){
     }
 
     /**Society Commission Anex - VI A */            
-    public function f_society_commision(){
+    public function f_societyComm(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
              $select = array (
@@ -6148,7 +6152,9 @@ public function f_wqscdetails_report(){
 
              $wheres  =   array(
 
-              "sl_no"    =>  "9"
+              "sl_no"    =>  "9",
+
+              "kms_yr"     => $this->session->userdata('kms_yr')
 
              );
 
@@ -6176,7 +6182,7 @@ public function f_wqscdetails_report(){
     }
 
     /**Milling charges Anex - VII */
-     public function f_mill_commision(){
+     public function f_millComm(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Retriving Bill Details
@@ -6199,7 +6205,9 @@ public function f_wqscdetails_report(){
 
              $wheres  =   array(
 
-              "sl_no"    =>  "10"
+              "sl_no"    =>  "10",
+
+              "kms_yr"     => $this->session->userdata('kms_yr')
 
              );
 
@@ -6243,7 +6251,7 @@ public function f_wqscdetails_report(){
     }
 
     /**Gunny Bag charges Anex - VIII */
-    public function f_claim_gunny(){
+    public function f_gunnyRep(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Retriving Bill Details
@@ -6266,7 +6274,9 @@ public function f_wqscdetails_report(){
 
              $wheres  =   array(
 
-              "sl_no"    =>  "16"
+              "sl_no"    =>  "16",
+
+              "kms_yr"     => $this->session->userdata('kms_yr')
 
              );
 
@@ -6313,7 +6323,7 @@ public function f_wqscdetails_report(){
     }
 
     /**Transport charges Anex - V */
-    public function f_claim_transportch(){
+    public function f_claimTransport(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Retriving Bill Details
@@ -6338,29 +6348,39 @@ public function f_wqscdetails_report(){
 
               "sl_no"  =>    "4",
 
+              "kms_yr"     => $this->session->userdata('kms_yr')
+
              );
 
              $wheres2  =   array(
 
                 "sl_no"  =>    "5",
+
+                "kms_yr"     => $this->session->userdata('kms_yr')
   
              );
 
              $wheres3  =   array(
 
                 "sl_no"  =>    "6",
+
+                "kms_yr"     => $this->session->userdata('kms_yr')
   
              );
 
              $wheres4  =   array(
 
                 "sl_no"  =>    "7",
+
+                "kms_yr"     => $this->session->userdata('kms_yr')
   
              );
 
              $wheres5  =   array(
 
                 "sl_no"  =>    "15",
+
+                "kms_yr"     => $this->session->userdata('kms_yr')
   
              );
 
@@ -6458,8 +6478,8 @@ public function f_wqscdetails_report(){
                 );
 
                 //Bill Master Details
-                //$bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", NULL, $where, 0);
-                $bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", NULL, NULL, 0);
+                $bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", NULL, $where, 0);
+                //$bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", NULL, NULL, 0);
 
 
             }
@@ -6480,8 +6500,8 @@ public function f_wqscdetails_report(){
                 );
 
                 //Bill Master Details
-                //$bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", $select, $where, 0);
-                $bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", $select, Null, 0);
+                $bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", $select, $where, 0);
+                //$bill['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", $select, Null, 0);
 
             }
             else{
@@ -6555,29 +6575,47 @@ public function f_wqscdetails_report(){
                 "pool_type = '".$this->input->post('pool_type')."' ORDER BY bill_no" => NULL
             
             );
+            /*$sql = array (
+                "a.bill_no bill_no","a.bill_dt bill_dt","a.kms_yr kms_yr","a.pool_type pool_type",
+                "a.rice_type rice_type","a.dist dist","a.block 'block'","a.soc_id soc_id","a.mill_id mill_id",
+                "a.paddy_qty paddy_qty","a.tot_msp tot_msp","a.market_fee market_fee","a.mandi_chrg","a.transport_dist",
+                "a.transportation1","a.transportation2","a.transportation3","a.driage","a.comm_soc","a.comm_mill",
+                "a.cgst_milling","a.sgst_milling","a.admin_chrg","a.tot_milled_paddy","a.out_ratio","a.sub_tot_cmr_qty",
+                "a.inter_dist_transprt","a.sub_tot_cmr_rate","a.transport_dist1","a.transportation_cmr1",
+                "a.transportation_cmr2","a.transportation_cmr3","a.gunny_usege","a.cgst_gunny","a.sgst_gunny",
+                "a.butta_cut butta_cut","a.gunny_cut gunny_cut","b.wqsc_no  wqsc"
+        );
+
+        $where = array(
+            "a.bill_no = b.bill_no" => Null,
+
+            "a.bill_dt between '$from_dt' and '$to_dt'" => Null,
+
+            "a.pool_type" => $pool_type
+
+        );*/
             $sql = array (
-                    "a.bill_no bill_no","a.bill_dt bill_dt","a.kms_yr kms_yr","a.pool_type pool_type",
-                    "a.rice_type rice_type","a.dist dist","a.block 'block'","a.soc_id soc_id","a.mill_id mill_id",
-                    "a.paddy_qty paddy_qty","a.tot_msp tot_msp","a.market_fee market_fee","a.mandi_chrg","a.transport_dist",
-                    "a.transportation1","a.transportation2","a.transportation3","a.driage","a.comm_soc","a.comm_mill",
-                    "a.cgst_milling","a.sgst_milling","a.admin_chrg","a.tot_milled_paddy","a.out_ratio","a.sub_tot_cmr_qty",
-                    "a.inter_dist_transprt","a.sub_tot_cmr_rate","a.transport_dist1","a.transportation_cmr1",
-                    "a.transportation_cmr2","a.transportation_cmr3","a.gunny_usege","a.cgst_gunny","a.sgst_gunny",
-                    "a.butta_cut butta_cut","a.gunny_cut gunny_cut","b.wqsc_no  wqsc"
+                    "bill_no bill_no","bill_dt bill_dt","kms_yr kms_yr","pool_type pool_type",
+                    "rice_type rice_type","dist dist","block 'block'","soc_id soc_id","mill_id mill_id",
+                    "paddy_qty paddy_qty","tot_msp tot_msp","market_fee market_fee","mandi_chrg","transport_dist",
+                    "transportation1","transportation2","transportation3","driage","comm_soc","comm_mill",
+                    "cgst_milling","sgst_milling","admin_chrg","tot_milled_paddy","out_ratio","sub_tot_cmr_qty",
+                    "inter_dist_transprt","sub_tot_cmr_rate","transport_dist1","transportation_cmr1",
+                    "transportation_cmr2","transportation_cmr3","gunny_usege","cgst_gunny","sgst_gunny",
+                    "butta_cut butta_cut","gunny_cut gunny_cut"
             );
 
             $where = array(
-                "a.bill_no = b.bill_no" => Null,
+            
+                "bill_dt between '$from_dt' and '$to_dt'" => Null,
 
-                "a.bill_dt between '$from_dt' and '$to_dt'" => Null,
-
-                "a.pool_type" => $pool_type
+                "pool_type" => $pool_type
 
             );
                  
                      
             //Bill Master Details
-            $bill['bill_dtls']     =   $this->Paddy->f_get_particulars("td_bill a,td_wqsc_sheet b", $sql,$where,0);
+            $bill['bill_dtls']     =   $this->Paddy->f_get_particulars("td_bill" , $sql,$where,0);
 
             //echo $this->db->last_query();die;  
 
@@ -6931,7 +6969,7 @@ public function f_wqscdetails_report(){
     }
 
     //**********************************************Payment Report*****************************************************/
-    public function f_payment_report(){
+    public function f_millPayment(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -6954,7 +6992,8 @@ public function f_wqscdetails_report(){
             $where  =   array(
 
                 "pmt_bill_no"   => $this->input->post('pmt_bill_no'),
-                "pool_type"     => $this->input->post('pool_type')
+                "pool_type"     => $this->input->post('pool_type'),
+                "kms_year"      => $this->session->userdata('kms_yr')
 
             );
        
@@ -6974,10 +7013,11 @@ public function f_wqscdetails_report(){
             $where  =   array(
 
                 "t.account_type = m.sl_no" => NULL,
-                "t.pmt_bill_no"   => $this->input->post('pmt_bill_no')
+                "t.pmt_bill_no"   => $this->input->post('pmt_bill_no'),
+                "t.kms_year"      => $this->session->userdata('kms_yr'),
+                "m.kms_yr"        => $this->session->userdata('kms_yr')
 
             );
-
 
             $payment['charges']    =   $this->Paddy->f_get_particulars("td_payment_bill_dtls t, md_comm_params m", $select, $where, 0);
 
@@ -7025,7 +7065,7 @@ public function f_paymentbilllist(){
     }
 
 //Payment Voucher
-public function f_payment_voucher(){
+public function f_paymentVoucher(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -7048,7 +7088,8 @@ public function f_payment_voucher(){
             $where  =   array(
 
                 "pmt_bill_no"   => $this->input->post('pmt_bill_no'),
-                "pool_type"     => $this->input->post('pool_type')
+                "pool_type"     => $this->input->post('pool_type'),
+                "kms_year"      => $this->session->userdata('kms_yr')
 
             );
        
@@ -7068,8 +7109,9 @@ public function f_payment_voucher(){
             $where  =   array(
 
                 "t.account_type = m.sl_no" => NULL,
-                "t.pmt_bill_no"   => $this->input->post('pmt_bill_no')
-
+                "t.pmt_bill_no"   => $this->input->post('pmt_bill_no'),
+                "t.kms_year"      => $this->session->userdata('kms_yr'),
+                "m.kms_yr"        => $this->session->userdata('kms_yr')
             );
             $ptm_no     = $this->input->post('pmt_bill_no');
             $pool_type  = $this->input->post('pool_type');

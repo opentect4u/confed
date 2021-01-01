@@ -70,7 +70,7 @@ tr:hover {background-color: #f5f5f5;}
     
             <form method="POST" 
                 id="form"
-                action="<?php echo site_url("paddy/payment/report");?>" >
+                action="<?php echo site_url("report/millPayment");?>" >
 
                 <div class="form-header">
                 
@@ -614,7 +614,7 @@ tr:hover {background-color: #f5f5f5;}
             //For District wise Block
             $.get( 
 
-                '<?php echo site_url("paddy/paymentbilllist");?>',
+                '<?php echo site_url("report/paymentbilllist");?>',
 
                 { 
                     dist: $('#dist').val(),

@@ -67,7 +67,7 @@ tr:hover {background-color: #f5f5f5;}
     
             <form method="POST" 
                 id="form"
-                action="<?php echo site_url("paddy/procurement/report");?>" >
+                action="<?php echo site_url("report/procurementRep");?>" >
 
                 <div class="form-header">
                 

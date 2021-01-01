@@ -4124,6 +4124,7 @@ class Paddys extends MX_Controller {
     //Total Amount of all bills for a particular KMS Year from table bill_no
     public function f_billamount(){
         echo $this->Paddy->f_allBillAmount($this->genBills($this->input->get('bill_nos')), $this->input->get('pool_type'), $this->session->userdata('kms_yr')); 
+        
     }
 
     //Checking Which Bill no are valid
@@ -4229,8 +4230,6 @@ class Paddys extends MX_Controller {
                     "pmt_bill_no"           =>  $pmt_bill_no,
     
                     "trans_dt"              =>  $this->input->post('trans_dt'),
-    
-                    // "kms_year"              =>  $this->kms_year,
 
                     "kms_year"              => $this->session->userdata('kms_yr'),
     
@@ -4301,6 +4300,7 @@ class Paddys extends MX_Controller {
                     "created_by"            =>  $this->session->userdata('loggedin')->user_name,
     
                     "created_dt"            =>  date('Y-m-d h:i:s'),
+
                     "kms_year"              =>$this->session->userdata('kms_yr')
     
                 );
@@ -4322,7 +4322,7 @@ class Paddys extends MX_Controller {
             $payment['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
             //Bill Master Details
-            $payment['bill_master']   =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), NULL, 0);
+            $payment['bill_master']   =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), array('kms_yr' =>$this->session->userdata('kms_yr')), 0);
 
             $this->load->view('post_login/main');
 
@@ -4468,7 +4468,7 @@ class Paddys extends MX_Controller {
             $payment['dist']            =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
             
             //Bill Master Details
-            $payment['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), NULL, 0);
+            $payment['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), array('kms_yr' =>$this->session->userdata('kms_yr')), 0);
 
             //Retriving Bill Payment Details
             $payment['payment_dtls']    =   $this->Paddy->f_get_payment($this->input->get('pmt_bill_no'),$this->input->get('pool_type'));
@@ -4717,6 +4717,7 @@ class Paddys extends MX_Controller {
             
             $select = array('boiled_val val', 'action');
 
+
         }
         else{
 
@@ -4725,7 +4726,9 @@ class Paddys extends MX_Controller {
         }
 
         $where = array(
-            'sl_no' => $this->input->get('sl_no')
+            'sl_no'  => $this->input->get('sl_no'),
+
+            'kms_yr' =>$this->session->userdata('kms_yr')
         );
 
         $data = $this->Paddy->f_get_particulars("md_comm_params", $select, $where, 1);
@@ -4889,7 +4892,7 @@ class Paddys extends MX_Controller {
             $commission['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
             //Bill Master Details
-            $commission['bill_master']   =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), NULL, 0);
+            $commission['bill_master']   =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), array('kms_year' =>$this->session->userdata('kms_yr')), 0);
 
             $this->load->view('post_login/main');
 
@@ -4906,7 +4909,7 @@ class Paddys extends MX_Controller {
      
         if($_SERVER['REQUEST_METHOD'] == "POST") {
 
-            $where = array('pmt_commission_no' => $this->input->post('pmt_commission_no'));
+            $where = array('pmt_commission_no' => $this->input->post('pmt_commission_no'),'kms_year' =>$this->session->userdata('kms_yr'));
 
             $this->Paddy->f_delete('td_commission_bill', $where);
             $this->Paddy->f_delete('td_commission_bill_dtls', $where);
@@ -5206,8 +5209,7 @@ class Paddys extends MX_Controller {
     public function f_checkbills() {
         $kms_year=$this->session->userdata('kms_yr');
         $true_bills = $this->Paddy->f_check_bill_no($this->genBills($this->input->get("bill_nos")), $this->input->get("pool_type"),$this->session->userdata('kms_yr'));
-        // echo $this->db->last_query();
-        // die();
+
         echo json_encode(array_map(function($data){ return $data->bill_no;}, $true_bills));
 
     }
@@ -5782,7 +5784,7 @@ class Paddys extends MX_Controller {
     }
 
     //Districtwise & Societywise Total Procurement Report
-    public function f_procurement_report(){
+    /*public function f_procurement_report(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -5817,10 +5819,10 @@ class Paddys extends MX_Controller {
 
         }
 
-    }
+    }*/
 //Wqsc details report (billno wise)
 //Procurement to Delivery Report
-public function f_wqscdetails_report(){
+/*public function f_wqscdetails_report(){
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -5871,7 +5873,7 @@ public function f_wqscdetails_report(){
 
     }
 
-}
+}*/
 
     //Procurement to Delivery Report
     /*public function f_proctodelivery_report(){
@@ -5996,7 +5998,7 @@ public function f_wqscdetails_report(){
     }*/
 
     //Procurement to Delivery Report
-    public function f_proctodelivery_report(){
+    /*public function f_proctodelivery_report(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -6041,7 +6043,7 @@ public function f_wqscdetails_report(){
 
         }
 
-    }
+    }*/
 
     public function f_kms(){
 
@@ -6058,7 +6060,7 @@ public function f_wqscdetails_report(){
 
 
     /**Mandi Labour charge -- Anex - IV */
-    public function f_labour_charge(){
+    /*public function f_labour_charge(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             
@@ -6100,10 +6102,10 @@ public function f_wqscdetails_report(){
 
         }
 
-    }
+    }*/
 
     /**Society Commission Anex - VI A */            
-    public function f_society_commision(){
+    /*public function f_society_commision(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
              $select = array (
@@ -6150,10 +6152,10 @@ public function f_wqscdetails_report(){
 
         }
 
-    }
+    }*/
 
     /**Milling charges Anex - VII */
-     public function f_mill_commision(){
+     /*public function f_mill_commision(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Retriving Bill Details
@@ -6217,10 +6219,10 @@ public function f_wqscdetails_report(){
 
         }
 
-    }
+    }*/
 
     /**Gunny Bag charges Anex - VIII */
-    public function f_claim_gunny(){
+    /*public function f_claim_gunny(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Retriving Bill Details
@@ -6287,10 +6289,10 @@ public function f_wqscdetails_report(){
 
         }
 
-    }
+    }*/
 
     /**Transport charges Anex - V */
-    public function f_claim_transportch(){
+    /*public function f_claim_transportch(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Retriving Bill Details
@@ -6370,7 +6372,7 @@ public function f_wqscdetails_report(){
 
         }
 
-    }
+    }*/
 
     //Payment Report
     /*public function f_payment_report(){
@@ -6449,7 +6451,7 @@ public function f_wqscdetails_report(){
     }*/
 
      // Payment Bill List
-public function f_paymentbilllist(){
+    /*public function f_paymentbilllist(){
                 
 
             $dist      = $this->input->get('dist');
@@ -6464,10 +6466,10 @@ public function f_paymentbilllist(){
         
         echo json_encode($data);
 
-    }
+    }*/
 
 //Payment Voucher
-public function f_payment_voucher(){
+/*public function f_payment_voucher(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -6543,7 +6545,7 @@ public function f_payment_voucher(){
 
         }
 
-    }
+    }*/
 
 /////////////////////////////////
 public function js_get_bill()

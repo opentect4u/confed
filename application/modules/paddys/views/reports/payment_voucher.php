@@ -70,7 +70,7 @@ tr:hover {background-color: #f5f5f5;}
     
             <form method="POST" 
                 id="form"
-                action="<?php echo site_url("paddy/payment/voucher");?>" >
+                action="<?php echo site_url("report/paymentVoucher");?>" >
 
                 <div class="form-header">
                 
@@ -163,6 +163,30 @@ tr:hover {background-color: #f5f5f5;}
 
               </div>  
 
+              <div class="form-group row">
+                    <label for="pool_type" class="control-lebel col-sm-2 col-form-label">Pool Type:</label>
+            
+                    <div class="col-sm-10">
+
+                        <select class="form-control" 
+                                name="pool_type"
+                                id="pool_type"
+                            >
+
+                            <option value="">Select</option>
+
+                            <option value="S">State Pool</option>
+
+                            <option value="C">Central Pool</option>
+                            
+                            <option value="F">FCI</option>
+
+                        </select>    
+
+                    </div>
+
+                </div>
+
                 <div class="form-group row">
 
                     <label for="pmt_bill_no" class="control-lebel col-sm-2 col-form-label">Payment No:</label>
@@ -186,32 +210,8 @@ tr:hover {background-color: #f5f5f5;}
                   
                     </div>
                 </div>
-                    <!-- <div class="form-group row"> -->
-                   <div class="form-group row">
-                    <label for="pool_type" class="control-lebel col-sm-2 col-form-label">Pool Type:</label>
-            
-                    <div class="col-sm-10">
+                    
 
-                        <select class="form-control" 
-                                name="pool_type"
-                                id="pool_type"
-                            >
-
-                            <option value="">Select</option>
-
-                            <option value="S">State Pool</option>
-
-                            <option value="C">Central Pool</option>
-                            
-                            <option value="F">FCI</option>
-
-                        </select>    
-
-                    </div>
-
-                <!-- </div> -->
-
-                </div>
 
                 <div class="form-group row">
 
@@ -640,19 +640,24 @@ tr:hover {background-color: #f5f5f5;}
 
 </script>
 <script>
-    $('#mill_name').change(function(){
+
+   // $('#mill_name').change(function(){
+
+         $('#pool_type').change(function(){
 
             //For District wise Block
             $.get( 
 
-                '<?php echo site_url("paddy/paymentbilllist");?>',
+                '<?php echo site_url("report/paymentbilllist");?>',
 
                 { 
                     dist: $('#dist').val(),
                     
                     soc_id: $('#soc_name').val(),
                    
-                    mill_id: $(this).val(),
+                    mill_id: $('#mill_name').val(),
+
+                    pool_type: $(this).val()
                   
                 }
 

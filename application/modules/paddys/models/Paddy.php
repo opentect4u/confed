@@ -523,20 +523,20 @@ $sql="SELECT t.dist, m.district_name, SUM(t.count) count
         //         AND `t`.`mill_id` = `mm`.`sl_no`
         //         AND `t`.`kms_year` ='$kms_year'";
         
-$sql =$sql = "SELECT  CONCAT(min(con_bill_no),'-',max(con_bill_no))confed_bill_no, `t`.`pmt_bill_no`, `t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name`, `mm`.`mill_name`, `t`.`trans_dt` 
+        $sql = "SELECT  CONCAT(min(con_bill_no),'-',max(con_bill_no))confed_bill_no, `t`.`pmt_bill_no`, `t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name`, `mm`.`mill_name`, `t`.`trans_dt` 
 
-FROM `td_payment_bill` `t`, md_society ms,md_mill mm,md_district md
+        FROM `td_payment_bill` `t`, md_society ms,md_mill mm,md_district md
 
-WHERE `t`.`dist` = `md`.`district_code` 
-AND `t`.`soc_id` = `ms`.`sl_no` 
-AND `t`.`mill_id` = `mm`.`sl_no`
-AND `t`.`kms_year` ='$kms_year'
-group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name`, `mm`.`mill_name`, `t`.`trans_dt`";
+        WHERE `t`.`dist` = `md`.`district_code` 
+        AND `t`.`soc_id` = `ms`.`sl_no` 
+        AND `t`.`mill_id` = `mm`.`sl_no`
+        AND `t`.`kms_year` ='$kms_year'
+        group by  `t`.`pmt_bill_no`,`t`.`pool_type`,`md`.`district_name`, `ms`.`soc_name`, `mm`.`mill_name`, `t`.`trans_dt`";
 
-        $result = $this->db->query($sql);     
-        
-        return $result->result();
-        
+                $result = $this->db->query($sql);     
+                
+                return $result->result();
+            
     }
 
      //Payment Details

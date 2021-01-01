@@ -105,7 +105,7 @@ tr:hover {background-color: #f5f5f5;}
     
             <form method="POST" 
                 id="form"
-                action="<?php echo site_url("paddy/labour/charge");?>" >
+                action="<?php echo site_url("report/labourCharge");?>" >
 
                 <div class="form-header">
                 
@@ -384,8 +384,12 @@ tr:hover {background-color: #f5f5f5;}
                     
                     <div style="font-size: 12px;">
                         <br>
-                        <p style="display:inline;">Rupees in Words: <?php echo getIndianCurrency($bill_dtls->mandi_chrg); ?>
-                        <p style="display:inline; float:right;">GSTIN : 19AAAAW1196J1Z3</p>
+                        <?php 
+                            if($bill_dtls) { ?>
+                                <p style="display:inline;">Rupees in Words: <?php echo getIndianCurrency($bill_dtls->mandi_chrg); ?>
+                                <p style="display:inline; float:right;">GSTIN : 19AAAAW1196J1Z3</p>
+                        <?php } ?>
+
                     </div>
 
                     <div  class="bottom">

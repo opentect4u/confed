@@ -267,21 +267,21 @@
                             <div class="sub-dropdown">
                                 <a class="sub-dropbtn">Reports <i class="fa fa-angle-right" style="float: right;"></i></a>    
                                 <div class="sub-dropdown-content">
-                                <a href="<?php echo site_url('paddy/procurement/report'); ?>">Society Wise Total Procurement</a>
+                                <a href="<?php echo site_url('report/procurementRep'); ?>">Society Wise Total Procurement</a>
                                     <!--<a href="<?php //echo site_url('paddy/distwise/report'); ?>">District Wise</a>-->
                                 <!--<a href="<?php //echo site_url('paddy/datewiseprocurement/report'); ?>">Date Wise Procurement</a>-->
-                                <a href="<?php echo site_url('paddy/proctodelivery/report'); ?>">Procurement to Delivery</a>
-                                <a href="<?php echo site_url('paddy/wqscdetails/report'); ?>">WQSC Details</a>
+                                <a href="<?php echo site_url('report/proctodelivery'); ?>">Procurement to Delivery</a>
+                                <a href="<?php echo site_url('report/wqscdetailsReport'); ?>">WQSC Details</a>
                                     <!--<a href="<?php echo site_url('paddy/blockwise/report'); ?>">Block Wise</a>-->
                                 <a href="<?php echo site_url('report/billreport'); ?>">Bill</a>
-                                <a href="<?php echo site_url('paddy/labour/charge'); ?>">Mandi Labour Charge</a>
-                                <a href="<?php echo site_url('paddy/society/commision'); ?>">Society Comission</a>
-                                <a href="<?php echo site_url('paddy/claim/transportch'); ?>">Transport Charge</a>
-                                <a href="<?php echo site_url('paddy/mill/commision'); ?>">Milling Charge</a>
-                                <a href="<?php echo site_url('paddy/claim/gunny'); ?>">Claim For Gunny Bag</a>
+                                <a href="<?php echo site_url('report/labourCharge'); ?>">Mandi Labour Charge</a>
+                                <a href="<?php echo site_url('report/societyComm'); ?>">Society Comission</a>
+                                <a href="<?php echo site_url('report/claimTransport'); ?>">Transport Charge</a>
+                                <a href="<?php echo site_url('report/millComm'); ?>">Milling Charge</a>
+                                <a href="<?php echo site_url('report/gunnyRep'); ?>">Claim For Gunny Bag</a>
                                 <a href="<?php echo site_url('report/billdetailsReport'); ?>">Bill Details</a>
-                                <a href="<?php echo site_url('paddy/payment/report'); ?>">Miller's Payment</a>
-                                <a href="<?php echo site_url('paddy/payment/voucher'); ?>">Payment Voucher</a>
+                                <a href="<?php echo site_url('report/millPayment'); ?>">Miller's Payment</a>
+                                <a href="<?php echo site_url('report/paymentVoucher'); ?>">Payment Voucher</a>
                                 <a href="<?php echo site_url('report/paymentsociety'); ?>">Society's Payment</a>
                                 <a href="<?php echo site_url('report/paddydeclr'); ?>">Declaration</a>
                                 </div>
@@ -329,8 +329,8 @@
                                 <div class="sub-dropdown-content">
                                     <a href="<?php echo site_url('Disaster/billPay_record'); ?>">Bill Receipt</a> 
                                     <a href="<?php echo site_url('Disaster/paymentDetails'); ?>">Payment Details</a>
-                                    <!-- <a href="<?php //echo site_url('Disaster/agentDelivery'); ?>">Agent Delivery</a>  -->
-                                  <!--  <a href="<?php// echo site_url('paddy/bill'); ?>">xyz</a> -->
+                                    <!-- <a href="  //echo site_url('Disaster/agentDelivery');">Agent Delivery</a>  
+                                    <a href=" // echo site_url('paddy/bill');">xyz</a> -->
                                 </div>
                             </div>
                             <?php } ?>

@@ -298,7 +298,7 @@ tr:hover {background-color: #f5f5f5;}
                                     <th>Butta Cut</th>
 
                                     <th>Final Value</th>
-                                    <th>WQSC</th>
+                                    <!--<th>WQSC</th>-->
                                 </tr>
     
                             </thead>
@@ -420,7 +420,7 @@ tr:hover {background-color: #f5f5f5;}
                                        <td style="text-align: right;"><?php echo $b_list->butta_cut; ?></td>
                                        
                                        <td style="text-align: right;"><?php echo ($tot - $b_list->butta_cut); ?></td>
-                                       <td style="text-align: right;"><?php echo $b_list->wqsc; ?></td>
+                                       <!--<td style="text-align: right;"><?php //echo $b_list->wqsc; ?></td>-->
     
                                     </tr>
                             <?php        
