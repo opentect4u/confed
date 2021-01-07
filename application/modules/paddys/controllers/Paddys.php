@@ -2952,18 +2952,18 @@ class Paddys extends MX_Controller {
             if($rice_type == 'P'){
                 
                 //MSP
-                $tot_msp        = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 1), 1)->boiled_val;
+                $tot_msp        = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 1,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //Market fee
-                $market_fee     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 2), 1)->boiled_val;
+                $market_fee     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 2,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //Labour Charge
-                $mandi_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 3), 1)->boiled_val;
+                $mandi_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 3,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //Transportation charges distance wise PADDY
                 if($this->input->post('trns_distance_paddy') <= 25){
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4), 1)->boiled_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                     $trans_chrg_mid = 0;
 
@@ -2973,9 +2973,9 @@ class Paddys extends MX_Controller {
 
                     $extra_dist     = $this->input->post('trns_distance_paddy') - 25;
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4), 1)->boiled_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $trans_chrg_mid = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 5), 1)->boiled_val;
+                    $trans_chrg_mid = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 5,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                     $trans_chrg_max = 0;
 
@@ -2984,46 +2984,46 @@ class Paddys extends MX_Controller {
 
                     $extra_dist     = $this->input->post('trns_distance_paddy') - 50;
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4), 1)->boiled_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $trans_chrg_mid = ($this->input->post('paddy_qty') * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 5), 1)->boiled_val;
+                    $trans_chrg_mid = ($this->input->post('paddy_qty') * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 5,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $trans_chrg_max = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 6), 1)->boiled_val;
+                    $trans_chrg_max = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 6,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 }
 
                 //Driage
-                $driage         = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 8), 1)->boiled_val;
+                $driage         = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 8,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //Commission to Society
-                $soc_comm       = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 9), 1)->boiled_val;
+                $soc_comm       = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 9,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //Milling charges
-                $millng_chrg    = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 10), 1)->boiled_val;
+                $millng_chrg    = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 10,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //CGST Paddy
-                $cgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 11), 1)->boiled_val) / 100;
+                $cgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 11,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val) / 100;
 
                 //SGST Paddy
-                $sgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 12), 1)->boiled_val) / 100;
+                $sgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 12,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val) / 100;
                 
                 //Administrative Charges
-                $admin_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 13), 1)->boiled_val;
+                $admin_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 13,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //Cost of 1 qtl of Milled Paddy (Amount)
-                $cost_per_milled_paddy = $this->Paddy->f_get_particulars("md_comm_params", array("SUM(boiled_val) boiled_val"), array("sl_no BETWEEN 1 AND 13" => NULL), 1)->boiled_val;
+                $cost_per_milled_paddy = $this->Paddy->f_get_particulars("md_comm_params", array("SUM(boiled_val) boiled_val"), array("sl_no BETWEEN 1 AND 13" => NULL,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //Sub-total of CMR
-                $sub_tot_cmr    = ($this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14), 1)->boiled_val) / 100;
+                $sub_tot_cmr    = ($this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val) / 100;
 
                 //Sub-total of Rate
-                $sub_tot_rate   = ($cost_per_milled_paddy * 100) / $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14), 1)->boiled_val;
+                $sub_tot_rate   = ($cost_per_milled_paddy * 100) / $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
 
                 //Transportation charges distance wise RICE
                 if($this->input->post('trns_distance_rice') > 0){
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15), 1)->boiled_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                     $cmr_trans_chrg_mid = 0;
 
@@ -3033,9 +3033,9 @@ class Paddys extends MX_Controller {
 
                     $cmr_extra_dist     = $this->input->post('trns_distance_rice') - 25;
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15), 1)->boiled_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $cmr_trans_chrg_mid = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16), 1)->boiled_val;
+                    $cmr_trans_chrg_mid = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                     $cmr_trans_chrg_max = 0;
 
@@ -3044,22 +3044,22 @@ class Paddys extends MX_Controller {
 
                     $cmr_extra_dist     = $this->input->post('trns_distance_rice') - 50;
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15), 1)->boiled_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $cmr_trans_chrg_mid = ($sub_tot_cmr * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16), 1)->boiled_val;
+                    $cmr_trans_chrg_mid = ($sub_tot_cmr * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $cmr_trans_chrg_max = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 17), 1)->boiled_val;
+                    $cmr_trans_chrg_max = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 17,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 }
 
                 //Gunny Usage for Gunny Bags Paddy
-                $gunny_bags     = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16), 1)->boiled_val;
+                $gunny_bags     = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //CGST Paddy
-                $cgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 17), 1)->boiled_val) / 100;
+                $cgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 17,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val) / 100;
 
                 //SGST Paddy
-                $sgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 18), 1)->boiled_val ) / 100;
+                $sgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 18,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val ) / 100;
 
                 $data_array =   array(
 
@@ -3115,7 +3115,7 @@ class Paddys extends MX_Controller {
 
                     "tot_milled_paddy" => $cost_per_milled_paddy,
 
-                    "out_ratio"     => $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14), 1)->boiled_val,
+                    "out_ratio"     => $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val,
 
                     "sub_tot_cmr_qty"  => round($sub_tot_cmr, 3),
 
@@ -3181,18 +3181,18 @@ class Paddys extends MX_Controller {
             else{
                 
                 //MSP
-                $tot_msp        = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 1), 1)->raw_val;
+                $tot_msp        = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 1,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //Market fee
-                $market_fee     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 2), 1)->raw_val;
+                $market_fee     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 2,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
                 
                 //Labour Charge
-                $mandi_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 3), 1)->raw_val;
+                $mandi_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 3,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
                 
                 //Transportation charges distance wise PADDY
                 if($this->input->post('trns_distance_paddy') <= 25){
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4), 1)->raw_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                     $trans_chrg_mid = 0;
 
@@ -3202,9 +3202,9 @@ class Paddys extends MX_Controller {
 
                     $extra_dist     = $this->input->post('trns_distance_paddy') - 25;
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4), 1)->raw_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $trans_chrg_mid = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 5), 1)->raw_val;
+                    $trans_chrg_mid = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 5,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                     $trans_chrg_max = 0;
 
@@ -3213,46 +3213,46 @@ class Paddys extends MX_Controller {
 
                     $extra_dist     = $this->input->post('trns_distance_paddy') - 50;
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4), 1)->raw_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $trans_chrg_mid = ($this->input->post('paddy_qty') * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 5), 1)->raw_val;
+                    $trans_chrg_mid = ($this->input->post('paddy_qty') * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 5,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $trans_chrg_max = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 6), 1)->raw_val;
+                    $trans_chrg_max = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 6,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 }
 
                 //Driage
-                $driage         = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 8), 1)->raw_val;
+                $driage         = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 8,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //Commission to Society
-                $soc_comm       = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 9), 1)->raw_val;
+                $soc_comm       = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 9,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
                 
                 //Milling charges
-                $millng_chrg    = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 10), 1)->raw_val;
+                $millng_chrg    = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 10,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
                 
                 //CGST Paddy
-                $cgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 11), 1)->raw_val) / 100;
+                $cgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 11,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val) / 100;
 
                 //SGST Paddy
-                $sgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 12), 1)->raw_val) / 100;
+                $sgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 12,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val) / 100;
                 
                 //Administrative Charges
-                $admin_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 13), 1)->raw_val;
+                $admin_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 13,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //Cost of 1 qtl of Milled Paddy (Amount)
-                $cost_per_milled_paddy = $this->Paddy->f_get_particulars("md_comm_params", array("SUM(raw_val) raw_val"), array("sl_no BETWEEN 1 AND 13" => NULL), 1)->raw_val;
+                $cost_per_milled_paddy = $this->Paddy->f_get_particulars("md_comm_params", array("SUM(raw_val) raw_val"), array("sl_no BETWEEN 1 AND 13" => NULL,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //Sub-total of CMR
-                $sub_tot_cmr    = ($this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14), 1)->raw_val) / 100;
+                $sub_tot_cmr    = ($this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val) / 100;
 
                 //Sub-total of Rate
-                $sub_tot_rate   = ($cost_per_milled_paddy * 100) / $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14), 1)->raw_val;
+                $sub_tot_rate   = ($cost_per_milled_paddy * 100) / $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
 
                 //Transportation charges distance wise RICE
                 if($this->input->post('trns_distance_rice') > 0){
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15), 1)->raw_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                     $cmr_trans_chrg_mid = 0;
 
@@ -3262,9 +3262,9 @@ class Paddys extends MX_Controller {
 
                     $cmr_extra_dist     = $this->input->post('trns_distance_rice') - 25;
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15), 1)->raw_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $cmr_trans_chrg_mid = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16), 1)->raw_val;
+                    $cmr_trans_chrg_mid = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                     $cmr_trans_chrg_max = 0;
 
@@ -3273,22 +3273,22 @@ class Paddys extends MX_Controller {
 
                     $cmr_extra_dist     = $this->input->post('trns_distance_rice') - 50;
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15), 1)->raw_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $cmr_trans_chrg_mid = ($sub_tot_cmr * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16), 1)->raw_val;
+                    $cmr_trans_chrg_mid = ($sub_tot_cmr * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $cmr_trans_chrg_max = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 17), 1)->raw_val;
+                    $cmr_trans_chrg_max = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 17,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 }
 
                 //Gunny Usage for Gunny Bags Paddy
-                $gunny_bags     = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16), 1)->raw_val;
+                $gunny_bags     = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //CGST Paddy
-                $cgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 17), 1)->raw_val) / 100;
+                $cgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 17,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val) / 100;
 
                 //SGST Paddy
-                $sgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 18), 1)->raw_val ) / 100;
+                $sgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 18,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val ) / 100;
 
                 $data_array =   array(
 
@@ -3344,7 +3344,7 @@ class Paddys extends MX_Controller {
 
                     "tot_milled_paddy" => $cost_per_milled_paddy,
 
-                    "out_ratio"     => $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14), 1)->raw_val,
+                    "out_ratio"     => $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val,
 
                     "sub_tot_cmr_qty"  => round($sub_tot_cmr, 3),
 
@@ -3481,18 +3481,18 @@ class Paddys extends MX_Controller {
 
                 //Calculating billing values
                 //MSP
-                $tot_msp        = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 1), 1)->boiled_val;
+                $tot_msp        = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 1,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //Market fee
-                $market_fee     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 2), 1)->boiled_val;
+                $market_fee     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 2,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //Labour Charge
-                $mandi_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 3), 1)->boiled_val;
+                $mandi_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 3,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //Transportation charges distance wise PADDY
                 if($this->input->post('trns_distance_paddy') <= 25){
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4), 1)->boiled_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                     $trans_chrg_mid = 0;
 
@@ -3502,9 +3502,9 @@ class Paddys extends MX_Controller {
 
                     $extra_dist     = $this->input->post('trns_distance_paddy') - 25;
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4), 1)->boiled_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $trans_chrg_mid = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 5), 1)->boiled_val;
+                    $trans_chrg_mid = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 5,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                     $trans_chrg_max = 0;
 
@@ -3513,46 +3513,46 @@ class Paddys extends MX_Controller {
 
                     $extra_dist     = $this->input->post('trns_distance_paddy') - 50;
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4), 1)->boiled_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $trans_chrg_mid = ($this->input->post('paddy_qty') * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 5), 1)->boiled_val;
+                    $trans_chrg_mid = ($this->input->post('paddy_qty') * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 5,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $trans_chrg_max = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 6), 1)->boiled_val;
+                    $trans_chrg_max = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 6,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 }
 
                 //Driage
-                $driage         = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 8), 1)->boiled_val;
+                $driage         = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 8,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //Commission to Society
-                $soc_comm       = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 9), 1)->boiled_val;
+                $soc_comm       = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 9,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //Milling charges
-                $millng_chrg    = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 10), 1)->boiled_val;
+                $millng_chrg    = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 10,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //CGST Paddy
-                $cgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 11), 1)->boiled_val) / 100;
+                $cgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 11,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val) / 100;
 
                 //SGST Paddy
-                $sgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 12), 1)->boiled_val) / 100;
+                $sgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 12,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val) / 100;
                 
                 //Administrative Charges
-                $admin_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 13), 1)->boiled_val;
+                $admin_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 13,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //Cost of 1 qtl of Milled Paddy (Amount)
-                $cost_per_milled_paddy = $this->Paddy->f_get_particulars("md_comm_params", array("SUM(boiled_val) boiled_val"), array("sl_no BETWEEN 1 AND 13" => NULL), 1)->boiled_val;
+                $cost_per_milled_paddy = $this->Paddy->f_get_particulars("md_comm_params", array("SUM(boiled_val) boiled_val"), array("sl_no BETWEEN 1 AND 13" => NULL,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 //Sub-total of CMR
-                $sub_tot_cmr    = ($this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14), 1)->boiled_val) / 100;
+                $sub_tot_cmr    = ($this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val) / 100;
 
                 //Sub-total of Rate
-                $sub_tot_rate   = ($cost_per_milled_paddy * 100) / $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14), 1)->boiled_val;
+                $sub_tot_rate   = ($cost_per_milled_paddy * 100) / $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
 
                 //Transportation charges distance wise RICE
                 if($this->input->post('trns_distance_rice') > 0){
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15), 1)->boiled_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                     $cmr_trans_chrg_mid = 0;
 
@@ -3562,9 +3562,9 @@ class Paddys extends MX_Controller {
 
                     $cmr_extra_dist     = $this->input->post('trns_distance_rice') - 25;
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15), 1)->boiled_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $cmr_trans_chrg_mid = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16), 1)->boiled_val;
+                    $cmr_trans_chrg_mid = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                     $cmr_trans_chrg_max = 0;
 
@@ -3573,22 +3573,22 @@ class Paddys extends MX_Controller {
 
                     $cmr_extra_dist     = $this->input->post('trns_distance_rice') - 50;
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15), 1)->boiled_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $cmr_trans_chrg_mid = ($sub_tot_cmr * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16), 1)->boiled_val;
+                    $cmr_trans_chrg_mid = ($sub_tot_cmr * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
-                    $cmr_trans_chrg_max = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 17), 1)->boiled_val;
+                    $cmr_trans_chrg_max = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 17,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
 
                 }
 
                 //Gunny Usage for Gunny Bags Paddy
-                $gunny_bags     = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16), 1)->boiled_val;
+                $gunny_bags     = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val;
                 
                 //CGST Paddy
-                $cgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 17), 1)->boiled_val) / 100;
+                $cgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 17,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val) / 100;
 
                 //SGST Paddy
-                $sgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 18), 1)->boiled_val ) / 100;
+                $sgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 18,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val ) / 100;
 
                 $data_array =   array(
 
@@ -3642,7 +3642,7 @@ class Paddys extends MX_Controller {
 
                     "tot_milled_paddy" => $cost_per_milled_paddy,
 
-                    "out_ratio"     => $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14), 1)->boiled_val,
+                    "out_ratio"     => $this->Paddy->f_get_particulars("md_comm_params", array("boiled_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->boiled_val,
 
                     "sub_tot_cmr_qty"  => round($sub_tot_cmr, 3),
 
@@ -3714,18 +3714,18 @@ class Paddys extends MX_Controller {
                 //Calculating billing values
                 
                 //MSP
-                $tot_msp        = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 1), 1)->raw_val;
+                $tot_msp        = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 1,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //Market fee
-                $market_fee     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 2), 1)->raw_val;
+                $market_fee     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 2,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
                 
                 //Labour Charge
-                $mandi_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 3), 1)->raw_val;
+                $mandi_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 3,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
                 
                 //Transportation charges distance wise PADDY
                 if($this->input->post('trns_distance_paddy') <= 25){
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4), 1)->raw_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                     $trans_chrg_mid = 0;
 
@@ -3735,9 +3735,9 @@ class Paddys extends MX_Controller {
 
                     $extra_dist     = $this->input->post('trns_distance_paddy') - 25;
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4), 1)->raw_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $trans_chrg_mid = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 5), 1)->raw_val;
+                    $trans_chrg_mid = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 5,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                     $trans_chrg_max = 0;
 
@@ -3746,46 +3746,46 @@ class Paddys extends MX_Controller {
 
                     $extra_dist     = $this->input->post('trns_distance_paddy') - 50;
 
-                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4), 1)->raw_val;
+                    $trans_chrg_min = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 4,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $trans_chrg_mid = ($this->input->post('paddy_qty') * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 5), 1)->raw_val;
+                    $trans_chrg_mid = ($this->input->post('paddy_qty') * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 5,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $trans_chrg_max = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 6), 1)->raw_val;
+                    $trans_chrg_max = ($this->input->post('paddy_qty') * $extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 6,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 }
 
                 //Driage
-                $driage         = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 8), 1)->raw_val;
+                $driage         = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 8,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //Commission to Society
-                $soc_comm       = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 9), 1)->raw_val;
+                $soc_comm       = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 9,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
                 
                 //Milling charges
-                $millng_chrg    = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 10), 1)->raw_val;
+                $millng_chrg    = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 10,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
                 
                 //CGST Paddy
-                $cgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 11), 1)->raw_val) / 100;
+                $cgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 11,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val) / 100;
 
                 //SGST Paddy
-                $sgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 12), 1)->raw_val) / 100;
+                $sgst_paddy     = ($millng_chrg * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 12,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val) / 100;
                 
                 //Administrative Charges
-                $admin_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 13), 1)->raw_val;
+                $admin_chrg     = $this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 13,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //Cost of 1 qtl of Milled Paddy (Amount)
-                $cost_per_milled_paddy = $this->Paddy->f_get_particulars("md_comm_params", array("SUM(raw_val) raw_val"), array("sl_no BETWEEN 1 AND 13" => NULL), 1)->raw_val;
+                $cost_per_milled_paddy = $this->Paddy->f_get_particulars("md_comm_params", array("SUM(raw_val) raw_val"), array("sl_no BETWEEN 1 AND 13" => NULL,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //Sub-total of CMR
-                $sub_tot_cmr    = ($this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14), 1)->raw_val) / 100;
+                $sub_tot_cmr    = ($this->input->post('paddy_qty') * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val) / 100;
 
                 //Sub-total of Rate
-                $sub_tot_rate   = ($cost_per_milled_paddy * 100) / $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14), 1)->raw_val;
+                $sub_tot_rate   = ($cost_per_milled_paddy * 100) / $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
 
                 //Transportation charges distance wise RICE
                 if($this->input->post('trns_distance_rice') > 0){
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15), 1)->raw_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                     $cmr_trans_chrg_mid = 0;
 
@@ -3795,9 +3795,9 @@ class Paddys extends MX_Controller {
 
                     $cmr_extra_dist     = $this->input->post('trns_distance_rice') - 25;
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15), 1)->raw_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $cmr_trans_chrg_mid = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16), 1)->raw_val;
+                    $cmr_trans_chrg_mid = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                     $cmr_trans_chrg_max = 0;
 
@@ -3806,22 +3806,22 @@ class Paddys extends MX_Controller {
 
                     $cmr_extra_dist     = $this->input->post('trns_distance_rice') - 50;
 
-                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15), 1)->raw_val;
+                    $cmr_trans_chrg_min = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 15,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $cmr_trans_chrg_mid = ($sub_tot_cmr * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16), 1)->raw_val;
+                    $cmr_trans_chrg_mid = ($sub_tot_cmr * 25) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 16,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
-                    $cmr_trans_chrg_max = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 17), 1)->raw_val;
+                    $cmr_trans_chrg_max = ($sub_tot_cmr * $cmr_extra_dist) * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 17,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 }
 
                 //Gunny Usage for Gunny Bags Paddy
-                $gunny_bags     = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 18), 1)->raw_val;
+                $gunny_bags     = $sub_tot_cmr * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 18,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val;
 
                 //CGST Paddy
-                $cgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 19), 1)->raw_val) / 100;
+                $cgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 19,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val) / 100;
 
                 //SGST Paddy
-                $sgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 20), 1)->raw_val ) / 100;
+                $sgst_cmr       = ($gunny_bags * $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 20,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val ) / 100;
 
                 $data_array =   array(
 
@@ -3875,7 +3875,7 @@ class Paddys extends MX_Controller {
 
                     "tot_milled_paddy" => $cost_per_milled_paddy,
 
-                    "out_ratio"     => $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14), 1)->raw_val,
+                    "out_ratio"     => $this->Paddy->f_get_particulars("md_comm_params", array("raw_val"), array("sl_no" => 14,"kms_yr"=>$this->session->userdata('kms_yr')), 1)->raw_val,
 
                     "sub_tot_cmr_qty"  => round($sub_tot_cmr, 3),
 
@@ -4648,7 +4648,7 @@ class Paddys extends MX_Controller {
             $select = array('raw_val rate');
         }
         
-        $res = (array) $this->Paddy->f_get_particulars("md_comm_params", $select, array('sl_no' => 8), 1);
+        $res = (array) $this->Paddy->f_get_particulars("md_comm_params", $select, array('sl_no' => 8,"kms_yr"=>$this->session->userdata('kms_yr')), 1);
 
         echo json_encode((object) array_merge($data, $res));
 
@@ -4704,7 +4704,7 @@ class Paddys extends MX_Controller {
             $select = array('raw_val rate');
         }
         
-        $res = (array) $this->Paddy->f_get_particulars("md_comm_params", $select, array('sl_no' => 9), 1);
+        $res = (array) $this->Paddy->f_get_particulars("md_comm_params", $select, array('sl_no' => 9,"kms_yr"=>$this->session->userdata('kms_yr')), 1);
 
         echo json_encode((object) array_merge($data, $res));
 
