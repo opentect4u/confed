@@ -120,8 +120,8 @@
                                     <a href="<?php echo site_url('payroll/stopsalary');?>">Stop Salary</a>
                                 </div>
                             </div> 
-                            
                             <a href="<?php echo site_url('payroll/approve');?> ">Approve</a>
+                            <a href="<?php echo site_url('payroll/parameter');?> ">Salary Parameter</a>
                             <?php } ?>
                             <div class="sub-dropdown">
                                 <a class="sub-dropbtn">Reports <i class="fa fa-angle-right" style="float: right;"></i></a>    

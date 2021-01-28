@@ -31,6 +31,13 @@
 			}
 
 		}
+		public function f_get_parameter()
+        {
+
+            $sql = $this->db->query("SELECT * FROM md_parameters where  sl_no in(7,8,9,10,11) ");
+            return $sql->result();
+
+        }
 
 		//For inserting row
 		public function f_insert($table_name, $data_array) {

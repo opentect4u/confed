@@ -109,6 +109,86 @@ class Payrolls extends MX_Controller {
 	// force_download('sample_Employee_details.csv', $data);
     // }
 
+/************************************** */
+//salary parameters fro da ,hra etc
+public function f_parameter()
+{
+
+    $this->load->view('post_login/main');
+
+    $param_dtls['parameter'] = $this->Payroll->f_get_parameter();
+    $this->load->view('parameter/table', $param_dtls);
+
+    $this->load->view('post_login/footer'); 
+
+}
+
+
+public function f_parameter_edit(){
+
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+        
+        $sl_no  =   $this->input->post('sl_no');
+
+        $param_desc       =   $this->input->post('param_desc');
+
+        $param_value   =   $this->input->post('param_value');
+
+        $data_array = array (
+
+            "sl_no"         =>  $sl_no,
+
+            "param_desc"        =>  $param_desc,
+
+            "param_value"     =>  $param_value
+
+           
+
+            // "modified_by"   =>  $this->session->userdata('loggedin')->user_name,
+
+            // "modified_dt"   =>  date('Y-m-d h:i:s')
+
+        );
+
+        $where = array(
+
+            "sl_no"       =>  $sl_no
+
+        );
+        
+        $this->session->set_flashdata('msg', 'Successfully updated!');
+
+        $this->Payroll->f_edit('md_parameters', $data_array, $where);
+
+        redirect('payroll/parameter');
+
+    }
+
+    else {
+
+        $where = array(
+
+            "sl_no"     =>  $this->input->get('sl_no')
+
+        );
+
+
+        //Month List
+        // $bonus['month_list'] =   $this->Payroll->f_get_particulars("md_month", NULL, NULL, 0);
+        
+        //Bonus list of latest month
+         $parameter['param_dtls']    =   $this->Payroll->f_get_particulars("md_parameters", NULL, $where, 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("parameter/edit", $parameter);
+
+        $this->load->view('post_login/footer');
+
+    }
+
+}
+
 
     /******************For Employee Screen*****************/
 
@@ -194,7 +274,7 @@ class Payrolls extends MX_Controller {
             $this->Payroll->f_insert('md_employee', $data_array);
 
             $this->session->set_flashdata('msg', 'Successfully added!');
-
+ 
             redirect('payroll/employee');
 
         }
