@@ -4892,7 +4892,7 @@ class Paddys extends MX_Controller {
             $commission['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
             //Bill Master Details
-            $commission['bill_master']   =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), array('kms_year' =>$this->session->userdata('kms_yr')), 0);
+            $commission['bill_master']   =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), array('kms_yr' =>$this->session->userdata('kms_yr')), 0);
 
             $this->load->view('post_login/main');
 
