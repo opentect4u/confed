@@ -4610,7 +4610,7 @@ class Paddys extends MX_Controller {
                 
                 'bill_dt', 'paddy_qty', 'sub_tot_cmr_qty',
                 
-                'butta_cut', 'bill_no', 'comm_soc'
+                'butta_cut', 'bill_no', 'comm_soc','inter_dist_transprt'
             
             );
         }
@@ -4619,7 +4619,7 @@ class Paddys extends MX_Controller {
             
                 'bill_dt', 'paddy_qty', 'sub_tot_cmr_qty',
                 
-                'butta_cut', 'bill_no', 'comm_soc'
+                'butta_cut', 'bill_no', 'comm_soc','inter_dist_transprt'
             
             );
         }        

@@ -5810,6 +5810,16 @@ class Reports extends MX_Controller {
             $data['proc_dtls'] =   $this->Paddy->f_get_procurements($from_date,$to_date);
 
             $data['farm_dtls'] =   $this->Paddy->f_get_registered_farmer($from_date,$to_date);
+
+            $select =  array(
+                "param_value"
+            );
+            
+            $where  =   array(
+                "sl_no" => 1
+            );
+
+            $data['orgname']    =   $this->Paddy->f_get_particulars("md_parameters", $select, $where, 1);
             
             $this->load->view('post_login/main');
 
@@ -5867,6 +5877,16 @@ public function f_wqscdetailsReport(){
         $data['wqsc']   =   $this->Paddy->f_get_particulars('td_wqsc_sheet',$select,$where,0);
 
         $data['dist']   =   $this->Paddy->f_get_particulars('md_district',$select1,NULL,0);
+
+        $select =  array(
+            "param_value"
+        );
+        
+        $where  =   array(
+            "sl_no" => 1
+        );
+
+        $data['orgname']    =   $this->Paddy->f_get_particulars("md_parameters", $select, $where, 1);
 
       
         $this->load->view('post_login/main');
@@ -6036,6 +6056,16 @@ public function f_wqscdetailsReport(){
             $data['cmr_deliver']    =  $this->Paddy->f_get_cmr_deliver($from_date,$to_date);
 
             $data['to_deliver']     =  $this->Paddy->f_get_to_deliver($from_date,$to_date);
+
+            $select =  array(
+                "param_value"
+            );
+            
+            $where  =   array(
+                "sl_no" => 1
+            );
+
+            $data['orgname']    =   $this->Paddy->f_get_particulars("md_parameters", $select, $where, 1);
 
             $this->load->view('post_login/main');
 
@@ -6654,15 +6684,26 @@ public function f_wqscdetailsReport(){
             $bill['mill']    =   $this->Paddy->f_get_particulars("md_mill", array("sl_no", "mill_name"), NULL, 0);
             
             //District List
-            $bill['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+            $bill['dist']    =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $bill['kms'] = (object) array('kms_year' => $this->kms_year);
+            unset($where);
+            unset($select);
+
+            $select =  array(
+                "param_value"
+            );
             
-            $this->session->set_userdata('excelBillDtls_tot', $bill['tot_bill_dtls']);
+            $where  =   array(
+                "sl_no" => 1
+            );
+
+            $bill['orgname']    =   $this->Paddy->f_get_particulars("md_parameters", $select, $where, 1);
+            
+            /*$this->session->set_userdata('excelBillDtls_tot', $bill['tot_bill_dtls']);
             $this->session->set_userdata('excelBillDtls_soc', $bill['soc']);
             $this->session->set_userdata('excelBillDtls_mill', $bill['mill']);
             $this->session->set_userdata('excelBillDtls_dist', $bill['dist']);
-            $this->session->set_userdata('excelBillDtls_kms', $bill['kms']);
+            $this->session->set_userdata('excelBillDtls_kms', $bill['kms']);*/
 
 
             $this->load->view('post_login/main');
@@ -6685,7 +6726,7 @@ public function f_wqscdetailsReport(){
 
     }
 
-    public function f_downloadExcel(){
+    /*public function f_downloadExcel(){
 
         $this->load->library('excel');
 
@@ -6859,7 +6900,7 @@ public function f_wqscdetailsReport(){
 			$writer->save('php://output');
 		   
 			exit;
-    }
+    }*/
 /**************************************************************************************************************************88 */
 
     //************************************************Declaration Report*******************************************************/
@@ -6917,6 +6958,19 @@ public function f_wqscdetailsReport(){
             $bill['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
             
             $bill['soc_name']      =   $this->Paddy->f_get_particulars("md_society", array("sl_no", "soc_name"), NULL, 0);
+
+            unset($select);
+            unset($where);
+
+            $select =  array(
+                "param_value"
+            );
+            
+            $where  =   array(
+                "sl_no" => 1
+            );
+
+            $bill['orgname']    =   $this->Paddy->f_get_particulars("md_parameters", $select, $where, 1);
 
             $this->load->view('post_login/main');
 
@@ -7021,6 +7075,20 @@ public function f_wqscdetailsReport(){
 
             $payment['charges']    =   $this->Paddy->f_get_particulars("td_payment_bill_dtls t, md_comm_params m", $select, $where, 0);
 
+            unset($select);
+            unset($where);
+            $select =  array(
+                "param_value"
+            );
+            
+            $where  =   array(
+                "sl_no" => 1
+            );
+
+            $payment['orgname']    =   $this->Paddy->f_get_particulars("md_parameters", $select, $where, 1);
+
+
+
             $this->load->view('post_login/main');
 
             $this->load->view("reports/payment", $payment);
@@ -7120,6 +7188,19 @@ public function f_paymentVoucher(){
             $payment['charges']         =   $this->Paddy->f_get_particulars("td_payment_bill_dtls t, md_comm_params m", $select, $where, 0);
             //$payment['tottransport']    =   $this->Paddy->f_tottransport($ptm_no,$pool_type);
 
+            unset($select);
+            unset($where);
+
+            $select =  array(
+                "param_value"
+            );
+            
+            $where  =   array(
+                "sl_no" => 1
+            );
+
+            $payment['orgname']    =   $this->Paddy->f_get_particulars("md_parameters", $select, $where, 1);
+
             $this->load->view('post_login/main');
 
             $this->load->view("reports/payment_voucher", $payment);
@@ -7187,6 +7268,19 @@ public function f_paymentsociety(){
 
 
             $payment['charges']    =   $this->Paddy->f_get_particulars("td_commission_bill_dtls", $select, $where, 0);
+
+            unset($select);
+            unset($where);
+
+            $select =  array(
+                "param_value"
+            );
+            
+            $where  =   array(
+                "sl_no" => 1
+            );
+
+            $payment['orgname']    =   $this->Paddy->f_get_particulars("md_parameters", $select, $where, 1);
 
             $this->load->view('post_login/main');
 

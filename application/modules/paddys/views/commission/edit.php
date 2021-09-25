@@ -150,7 +150,7 @@
                         <th>Quantity of Paddy <br>(Qtls)</th>
                         <th>Rete / Qtls</th>
                         <th>Value</th>
-                        <th><button type="button" class="btn btn-success addAnother"><i class="fa fa-plus"></i></button></th>
+                        <!--<th><button type="button" class="btn btn-success addAnother"><i class="fa fa-plus"></i></button></th>-->
 
                     </tr>
 

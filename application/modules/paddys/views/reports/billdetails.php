@@ -218,11 +218,11 @@ tr:hover {background-color: #f5f5f5;}
     
                         <div style="text-align:center;">
     
-                            <h3>WEST BENGAL STATE CONSUMERS' CO-OPERATIVE FEDERATION LTD.</h3>
+                            <h2><?php echo $orgname->param_value; ?></h2>
     
                             <h3>P-1, Hide Lane, Akbar Mansion, 3rd Floor, Kolkata-700073</h3>
     
-                            <h3>Bill Details For The KMS: <?php echo $kms->kms_year; ?> For The Period Of <?php echo date('d-m-Y', strtotime($this->input->post('from_dt'))). ' to '. date('d-m-Y', strtotime($this->input->post('to_dt'))); ?></h3>
+                            <h3>Bill Details Between <?php echo date('d-m-Y', strtotime($this->input->post('from_dt'))). ' to '. date('d-m-Y', strtotime($this->input->post('to_dt'))); ?></h3>
     
                             <h3><?php if($this->input->post('pool_type') == 'S'){
                                         echo 'State Pool';
@@ -239,7 +239,7 @@ tr:hover {background-color: #f5f5f5;}
     
                         <br>  
     
-                        <table style="width: 100%;">
+                        <table style="width: 100%;" id="example">
     
                             <thead>
     
@@ -519,12 +519,14 @@ tr:hover {background-color: #f5f5f5;}
                     <div style="text-align: center;">
     
                         <button class="btn btn-primary" type="button" onclick="printDiv();">Print</button>
+
+                        <button class="btn btn-primary" type="button" id="btnExport" >Excel</button>
     
                     </div>
 
-                    <div style="text-align: center;">
-                        <a class="btn btn-success" href="<?php echo site_url('report/downloadExcel'); ?>" id="downloadExcel"><i class="fa fa-download"></i>Download Excle</a>                                  
-                    </div>
+                    <!---<div style="text-align: center;">
+                        <a class="btn btn-success" href="<?php //echo site_url('report/downloadExcel'); ?>" id="downloadExcel"><i class="fa fa-download"></i>Download Excle</a>
+                    </div>--->
 
                 </div>
 
@@ -537,6 +539,16 @@ tr:hover {background-color: #f5f5f5;}
         }
     
         ?> 
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btnExport").click(function () {
+                $("#example").table2excel({
+                    filename: "Bill Details Between <?php echo date('d-m-Y', strtotime($this->input->post('from_dt'))). ' to '. date('d-m-Y', strtotime($this->input->post('to_dt'))); ?>.xls"
+                });
+            });
+        });
+    </script>
 
 <script>
     $(document).ready(function(){

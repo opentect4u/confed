@@ -41,7 +41,7 @@ tr:hover {background-color: #f5f5f5;}
             '                                         .left { margin-left: 315px;} ' +
             '                                         .right { margin-right: 375px; display: inline; }' +
             '                                          table { border-collapse: collapse; font-size: 12px; width: 100%;}' +
-            '                                          th, td { border: 1px solid black; border-collapse: collapse; padding: 6px;}' +
+            '                                          th, td { border: 1px solid black; border-collapse: collapse; padding: 3px;}' +
             '                                           th, td { }' +
             '                                         .border { border: 1px solid black; } ' +
             '                                         .bottom { bottom: 5px; width: 100%; position: fixed ' +
@@ -277,7 +277,7 @@ tr:hover {background-color: #f5f5f5;}
 
                     <div style="text-align:center;">
 
-                        <h2>WEST BENGAL STATE CONSUMERS' CO-OPERATIVE FEDERATION LTD.</h2>
+                        <h2><?php echo $orgname->param_value; ?></h2>
 
                     </div>
                     

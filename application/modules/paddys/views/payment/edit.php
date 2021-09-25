@@ -364,7 +364,7 @@
                         <th>CGST <br> (Add) <br> @2.5%</th>
                         <th>SGST <br> (Add) <br> @2.5%</th>
                         <th>Payable Amount(Rs)</th>
-                        <th><button type="button" class="btn btn-success addAnotherRow"><i class="fa fa-plus"></i></button></th>
+                        <!---<th><button type="button" class="btn btn-success addAnotherRow"><i class="fa fa-plus"></i></button></th>--->
 
                     </tr>
 

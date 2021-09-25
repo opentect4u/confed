@@ -172,7 +172,7 @@ tr:hover {background-color: #f5f5f5;}
 
                     <div style="text-align:center;">
 
-                        <h3>WEST BENGAL STATE CONSUMERS' CO-OPERATIVE FEDERATION LTD.</h3>
+                        <h2><?php echo $orgname->param_value; ?></h2>
 
                         <h3>P-1, Hide Lane, Akbar Mansion, 3rd Floor, Kolkata-700073</h3>
 

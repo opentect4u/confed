@@ -306,7 +306,7 @@ tr:hover {background-color: #f5f5f5;}
     
                         <div style="text-align:center;">
     
-                            <h3>WEST BENGAL STATE CONSUMERS' CO-OPERATIVE FEDERATION LTD.</h3>
+                            <h4><?php echo $orgname->param_value; ?></h4>
                             <h5>P-1, Hide Lane, Akbar Mansion,(3rd Floor), Kolkata-73,Gram: STAFECON<br>Ph No:(0)33-22377012/7013,033-22368942<br>e-mailId: confedwb.org@gmail.com,Wesite :www.confedwb.org.in</h5>
                             <!-- <h5>Ph NO:(0)33-22377012/7013,033-22368942</h5> -->
                             <!-- <h5>e-mailId: confedw.org@gmail.com,Wesite :www.confedwb.org.in</h5> -->

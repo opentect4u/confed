@@ -276,7 +276,7 @@ tr:hover {background-color: #f5f5f5;}
 
                     <div style="text-align:center;">
 
-                        <h2>WEST BENGAL STATE CONSUMERS' CO-OPERATIVE FEDERATION LTD.</h2>
+                         <h2><?php echo $orgname->param_value; ?></h2>
                          <h4>P1 HiderLane,Akabar Mansion,Kolkata-700073</h4>
 
                     </div>
