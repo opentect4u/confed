@@ -184,7 +184,7 @@ tr:hover {background-color: #f5f5f5;}
 
                     <br>  
 
-                    <table style="width: 100%;">
+                    <table style="width: 100%;" id="example">
 
                         <thead>
 
@@ -272,6 +272,8 @@ tr:hover {background-color: #f5f5f5;}
 
                     <button class="btn btn-primary" type="button" onclick="printDiv();">Print</button>
 
+                    <button class="btn btn-primary" type="button" id="btnExport" >Excel</button>
+
                 </div>
 
             </div>
@@ -283,6 +285,17 @@ tr:hover {background-color: #f5f5f5;}
     }
 
     ?> 
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnExport").click(function () {
+            $("#example").table2excel({
+                filename: "Districtwise & Societywise Paddy Procurement Report Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?>.xls"
+            });
+        });
+    });
+</script>
+
 <script>
     $(document).ready(function(){
 

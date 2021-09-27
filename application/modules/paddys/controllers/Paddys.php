@@ -4587,7 +4587,7 @@ class Paddys extends MX_Controller {
 
             'soc_id'    => $this->input->get('soc_id'),
 
-            'mill_id'   => $this->input->get('mill_id')
+            'mill_id   = '.$this->input->get('mill_id').' Order by cast(bill_no as unsigned)'=>Null
 
         );
 
