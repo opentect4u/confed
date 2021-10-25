@@ -4639,6 +4639,7 @@ class Paddys extends MX_Controller {
 
         $data = (array) $this->Paddy->f_get_particulars("td_bill", $select, $where, 1);
 
+
         if($rice->rice_type == 'P'){
             unset($select);
             $select = array('boiled_val rate');

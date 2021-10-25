@@ -213,6 +213,7 @@
                         <th>Quantity of Paddy <br>(Qtls)</th>
                         <th>Quantity of CMR<br>(Qtls)</th>
                         <th>Total Butta(RS)</th>
+                        <th>Inter District</th>
                         <th><button type="button" class="btn btn-success addAnother"><i class="fa fa-plus"></i></button></th>
 
                     </tr>
@@ -238,7 +239,7 @@
                             <input type="hidden" class="form-control qty_cmr" name="qty_cmr[]" >
                         </td>
                         <td><input type="text" class="form-control qty_butta" name="qty_butta[]"></td>
-                        <td><input type="hidden" class="form-control inter_dist" name="inter_dist[]"></td>
+                        <td><input type="text" class="form-control inter_dist" name="inter_dist[]" readonly></td>
                         <td></td>
                     </tr>
                 </tbody> 
@@ -250,7 +251,7 @@
                         <td><input type="text" class="no-border tot_paddy" readonly></td>
                         <td><input type="text" class="no-border tot_cmr" readonly></td>
                         <td><input type="text" class="no-border tot_butta" readonly></td>
-                        <td><input type="hidden" id = "tot_inter" class="no-border tot_inter" readonly></td>
+                        <td><input type="text" id = "tot_inter" class="no-border tot_inter" readonly></td>
                         <td></td>
 
                     </tr>
@@ -575,6 +576,7 @@
                         '<td><input type="text" class="form-control qty_paddys" name="qty_paddys[]" readonly><input type="hidden" class="form-control qty_paddy" name="qty_paddy[]"></td>' +
                         '<td><input type="text" class="form-control qty_cmrs" name="qty_cmrs[]" readonly><input type="hidden" class="form-control qty_cmr" name="qty_cmr[]"></td>' +
                         '<td><input type="text" class="form-control qty_butta" name="qty_butta[]"></td>' +
+                        '<td><input type="text" class="form-control inter_dist" name="inter_dist[]" readonly></td>'+
                         '<td><button type="button" class="btn btn-danger removeRow"><i class="fa fa-remove"></i></button></td>' +
                       '</tr>';
             
@@ -655,6 +657,8 @@
                 $('.qty_cmr:eq('+indexNo+')').val(data.sub_tot_cmr_qty );
                 $('.qty_cmrs:eq('+indexNo+')').val(data.sub_tot_cmr_qty );
                 $('.qty_butta:eq('+indexNo+')').val(data.butta_cut);
+
+                //console.log(data.inter_dist_transprt);
                 $('.inter_dist:eq('+indexNo+')').val(data.inter_dist_transprt);
                 $('.view:eq('+indexNo+')').attr('id', data.bill_no);
 
